@@ -48,6 +48,8 @@ public class CnlToAspTranslator {
             aspRule = aCNounVariableIsACNounOfACNounVariable(taggedWords);
         } else if (sentence.matches("if .* then .*\\.$")){
             aspRule = ifThen(taggedWords);
+        } else if (sentence.matches("exclude that .*\\.$")){
+            aspRule = excludeThat(taggedWords);
         }
         else if(sentence.matches("the .* is .*\\.$")) {
             aspRule = thePNounIsAdjective(taggedWords);
@@ -74,6 +76,66 @@ public class CnlToAspTranslator {
 
         return aspRule;
     }
+
+    private AspRule excludeThat(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        AspRule aspRule = new AspRule();
+
+        removeFirstWord(taggedWords);
+        removeFirstWord(taggedWords);
+
+        while (!taggedWords.get(0).value().equals(".")){
+            String sentence = "";
+
+            if(taggedWords.get(0).value().equals("and") && taggedWords.get(1).value().equals("that"))
+            {
+                removeFirstWord(taggedWords);
+                removeFirstWord(taggedWords);
+            }
+
+            while (!taggedWords.get(0).value().equals(".") && (!taggedWords.get(0).value().equals("and") && !taggedWords.get(1).value().equals("that"))){
+                sentence += taggedWords.get(0).value() + " ";
+                taggedWords.remove(0);
+            }
+            sentence = sentence.trim() + ".";
+            aspRule.getBody().addAll(translateSentence(sentence).getHead());
+        }
+
+        return aspRule;
+    }
+
+    private AspRule ifThen(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        AspRule aspRule = new AspRule();
+
+        removeFirstWord(taggedWords);
+
+        /* Body */
+        while (!taggedWords.get(0).value().equals("then")){
+            String sentence = "";
+            while (!taggedWords.get(0).value().equals("and") && !taggedWords.get(0).value().equals("then")){
+                sentence += taggedWords.get(0).value() + " ";
+                taggedWords.remove(0);
+            }
+            sentence = sentence.trim() + ".";
+            aspRule.getBody().addAll(translateSentence(sentence).getHead());
+        }
+
+        taggedWords.remove(0);
+
+        /* Head */
+        String sentence = "";
+        while (!taggedWords.get(0).value().equals(".")){
+            sentence += taggedWords.get(0).value() + " ";
+            taggedWords.remove(0);
+        }
+        sentence = sentence.trim() + ".";
+        aspRule.getHead().add(translateSentence(sentence).getHead().get(0));
+
+        return aspRule;
+    }
+
+
 
     private AspRule aCNounVariableIsACNounOfACNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
         removeFirstWord(taggedWords);
@@ -104,35 +166,6 @@ public class CnlToAspTranslator {
         aspRule.getHead().add(literal1);
         aspRule.getHead().add(literal2);
         aspRule.getHead().add(literal3);
-
-        return aspRule;
-    }
-
-    private AspRule ifThen(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
-
-        AspRule aspRule = new AspRule();
-
-        removeFirstWord(taggedWords);
-
-        while (!taggedWords.get(0).value().equals("then")){
-            String sentence = "";
-            while (!taggedWords.get(0).value().equals("then") || !taggedWords.get(0).value().equals("then")){
-                sentence += taggedWords.get(0).value() + " ";
-                taggedWords.remove(0);
-            }
-            sentence = sentence.trim() + ".";
-            aspRule.getBody().addAll(translateSentence(sentence).getHead());
-        }
-
-        taggedWords.remove(0);
-
-        String sentence = "";
-        while (!taggedWords.get(0).value().equals(".")){
-            sentence += taggedWords.get(0).value() + " ";
-            taggedWords.remove(0);
-        }
-        sentence = sentence.trim() + ".";
-        aspRule.getHead().addAll(translateSentence(sentence).getHead());
 
         return aspRule;
     }
@@ -187,14 +220,14 @@ public class CnlToAspTranslator {
 
         removeWord(taggedWords,".");
 
-        Literal literal1 = new Literal(cNoun);
+        Literal literal1 = new Literal(adjective);
         literal1.getTerms().add(variable);
 
-        Literal literal2 = new Literal(adjective);
+        Literal literal2 = new Literal(cNoun);
         literal2.getTerms().add(variable);
 
         AspRule aspRule = new AspRule();
-      //  aspRule.getHead().add(literal1);
+        aspRule.getHead().add(literal1);
         aspRule.getHead().add(literal2);
 
         return aspRule;
@@ -312,6 +345,9 @@ public class CnlToAspTranslator {
         return aspRule;
     }
 
+
+
+
     private void removeFirstWord(ArrayList<TaggedWord> taggedWords){
         taggedWords.remove(0);
     }
@@ -423,8 +459,7 @@ public class CnlToAspTranslator {
      * together as NNP.
      * e.g "X." --> X./NNP
      */
-    private String addWhitespanceBeforDot(String sentence)
-    {
+    private String addWhitespanceBeforDot(String sentence) {
         if(sentence.matches(".*\\.$"))
         {
             sentence = sentence.substring(0,sentence.lastIndexOf('.'));

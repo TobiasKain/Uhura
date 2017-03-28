@@ -40,6 +40,7 @@ public class Main {
 
         inputStrings.add("If a person X holds a job as nurse then person X is male.");
         inputStrings.add("If a person X is a husband of a person Y then person X is male.");
+        inputStrings.add("Exclude that person X is male and that person X is female.");
 
         StanfordParser.getInstance().printTaggedList(inputStrings);
 

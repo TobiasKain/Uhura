@@ -33,8 +33,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="27" column="46" lean-forward="true" selection-start-line="27" selection-start-column="46" selection-end-line="27" selection-end-column="46" />
+            <state relative-caret-position="93">
+              <caret line="22" column="8" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,24 +45,26 @@
       <file leaf-file-name="CnlToAspTranslator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="28" column="53" lean-forward="true" selection-start-line="28" selection-start-column="53" selection-end-line="28" selection-end-column="53" />
+            <state relative-caret-position="127">
+              <caret line="84" column="26" lean-forward="false" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#413#414#0" expanded="true" />
                 <element signature="e#461#462#0" expanded="true" />
-                <element signature="method#ifThen#0;class#CnlToAspTranslator#0" expanded="false" />
+                <element signature="method#aCNounVariableIsACNounOfACNounVariable#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#aCNounVariableVerbACNounAsPNoun#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#pNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#thePNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#pNounIsACNoun#0;class#CnlToAspTranslator#0" expanded="false" />
-                <element signature="method#cNounVariableIsACNoun#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#thereIsACNoun#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#isVariable#0;class#CnlToAspTranslator#0" expanded="false" />
+                <element signature="method#getVerb#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#removeWord#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#getPNoun#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#getAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#getVarialbe#0;class#CnlToAspTranslator#0" expanded="false" />
+                <element signature="method#addWhitespanceBeforDot#0;class#CnlToAspTranslator#0" expanded="false" />
+                <marker date="1490726071000" expanded="false" signature="8945:9552" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -97,8 +99,8 @@
       <file leaf-file-name="DLVProgramExecutor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
-              <caret line="17" column="72" lean-forward="true" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
+            <state relative-caret-position="313">
+              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#749#750#0" expanded="true" />
@@ -169,6 +171,7 @@
     <findStrings>
       <find>verb</find>
       <find>cnounvariableisadjective</find>
+      <find>adjective</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -736,12 +739,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1490362946771</updated>
-      <workItem from="1490362950583" duration="51374000" />
+      <workItem from="1490362950583" duration="54547000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51374000" />
+    <option name="totallyTimeSpent" value="54547000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -774,7 +777,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28313252" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28313252" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913166" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -800,25 +803,25 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java</url>
-          <line>33</line>
-          <properties />
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java</url>
-          <line>297</line>
+          <line>330</line>
           <properties />
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java</url>
-          <line>86</line>
+          <line>103</line>
           <properties />
-          <option name="timeStamp" value="36" />
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java</url>
+          <line>212</line>
+          <properties />
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="37" />
+      <option name="time" value="40" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -955,18 +958,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="17" column="72" lean-forward="true" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#749#750#0" expanded="true" />
-            <element signature="e#796#797#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-180">
@@ -977,34 +968,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#749#750#0" expanded="true" />
+            <element signature="e#796#797#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="28" column="53" lean-forward="true" selection-start-line="28" selection-start-column="53" selection-end-line="28" selection-end-column="53" />
+        <state relative-caret-position="127">
+          <caret line="84" column="26" lean-forward="false" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#413#414#0" expanded="true" />
             <element signature="e#461#462#0" expanded="true" />
-            <element signature="method#ifThen#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#aCNounVariableIsACNounOfACNounVariable#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#aCNounVariableVerbACNounAsPNoun#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#pNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#thePNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#pNounIsACNoun#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#cNounVariableIsACNoun#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#thereIsACNoun#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#isVariable#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#getVerb#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#removeWord#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#getPNoun#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#getAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#getVarialbe#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#addWhitespanceBeforDot#0;class#CnlToAspTranslator#0" expanded="false" />
+            <marker date="1490726071000" expanded="false" signature="8945:9552" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/at/tuwien/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="27" column="46" lean-forward="true" selection-start-line="27" selection-start-column="46" selection-end-line="27" selection-end-column="46" />
+        <state relative-caret-position="93">
+          <caret line="22" column="8" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
