@@ -36,6 +36,8 @@ public class DLVProgramGenerator {
 
             ruleString += ".";
 
+            System.out.println(ruleString);
+
             program.add(new Rule(ruleString));
         }
 

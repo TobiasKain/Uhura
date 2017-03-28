@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) throws SentenceValidationException {
 
         List<String> inputStrings = new ArrayList<>();
-        /*inputStrings.add("Roberta is a person.");
+        inputStrings.add("Roberta is a person.");
         inputStrings.add("Thelma is a person.");
         inputStrings.add("Steve is a person.");
         inputStrings.add("Pete is a person.");
@@ -36,9 +36,10 @@ public class Main {
         inputStrings.add("Police officer is a job.");
         inputStrings.add("Teacher is a job.");
         inputStrings.add("Actor is a job.");
-        inputStrings.add("Boxer is a job.");*/
+        inputStrings.add("Boxer is a job.");
 
-        inputStrings.add("If a person holds a job as nurse then the person is male.");
+        inputStrings.add("If a person X holds a job as nurse then person X is male.");
+        inputStrings.add("If a person X is a husband of a person Y then person X is male.");
 
         StanfordParser.getInstance().printTaggedList(inputStrings);
 
