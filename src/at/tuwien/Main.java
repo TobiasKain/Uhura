@@ -20,27 +20,48 @@ public class Main {
     public static void main(String[] args) throws SentenceValidationException {
 
         List<String> inputStrings = new ArrayList<>();
-        inputStrings.add("Roberta is a person.");
-        inputStrings.add("Thelma is a person.");
-        inputStrings.add("Steve is a person.");
-        inputStrings.add("Pete is a person.");
-        inputStrings.add("Roberta is female.");
-        inputStrings.add("Thelma is female.");
-        inputStrings.add("Steve is male.");
-        inputStrings.add("Pete is male.");
 
-        inputStrings.add("Chef is a job.");
-        inputStrings.add("Guard is a job.");
-        inputStrings.add("Nurse is a job.");
-        inputStrings.add("Telephone operator is a job.");
-        inputStrings.add("Police officer is a job.");
-        inputStrings.add("Teacher is a job.");
-        inputStrings.add("Actor is a job.");
-        inputStrings.add("Boxer is a job.");
+        inputStrings.add("Roberta is a person."); // B.1.0
+        inputStrings.add("Thelma is a person."); // B.1.0
+        inputStrings.add("Steve is a person."); // B.1.0
+        inputStrings.add("Pete is a person."); // B.1.0
 
-        inputStrings.add("If a person X holds a job as nurse then person X is male.");
-        inputStrings.add("If a person X is a husband of a person Y then person X is male.");
-        inputStrings.add("Exclude that person X is male and that person X is female.");
+        inputStrings.add("Roberta is female."); // B.1.1
+        inputStrings.add("Thelma is female."); // B.1.1
+
+        inputStrings.add("Steve is male."); // B.1.2
+        inputStrings.add("Pete is male."); // B.1.2
+
+        inputStrings.add("Exclude that person X is male and that person X is female."); // B.1.3
+
+        inputStrings.add("Chef is a job."); // B.4.0
+        inputStrings.add("Guard is a job."); // B.4.0
+        inputStrings.add("Nurse is a job."); // B.4.0
+        inputStrings.add("Telephone operator is a job."); // B.4.0
+        inputStrings.add("Police officer is a job."); // B.4.0
+        inputStrings.add("Teacher is a job."); // B.4.0
+        inputStrings.add("Actor is a job."); // B.4.0
+        inputStrings.add("Boxer is a job."); // B.4.0
+
+        inputStrings.add("If a person X holds a job as nurse then person X is male."); // B.5.0
+        inputStrings.add("If a person X holds a job as actor then person X is male."); // B.5.1
+
+        inputStrings.add("If a person X holds a job as chef and a person Y holds a job as telephone operator then a person Y is a husband of a  person X."); // B.6.0
+        inputStrings.add("If a person X is a husband of a person Y then person X is male."); // B.6.1
+        inputStrings.add("If a person X is a husband of a person Y then person Y is female."); // B.6.2
+
+        inputStrings.add("Exclude that Roberta holds a job as boxer."); // B.7.0
+
+        inputStrings.add("Exclude that Pete is educated."); // B.8.0
+        inputStrings.add("If a person X holds a job as nurse then person X is educated."); // B.8.1
+        inputStrings.add("If a person X holds a job as police officer then person X is educated."); // B.8.2
+        inputStrings.add("If a person X holds a job as teacher then person X is educated."); // B.8.3
+
+        inputStrings.add("Exclude that Roberta holds a job as chef."); // B.9.1a
+        inputStrings.add("Exclude that Roberta holds a job as police officer."); // B.9.1b
+        inputStrings.add("Exclude that a person X holds a job as chef and that person X holds a job as police officer."); // B.9.2
+
+        inputStrings.add("Exclude that there is a person X and that person X holds more than two jobs Y.");
 
         StanfordParser.getInstance().printTaggedList(inputStrings);
 
