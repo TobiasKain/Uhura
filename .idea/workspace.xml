@@ -33,8 +33,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="66" column="67" lean-forward="true" selection-start-line="66" selection-start-column="67" selection-end-line="66" selection-end-column="67" />
+            <state relative-caret-position="321">
+              <caret line="86" column="58" lean-forward="true" selection-start-line="86" selection-start-column="58" selection-end-line="86" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,13 +45,12 @@
       <file leaf-file-name="CnlToAspTranslator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="406" column="8" lean-forward="true" selection-start-line="406" selection-start-column="8" selection-end-line="406" selection-end-column="8" />
+            <state relative-caret-position="1971">
+              <caret line="173" column="29" lean-forward="false" selection-start-line="173" selection-start-column="29" selection-end-line="173" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#382#383#0" expanded="true" />
                 <element signature="e#430#431#0" expanded="true" />
-                <element signature="method#ifThen#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#cNounVariableIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#pNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#thePNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
@@ -60,6 +59,35 @@
                 <element signature="method#getVerb#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#getAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#addWhitespanceBeforDot#0;class#CnlToAspTranslator#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DLVProgramGenerator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="36" column="54" lean-forward="true" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AspRule.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/at/tuwien/ASP/AspRule.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="63">
+              <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+              <folding>
+                <element signature="e#667#668#0" expanded="true" />
+                <element signature="e#694#695#0" expanded="true" />
+                <element signature="e#807#808#0" expanded="true" />
+                <element signature="e#832#833#0" expanded="true" />
+                <element signature="e#869#870#0" expanded="true" />
+                <element signature="e#897#898#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -96,11 +124,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>verb</find>
       <find>cnounvariableisadjective</find>
       <find>adjective</find>
       <find>ofa</find>
       <find>there is a</find>
+      <find>verb</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -121,10 +149,11 @@
         <option value="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/SentenceValidationException.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/ASP/Literal.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/StanfordParser.java" />
-        <option value="$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java" />
-        <option value="$PROJECT_DIR$/src/at/tuwien/Main.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/ASP/AspRule.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/Main.java" />
       </list>
     </option>
   </component>
@@ -668,12 +697,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1490362946771</updated>
-      <workItem from="1490362950583" duration="69158000" />
+      <workItem from="1490362950583" duration="72186000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69158000" />
+    <option name="totallyTimeSpent" value="72186000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -733,19 +762,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java</url>
-          <line>262</line>
+          <line>289</line>
           <properties />
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java</url>
-          <line>133</line>
-          <properties />
-          <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java</url>
-          <line>524</line>
+          <line>591</line>
           <properties />
           <option name="timeStamp" value="42" />
         </line-breakpoint>
@@ -833,22 +856,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/at/tuwien/ASP/AspRule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding>
-            <element signature="e#469#470#0" expanded="true" />
-            <element signature="e#496#497#0" expanded="true" />
-            <element signature="e#548#549#0" expanded="true" />
-            <element signature="e#580#581#0" expanded="true" />
-            <element signature="e#650#651#0" expanded="true" />
-            <element signature="e#702#703#0" expanded="true" />
-            <element signature="e#734#735#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/StanfordParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="915">
@@ -869,16 +876,6 @@
             <element signature="imports" expanded="true" />
             <element signature="e#749#750#0" expanded="true" />
             <element signature="e#796#797#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-180">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -916,10 +913,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/ASP/AspRule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+          <folding>
+            <element signature="e#667#668#0" expanded="true" />
+            <element signature="e#694#695#0" expanded="true" />
+            <element signature="e#807#808#0" expanded="true" />
+            <element signature="e#832#833#0" expanded="true" />
+            <element signature="e#869#870#0" expanded="true" />
+            <element signature="e#897#898#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="36" column="54" lean-forward="true" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/at/tuwien/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="66" column="67" lean-forward="true" selection-start-line="66" selection-start-column="67" selection-end-line="66" selection-end-column="67" />
+        <state relative-caret-position="321">
+          <caret line="86" column="58" lean-forward="true" selection-start-line="86" selection-start-column="58" selection-end-line="86" selection-end-column="58" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -928,13 +950,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="406" column="8" lean-forward="true" selection-start-line="406" selection-start-column="8" selection-end-line="406" selection-end-column="8" />
+        <state relative-caret-position="1971">
+          <caret line="173" column="29" lean-forward="false" selection-start-line="173" selection-start-column="29" selection-end-line="173" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#382#383#0" expanded="true" />
             <element signature="e#430#431#0" expanded="true" />
-            <element signature="method#ifThen#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#cNounVariableIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#pNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#thePNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />

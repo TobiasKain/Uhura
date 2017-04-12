@@ -19,19 +19,25 @@ public class DLVProgramGenerator {
 
             if(!rule.getHead().isEmpty())
             {
-                for (Literal literal:rule.getHead()) {
-                    ruleString += generateDlvLiteral(literal) + ",";
+                if(rule.isOr()) {
+                    for (Literal literal : rule.getHead()) {
+                        ruleString += generateDlvLiteral(literal) + " v ";
+                    }
+                    ruleString = ruleString.substring(0, ruleString.lastIndexOf(" v "));  // remove last 'v'
                 }
-                ruleString = ruleString.substring(0,ruleString.lastIndexOf(','));  // remove last ','
+                else {
+                    // TODO throw exception if head > 1
+                    ruleString = generateDlvLiteral(rule.getHead().get(0));
+                }
             }
 
             if(!rule.getBody().isEmpty())
             {
-                ruleString += ":-";
+                ruleString += " :- ";
                 for (Literal literal:rule.getBody()) {
-                    ruleString += generateDlvLiteral(literal) + ",";
+                    ruleString += generateDlvLiteral(literal) + ", ";
                 }
-                ruleString = ruleString.substring(0,ruleString.lastIndexOf(','));  // remove last ','
+                ruleString = ruleString.substring(0,ruleString.lastIndexOf(", "));  // remove last ','
             }
 
             ruleString += ".";

@@ -63,6 +63,7 @@ public class Main {
 
         inputStrings.add("Exclude that there is a person X and that person X holds more than two jobs Y.");
         inputStrings.add("Exclude that there is a person X and that person X holds less than two jobs Y.");
+        inputStrings.add("Chef is a job or officer is a job or roberta is lovely.");
 
         StanfordParser.getInstance().printTaggedList(inputStrings);
 
@@ -82,6 +83,8 @@ public class Main {
     private static void printModels(List<String> models)
     {
         int count = 1;
+
+        System.out.println("\n\n----------- Models -----------");
 
         for (String model: models) {
             System.out.print(String.format("Model %d: %n%s",count,model));

@@ -52,6 +52,9 @@ public class CnlToAspTranslator {
         else if (sentence.matches("exclude that .*\\.$")){
             aspRule = excludeThat(taggedWords);
         }
+        else if(sentence.matches(".* or .*\\.$")){
+            aspRule = or(taggedWords);
+        }
         else if(sentence.matches("the .* is .*\\.$")) {
             aspRule = thePNounIsAdjective(taggedWords);
         }
@@ -74,6 +77,9 @@ public class CnlToAspTranslator {
         else if(sentence.matches(".* [a-z] .* a .* as .*\\.$")){
             aspRule = aCNounVariableVerbACNounAsPNoun(taggedWords);
         }
+        else if(sentence.matches(".* [a-z] .* [a-z]\\.$")){
+            aspRule = cNounVariableVerbCNounVariable(taggedWords);
+        }
         else if(sentence.matches(".* a .* as .*\\.$")){
             aspRule = aPNounVerbACNounAsPNoun(taggedWords);
         }
@@ -83,7 +89,6 @@ public class CnlToAspTranslator {
 
         return aspRule;
     }
-
 
 
     private AspRule excludeThat(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
@@ -148,7 +153,29 @@ public class CnlToAspTranslator {
         return aspRule;
     }
 
+    private AspRule or(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
+        AspRule aspRule = new AspRule();
+        aspRule.setOr(true);
+
+        while (!taggedWords.get(0).value().equals(".")){
+            String sentence = "";
+
+            if(taggedWords.get(0).value().equals("or"))
+            {
+                removeFirstWord(taggedWords);
+            }
+
+            while (!taggedWords.get(0).value().equals(".") && !taggedWords.get(0).value().equals("or")){
+                sentence += taggedWords.get(0).value() + " ";
+                taggedWords.remove(0);
+            }
+            sentence = sentence.trim() + ".";
+            aspRule.getHead().addAll(translateSentence(sentence).getHead());
+        }
+
+        return aspRule;
+    }
 
     private AspRule aCNounVariableIsACNounOfACNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
         removeFirstWord(taggedWords);
@@ -404,7 +431,7 @@ public class CnlToAspTranslator {
         String verb = getVerb(taggedWords);
 
         boolean more = false;
-        
+
         try {
             removeWord(taggedWords, "more");
             more = true;
@@ -429,6 +456,46 @@ public class CnlToAspTranslator {
 
         AspRule aspRule = new AspRule();
         aspRule.getHead().add(literal);
+
+        return aspRule;
+    }
+
+    private AspRule cNounVariableVerbCNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        if(taggedWords.get(0).value().equals("a")) {
+            removeFirstWord(taggedWords);
+        }
+
+        String cNoun1 = getCNoun(taggedWords);
+
+        String variable1 = getVariable(taggedWords);
+
+        String verb = getVerb(taggedWords);
+
+        if(taggedWords.get(0).value().equals("a")) {
+            removeFirstWord(taggedWords);
+        }
+
+        String cNoun2 = getCNoun(taggedWords);
+
+        String variable2 = getVariable(taggedWords);
+
+        removeWord(taggedWords,".");
+
+        Literal literal1 = new Literal(verb);
+        literal1.getTerms().add(variable1);
+        literal1.getTerms().add(variable2);
+
+        Literal literal2 = new Literal(cNoun1);
+        literal2.getTerms().add(variable1);
+
+        Literal literal3 = new Literal(cNoun2);
+        literal3.getTerms().add(variable2);
+
+        AspRule aspRule = new AspRule();
+        aspRule.getHead().add(literal1);
+        aspRule.getHead().add(literal2);
+        aspRule.getHead().add(literal3);
 
         return aspRule;
     }
