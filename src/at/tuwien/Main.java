@@ -62,6 +62,7 @@ public class Main {
         inputStrings.add("Exclude that a person X holds a job as chef and that person X holds a job as police officer."); // B.9.2
 
         inputStrings.add("Exclude that there is a person X and that person X holds more than two jobs Y.");
+        inputStrings.add("Exclude that there is a person X and that person X holds less than two jobs Y.");
 
         StanfordParser.getInstance().printTaggedList(inputStrings);
 

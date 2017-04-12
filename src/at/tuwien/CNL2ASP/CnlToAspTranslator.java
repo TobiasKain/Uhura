@@ -77,14 +77,14 @@ public class CnlToAspTranslator {
         else if(sentence.matches(".* a .* as .*\\.$")){
             aspRule = aPNounVerbACNounAsPNoun(taggedWords);
         }
-        else if (sentence.matches(".* more than .*\\.$")){
+        else if (sentence.matches(".* (more|less) than .*\\.$")){
             aspRule = cNounVariableVerbMoreThanNumberCNounVariable(taggedWords);
         }
 
-
-
         return aspRule;
     }
+
+
 
     private AspRule excludeThat(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
@@ -403,7 +403,15 @@ public class CnlToAspTranslator {
 
         String verb = getVerb(taggedWords);
 
-        removeWord(taggedWords, "more");
+        boolean more = false;
+        
+        try {
+            removeWord(taggedWords, "more");
+            more = true;
+        }catch (SentenceValidationException e){
+            removeWord(taggedWords, "less");
+        }
+
         removeWord(taggedWords, "than");
 
         String number = getNumber(taggedWords);
@@ -412,14 +420,18 @@ public class CnlToAspTranslator {
         String variable2 = getVariable(taggedWords);
         removeWord(taggedWords,".");
 
-        Literal literal = new Literal(String.format("#count{%s : %s(%s,%s)} > %s",variable2, verb, variable1, variable2, number));
+        Literal literal;
+        if(more) {
+            literal = new Literal(String.format("#count{%s : %s(%s,%s)} > %s", variable2, verb, variable1, variable2, number));
+        } else {
+            literal = new Literal(String.format("#count{%s : %s(%s,%s)} < %s", variable2, verb, variable1, variable2, number));
+        }
 
         AspRule aspRule = new AspRule();
         aspRule.getHead().add(literal);
 
         return aspRule;
     }
-
 
 
 
