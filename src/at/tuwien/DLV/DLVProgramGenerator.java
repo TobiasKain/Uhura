@@ -21,6 +21,9 @@ public class DLVProgramGenerator {
             {
                 if(rule.isOr()) {
                     for (Literal literal : rule.getHead()) {
+                        if(literal.isNegated()){
+                            ruleString += " - ";
+                        }
                         ruleString += generateDlvLiteral(literal) + " v ";
                     }
                     ruleString = ruleString.substring(0, ruleString.lastIndexOf(" v "));  // remove last 'v'
@@ -35,6 +38,9 @@ public class DLVProgramGenerator {
             {
                 ruleString += " :- ";
                 for (Literal literal:rule.getBody()) {
+                    if(literal.isNegated()){
+                        ruleString += " not ";
+                    }
                     ruleString += generateDlvLiteral(literal) + ", ";
                 }
                 ruleString = ruleString.substring(0,ruleString.lastIndexOf(", "));  // remove last ','

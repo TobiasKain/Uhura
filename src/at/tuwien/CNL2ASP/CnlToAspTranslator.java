@@ -33,11 +33,16 @@ public class CnlToAspTranslator {
         return aspRules;
     }
 
+
     private AspRule translateSentence(String sentence) throws SentenceValidationException {
+        return translateSentence(sentence,null);
+    }
+
+    private AspRule translateSentence(String sentence, ArrayList<TaggedWord> parentSentence) throws SentenceValidationException {
 
         AspRule aspRule = null;
 
-        sentence = addWhitespanceBeforDot(sentence);
+        sentence = addWhitespacesBeforeDot(sentence);
         ArrayList<TaggedWord> taggedWords = StanfordParser.getInstance().parse(sentence).taggedYield();
 
         sentence = sentence.toLowerCase();
@@ -54,6 +59,9 @@ public class CnlToAspTranslator {
         }
         else if(sentence.matches(".* or .*\\.$")){
             aspRule = or(taggedWords);
+        }
+        else if (sentence.matches(".* (more|less) than .*\\.$")){
+            aspRule = cNounVariableVerbMoreLessThanNumberCNounVariable(taggedWords, parentSentence);
         }
         else if(sentence.matches("the .* is .*\\.$")) {
             aspRule = thePNounIsAdjective(taggedWords);
@@ -77,14 +85,11 @@ public class CnlToAspTranslator {
         else if(sentence.matches(".* [a-z] .* a .* as .*\\.$")){
             aspRule = aCNounVariableVerbACNounAsPNoun(taggedWords);
         }
-        else if(sentence.matches(".* [a-z] .* [a-z]\\.$")){
+        else if(sentence.matches(".* [a-z] .* [a-z] \\.$")){
             aspRule = cNounVariableVerbCNounVariable(taggedWords);
         }
         else if(sentence.matches(".* a .* as .*\\.$")){
             aspRule = aPNounVerbACNounAsPNoun(taggedWords);
-        }
-        else if (sentence.matches(".* (more|less) than .*\\.$")){
-            aspRule = cNounVariableVerbMoreThanNumberCNounVariable(taggedWords);
         }
 
         return aspRule;
@@ -92,6 +97,9 @@ public class CnlToAspTranslator {
 
 
     private AspRule excludeThat(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        ArrayList<TaggedWord> parentTaggedWords = new ArrayList<>();
+        parentTaggedWords.addAll(taggedWords);
 
         AspRule aspRule = new AspRule();
 
@@ -112,13 +120,16 @@ public class CnlToAspTranslator {
                 taggedWords.remove(0);
             }
             sentence = sentence.trim() + ".";
-            aspRule.getBody().addAll(translateSentence(sentence).getHead());
+            aspRule.getBody().addAll(translateSentence(sentence, parentTaggedWords).getHead());
         }
 
         return aspRule;
     }
 
     private AspRule ifThen(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        ArrayList<TaggedWord> parentTaggedWords = new ArrayList<>();
+        parentTaggedWords.addAll(taggedWords);
 
         AspRule aspRule = new AspRule();
 
@@ -136,7 +147,7 @@ public class CnlToAspTranslator {
                 taggedWords.remove(0);
             }
             sentence = sentence.trim() + ".";
-            aspRule.getBody().addAll(translateSentence(sentence).getHead());
+            aspRule.getBody().addAll(translateSentence(sentence, parentTaggedWords).getHead());
         }
 
         taggedWords.remove(0);
@@ -148,12 +159,18 @@ public class CnlToAspTranslator {
             taggedWords.remove(0);
         }
         sentence = sentence.trim() + ".";
-        aspRule.getHead().add(translateSentence(sentence).getHead().get(0));
+
+        AspRule headRule = translateSentence(sentence, parentTaggedWords);
+        aspRule.getHead().addAll(headRule.getHead());
+        aspRule.setOr(headRule.isOr());
 
         return aspRule;
     }
 
     private AspRule or(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        ArrayList<TaggedWord> parentTaggedWords = new ArrayList<>();
+        parentTaggedWords.addAll(taggedWords);
 
         AspRule aspRule = new AspRule();
         aspRule.setOr(true);
@@ -171,7 +188,9 @@ public class CnlToAspTranslator {
                 taggedWords.remove(0);
             }
             sentence = sentence.trim() + ".";
-            aspRule.getHead().addAll(translateSentence(sentence).getHead());
+
+            // TODO check if head is null
+            aspRule.getHead().add(translateSentence(sentence, parentTaggedWords).getHead().get(0));
         }
 
         return aspRule;
@@ -180,26 +199,26 @@ public class CnlToAspTranslator {
     private AspRule aCNounVariableIsACNounOfACNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
         removeFirstWord(taggedWords);
         String cNoun1 = getCNoun(taggedWords);
-        String varialbe1 = getVariable(taggedWords);
+        String variable1 = getVariable(taggedWords);
         removeWord(taggedWords,"is");
         removeWord(taggedWords,"a");
         String cNoun2 = getCNoun(taggedWords);
         removeWord(taggedWords,"of");
         removeWord(taggedWords,"a");
         String cNoun3 = getCNoun(taggedWords);
-        String varialbe2 = getVariable(taggedWords);
+        String variable2 = getVariable(taggedWords);
 
         removeWord(taggedWords,".");
 
         Literal literal1 = new Literal(cNoun2);
-        literal1.getTerms().add(varialbe1);
-        literal1.getTerms().add(varialbe2);
+        literal1.getTerms().add(variable1);
+        literal1.getTerms().add(variable2);
 
         Literal literal2 = new Literal(cNoun1);
-        literal2.getTerms().add(varialbe1);
+        literal2.getTerms().add(variable1);
 
         Literal literal3 = new Literal(cNoun3);
-        literal3.getTerms().add(varialbe2);
+        literal3.getTerms().add(variable2);
 
         AspRule aspRule = new AspRule();
 
@@ -423,7 +442,7 @@ public class CnlToAspTranslator {
         return aspRule;
     }
 
-    private AspRule cNounVariableVerbMoreThanNumberCNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+    private AspRule cNounVariableVerbMoreLessThanNumberCNounVariable(ArrayList<TaggedWord> taggedWords, ArrayList<TaggedWord> parentSentence) throws SentenceValidationException {
 
         String cNoun1 = getCNoun(taggedWords);
         String variable1 = getVariable(taggedWords);
@@ -447,12 +466,23 @@ public class CnlToAspTranslator {
         String variable2 = getVariable(taggedWords);
         removeWord(taggedWords,".");
 
+        String countVariable;
+        if(getVariableCount(parentSentence,variable2) > getVariableCount(parentSentence,variable1))
+        {
+            countVariable = variable1;
+        }
+        else {
+            countVariable = variable2;
+        }
+
         Literal literal;
         if(more) {
-            literal = new Literal(String.format("#count{%s : %s(%s,%s)} > %s", variable2, verb, variable1, variable2, number));
+            literal = new Literal(String.format("#count{%s : %s(%s,%s)} > %s", countVariable, verb, variable1, variable2, number));
         } else {
-            literal = new Literal(String.format("#count{%s : %s(%s,%s)} < %s", variable2, verb, variable1, variable2, number));
+            literal = new Literal(String.format("#count{%s : %s(%s,%s)} < %s", countVariable, verb, variable1, variable2, number));
         }
+
+
 
         AspRule aspRule = new AspRule();
         aspRule.getHead().add(literal);
@@ -470,6 +500,8 @@ public class CnlToAspTranslator {
 
         String variable1 = getVariable(taggedWords);
 
+        boolean negated = isNegation(taggedWords);
+
         String verb = getVerb(taggedWords);
 
         if(taggedWords.get(0).value().equals("a")) {
@@ -485,6 +517,7 @@ public class CnlToAspTranslator {
         Literal literal1 = new Literal(verb);
         literal1.getTerms().add(variable1);
         literal1.getTerms().add(variable2);
+        literal1.setNegated(negated);
 
         Literal literal2 = new Literal(cNoun1);
         literal2.getTerms().add(variable1);
@@ -674,13 +707,52 @@ public class CnlToAspTranslator {
         return number;
     }
 
+    private boolean isNegation(ArrayList<TaggedWord> taggedWords) {
+        if(taggedWords.get(0).value().equals("not")){
+            removeFirstWord(taggedWords);
+            return true;
+        }
+        if(taggedWords.get(0).value().matches("(does|do|is|can)") &&
+                taggedWords.get(1).value().equals("not")){
+            removeFirstWord(taggedWords);
+            removeFirstWord(taggedWords);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private String getSentence(ArrayList<TaggedWord> taggedWords) {
+        String sentence = "";
+
+        for (TaggedWord tw: taggedWords) {
+            sentence += tw.value() + " ";
+        }
+
+        return sentence.trim();
+    }
+
+    private int getVariableCount(ArrayList<TaggedWord> taggedWords, String variable){
+        int count = 0;
+
+        for (TaggedWord tw: taggedWords) {
+            if(tw.value().equals(variable))
+            {
+                count ++;
+            }
+        }
+
+        return count;
+    }
+
     /* Workaround for the following problem:
      * if a Variable is followed by a dot then
      * the parser tags the variable and the dot
      * together as NNP.
      * e.g "X." --> X./NNP
      */
-    private String addWhitespanceBeforDot(String sentence) {
+    private String addWhitespacesBeforeDot(String sentence) {
         if(sentence.matches(".*\\.$"))
         {
             sentence = sentence.substring(0,sentence.lastIndexOf('.'));
@@ -689,4 +761,5 @@ public class CnlToAspTranslator {
 
         return sentence;
     }
+
 }

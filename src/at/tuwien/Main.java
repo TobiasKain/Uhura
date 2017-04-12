@@ -34,6 +34,13 @@ public class Main {
 
         inputStrings.add("Exclude that person X is male and that person X is female."); // B.1.3
 
+        inputStrings.add("If there is a person X and there is a job Y then person X holds job Y or person X does not hold job Y."); // B.2.1
+        inputStrings.add("Exclude that there is a job Y and that person X holds more than one job Y."); // B.2.2
+        inputStrings.add("Exclude that there is a job Y and that person X holds less than one job Y."); // B.2.3
+
+        inputStrings.add("Exclude that there is a person X and that person X holds more than two jobs Y."); // B.3.1
+        inputStrings.add("Exclude that there is a person X and that person X holds less than two jobs Y."); // B.3.2
+
         inputStrings.add("Chef is a job."); // B.4.0
         inputStrings.add("Guard is a job."); // B.4.0
         inputStrings.add("Nurse is a job."); // B.4.0
@@ -61,9 +68,6 @@ public class Main {
         inputStrings.add("Exclude that Roberta holds a job as police officer."); // B.9.1b
         inputStrings.add("Exclude that a person X holds a job as chef and that person X holds a job as police officer."); // B.9.2
 
-        inputStrings.add("Exclude that there is a person X and that person X holds more than two jobs Y.");
-        inputStrings.add("Exclude that there is a person X and that person X holds less than two jobs Y.");
-        inputStrings.add("Chef is a job or officer is a job or roberta is lovely.");
 
         StanfordParser.getInstance().printTaggedList(inputStrings);
 
@@ -87,7 +91,8 @@ public class Main {
         System.out.println("\n\n----------- Models -----------");
 
         for (String model: models) {
-            System.out.print(String.format("Model %d: %n%s",count,model));
+            System.out.print(String.format("\nModel %d: %n%s",count,model));
+            count++;
         }
     }
 }

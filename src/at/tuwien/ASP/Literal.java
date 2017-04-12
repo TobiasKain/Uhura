@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class Literal {
     private String predicateName;
     private ArrayList<String> terms;
+    private boolean negated;
 
     public Literal(String predicateName) {
         this.predicateName = predicateName;
         terms = new ArrayList<>();
+        negated = false;
     }
 
     public Literal(String predicateName, ArrayList<String> terms) {
@@ -33,5 +35,13 @@ public class Literal {
 
     public void setTerms(ArrayList<String> terms) {
         this.terms = terms;
+    }
+
+    public boolean isNegated() {
+        return negated;
+    }
+
+    public void setNegated(boolean negated) {
+        this.negated = negated;
     }
 }
