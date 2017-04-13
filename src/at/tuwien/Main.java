@@ -3,7 +3,6 @@ package at.tuwien;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 import at.tuwien.ASP.AspRule;
 import at.tuwien.CNL2ASP.CnlToAspTranslator;
@@ -11,13 +10,28 @@ import at.tuwien.CNL2ASP.SentenceValidationException;
 import at.tuwien.CNL2ASP.StanfordParser;
 import at.tuwien.DLV.DLVProgramExecutor;
 import at.tuwien.DLV.DLVProgramGenerator;
-import edu.stanford.nlp.process.Morphology;
 import it.unical.mat.dlv.program.Program;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 
-public class Main {
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/main_gui.fxml"));
+        primaryStage.setTitle("CNL2ASP-Translator");
+        primaryStage.setScene(new Scene(root, 1000, 800));
+        primaryStage.show();
+    }
+
 
     public static void main(String[] args) throws SentenceValidationException {
+
+        launch(args);
 
         List<String> inputStrings = new ArrayList<>();
 
