@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class DLVProgramExecutor {
 
-    public List<String> executeProgram(Program program){
+    public List<String> executeProgram(Program program, String pfilter){
 
         DLVInvocation invocation= DLVWrapper.getInstance(). createInvocation("/Users/tobiaskain/dlv.i386-apple-darwin.bin");
 
@@ -20,8 +20,8 @@ public class DLVProgramExecutor {
 
         inputProgram.includeProgram(program);
 
-        final List<ModelResult> models= new ArrayList();
-        ModelHandler modelHandler=new ModelHandler(){
+        final List<ModelResult> models = new ArrayList();
+        ModelHandler modelHandler = new ModelHandler(){
             final public void handleResult(DLVInvocation obsd, ModelResult res) {
                 models.add(res);
             }
@@ -30,6 +30,10 @@ public class DLVProgramExecutor {
         try {
             invocation.subscribe(modelHandler);
             invocation.setInputProgram(inputProgram);
+
+            List filters=new ArrayList();
+            filters.add(pfilter);
+            invocation.setFilter(filters, true);
 
             invocation.run();
 

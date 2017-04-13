@@ -5,6 +5,7 @@ import at.tuwien.CNL2ASP.CnlToAspTranslator;
 import at.tuwien.DLV.DLVProgramExecutor;
 import at.tuwien.DLV.DLVProgramGenerator;
 import it.unical.mat.dlv.program.Program;
+import it.unical.mat.dlv.program.Rule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +25,18 @@ public class MainGuiService {
         Program program = dlvProgramGenerator.generateDlvProgram(aspRules);
 
         return dlvProgramGenerator.getCode(program);
+    }
+
+    public List<String> solve(String aspRules, String filter)
+    {
+        DLVProgramGenerator dlvProgramGenerator = new DLVProgramGenerator();
+
+        Program program = dlvProgramGenerator.generateDlvProgram(aspRules);
+
+        DLVProgramExecutor dlvProgramExecutor = new DLVProgramExecutor();
+        List<String> models = dlvProgramExecutor.executeProgram(program,filter);
+
+        return models;
     }
 
     private List<String> splitSentences(String cnlSentences)

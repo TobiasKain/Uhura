@@ -92,7 +92,7 @@ public class Main extends Application {
         Program program = dlvProgramGenerator.generateDlvProgram(aspRules);
 
         DLVProgramExecutor dlvProgramExecutor = new DLVProgramExecutor();
-        List<String> models = dlvProgramExecutor.executeProgram(program);
+        List<String> models = dlvProgramExecutor.executeProgram(program,"");
 
         printModels(models);
 

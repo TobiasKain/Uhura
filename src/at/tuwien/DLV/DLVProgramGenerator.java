@@ -5,6 +5,7 @@ import at.tuwien.ASP.Literal;
 import it.unical.mat.dlv.program.Program;
 import it.unical.mat.dlv.program.Rule;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class DLVProgramGenerator {
@@ -56,6 +57,20 @@ public class DLVProgramGenerator {
             System.out.println(ruleString);
 
             program.add(new Rule(ruleString));
+        }
+
+        return program;
+    }
+
+    public Program generateDlvProgram(String rules) {
+        Program program = new Program();
+
+        rules = rules.replaceAll("\n", "");
+
+        List<String> ruleList = Arrays.asList(rules.split("\\."));
+
+        for (String rule: ruleList) {
+            program.add(new Rule(rule + "."));
         }
 
         return program;

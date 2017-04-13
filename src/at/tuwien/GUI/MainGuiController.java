@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainGuiController implements Initializable{
@@ -35,6 +36,16 @@ public class MainGuiController implements Initializable{
     }
 
     public void btnSolveClicked(ActionEvent actionEvent) {
+        taModels.setText("");
+
+        List<String> models = mainGuiService.solve(taASP.getText(),tfFilter.getText());
+
+        for (String model: models) {
+            model = model.replaceAll("\\.\n", ", ");
+            model = model.substring(0,model.lastIndexOf(", "));
+
+            taModels.setText(taModels.getText() + String.format("{%s}%n",model));
+        }
     }
 
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
