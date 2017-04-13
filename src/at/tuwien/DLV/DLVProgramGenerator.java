@@ -15,6 +15,11 @@ public class DLVProgramGenerator {
 
         for (AspRule rule:rules)
         {
+            if(rule == null)
+            {
+                continue;
+            }
+
             String ruleString = "";
 
             if(!rule.getHead().isEmpty())
@@ -73,5 +78,16 @@ public class DLVProgramGenerator {
         }
 
         return literalString;
+    }
+
+    public String getCode(Program program) {
+
+        String code = "";
+
+        for (Rule rule: program.getRules()) {
+            code += rule + "\n";
+        }
+
+        return code;
     }
 }

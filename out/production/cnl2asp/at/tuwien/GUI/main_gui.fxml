@@ -23,7 +23,7 @@
             </Label>
          </top>
          <center>
-            <TextArea fx:id="taCNL" onKeyPressed="#tfCnlOnKeyPressed" prefHeight="200.0" prefWidth="200.0" promptText="insert problem description ..." BorderPane.alignment="CENTER">
+            <TextArea fx:id="taCNL" onKeyReleased="#tfCnlOnKeyPressed" prefHeight="200.0" prefWidth="200.0" promptText="insert problem description ..." BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </BorderPane.margin>

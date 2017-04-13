@@ -30,7 +30,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws SentenceValidationException {
-
         launch(args);
 
         List<String> inputStrings = new ArrayList<>();
@@ -96,6 +95,8 @@ public class Main extends Application {
         List<String> models = dlvProgramExecutor.executeProgram(program);
 
         printModels(models);
+
+
     }
 
     private static void printModels(List<String> models)
