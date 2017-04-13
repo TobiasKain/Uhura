@@ -18,19 +18,25 @@ public class CnlToAspTranslator {
         this.inputStrings = inputStrings;
     }
 
-    public List<AspRule> translate()
+    public Translation translate()
     {
+        Translation translation = new Translation();
+
         List<AspRule> aspRules = new ArrayList<>();
+        translation.setAspRules(aspRules);
+
+        List<String> errors = new ArrayList<>();
+        translation.setErrors(errors);
 
         for (String sentence: inputStrings) {
             try {
                 aspRules.add(translateSentence(sentence));
             } catch (SentenceValidationException e) {
-                e.printStackTrace();
+                errors.add(String.format("Error in sentence \"%s\": %s",sentence, e.getMessage()));
             }
         }
 
-        return aspRules;
+        return translation;
     }
 
 
@@ -90,6 +96,10 @@ public class CnlToAspTranslator {
         }
         else if(sentence.matches(".* a .* as .*\\.$")){
             aspRule = aPNounVerbACNounAsPNoun(taggedWords);
+        }
+
+        if(aspRule == null){
+            throw new SentenceValidationException("Sentence doesn't match any pattern.");
         }
 
         return aspRule;
@@ -562,7 +572,7 @@ public class CnlToAspTranslator {
 
         if(cNoun.equals(""))
         {
-            throw new SentenceValidationException();
+            throw new SentenceValidationException(String.format("\"%s\" is not a common noun.", taggedWords.get(0).value()));
         }
 
         return cNoun;
@@ -586,7 +596,7 @@ public class CnlToAspTranslator {
             removeFirstWord(taggedWords);
         }
         if(verb == ""){
-            throw new SentenceValidationException();
+            throw new SentenceValidationException(String.format("\"%s\" is not a verb.", taggedWords.get(0).value()));
         }
 
         return verb;
@@ -599,7 +609,7 @@ public class CnlToAspTranslator {
             taggedWords.remove(0);
         }
         else {
-            throw new SentenceValidationException();
+            throw new SentenceValidationException(String.format("Expected \"%s\" instead of \"%s\".",word,taggedWords.get(0).value()));
         }
     }
 
@@ -614,7 +624,7 @@ public class CnlToAspTranslator {
 
         if(pNoun.equals(""))
         {
-            throw new SentenceValidationException();
+            throw new SentenceValidationException(String.format("\"%s\" is not a proper noun.", taggedWords.get(0).value()));
         }
 
         return pNoun;
@@ -632,7 +642,7 @@ public class CnlToAspTranslator {
 
         if(adjective.equals(""))
         {
-            throw new SentenceValidationException();
+            throw new SentenceValidationException(String.format("\"%s\" is not a adjective.", taggedWords.get(0).value()));
         }
 
         return adjective;
@@ -648,7 +658,7 @@ public class CnlToAspTranslator {
              return variable;
         }
 
-        throw new SentenceValidationException();
+        throw new SentenceValidationException(String.format("\"%s\" is not a variable.", taggedWords.get(0).value()));
     }
 
     private String getNumber(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
@@ -699,7 +709,7 @@ public class CnlToAspTranslator {
         }
 
         if(number.equals("")){
-            throw new SentenceValidationException();
+            throw new SentenceValidationException(String.format("\"%s\" is not a number.", taggedWords.get(0).value()));
         }
 
         removeFirstWord(taggedWords);

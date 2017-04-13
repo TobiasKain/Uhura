@@ -1,7 +1,7 @@
 package at.tuwien.Service;
 
 import at.tuwien.ASP.AspRule;
-import at.tuwien.CNL2ASP.CnlToAspTranslator;
+import at.tuwien.CNL2ASP.*;
 import at.tuwien.DLV.DLVProgramExecutor;
 import at.tuwien.DLV.DLVProgramGenerator;
 import it.unical.mat.dlv.program.Program;
@@ -16,15 +16,18 @@ import java.util.List;
  */
 public class MainGuiService {
 
-    public String translate(String cnlSentences) {
+    public Translation translate(String cnlSentences) {
+
         CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(splitSentences(cnlSentences));
 
-        List<AspRule> aspRules = cnlToAspTranslator.translate();
+        Translation translation = cnlToAspTranslator.translate();
 
         DLVProgramGenerator dlvProgramGenerator = new DLVProgramGenerator();
-        Program program = dlvProgramGenerator.generateDlvProgram(aspRules);
+        Program program = dlvProgramGenerator.generateDlvProgram(translation.getAspRules());
 
-        return dlvProgramGenerator.getCode(program);
+        translation.setAspCode(dlvProgramGenerator.getCode(program));
+
+        return translation;
     }
 
     public List<String> solve(String aspRules, String filter)

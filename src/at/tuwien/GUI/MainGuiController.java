@@ -1,5 +1,7 @@
 package at.tuwien.GUI;
 
+import at.tuwien.ASP.AspRule;
+import at.tuwien.CNL2ASP.Translation;
 import at.tuwien.Service.MainGuiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,6 +42,11 @@ public class MainGuiController implements Initializable{
 
         List<String> models = mainGuiService.solve(taASP.getText(),tfFilter.getText());
 
+        if(models.size() == 0)
+        {
+            taModels.setText("No models exist.");
+        }
+
         for (String model: models) {
             model = model.replaceAll("\\.\n", ", ");
             model = model.substring(0,model.lastIndexOf(", "));
@@ -52,7 +59,15 @@ public class MainGuiController implements Initializable{
         if (keyEvent.getText().equals(".") ||
                 taCNL.getCaretPosition() < taCNL.getText().lastIndexOf('.'))
         {
-            taASP.setText(mainGuiService.translate(taCNL.getText()));
+            taASP.setText("");
+            taError.setText("");
+
+            Translation translation = mainGuiService.translate(taCNL.getText());
+            taASP.setText(translation.getAspCode());
+
+            for (String error : translation.getErrors()) {
+                taError.setText(taError.getText() + error + "\n");
+            }
         }
     }
 }

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java" line="598" mnemonic="7" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="61c1f416-a71a-4868-97c8-6eccb878925c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java" afterPath="$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java" afterPath="$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/Translation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java" afterPath="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/SentenceValidationException.java" afterPath="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/SentenceValidationException.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/at/tuwien/GUI/MainGuiController.java" afterPath="$PROJECT_DIR$/src/at/tuwien/GUI/MainGuiController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/at/tuwien/Main.java" afterPath="$PROJECT_DIR$/src/at/tuwien/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/at/tuwien/Service/MainGuiService.java" afterPath="$PROJECT_DIR$/src/at/tuwien/Service/MainGuiService.java" />
@@ -39,8 +44,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="94" column="73" lean-forward="false" selection-start-line="94" selection-start-column="73" selection-end-line="94" selection-end-column="73" />
+            <state relative-caret-position="703">
+              <caret line="87" column="85" lean-forward="true" selection-start-line="87" selection-start-column="85" selection-end-line="87" selection-end-column="85" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -48,36 +53,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainGuiController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainGuiController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/GUI/MainGuiController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="40" column="85" lean-forward="false" selection-start-line="40" selection-start-column="85" selection-end-line="40" selection-end-column="85" />
+            <state relative-caret-position="346">
+              <caret line="63" column="0" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#801#802#0" expanded="true" />
-                <element signature="e#854#855#0" expanded="true" />
+                <element signature="e#869#870#0" expanded="true" />
+                <element signature="e#922#923#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FXMLLoader.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/javafx-src.zip!/javafx/fxml/FXMLLoader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="1773" column="0" lean-forward="false" selection-start-line="1773" selection-start-column="0" selection-end-line="1773" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TextInputControl.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/TextInputControl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="347" column="35" lean-forward="false" selection-start-line="347" selection-start-column="35" selection-end-line="347" selection-end-column="35" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -85,18 +70,39 @@
       <file leaf-file-name="CnlToAspTranslator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="31">
-              <caret line="372" column="0" lean-forward="true" selection-start-line="372" selection-start-column="0" selection-end-line="372" selection-end-column="0" />
+            <state relative-caret-position="303">
+              <caret line="574" column="92" lean-forward="false" selection-start-line="574" selection-start-column="92" selection-end-line="574" selection-end-column="92" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#pNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#thePNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
-                <element signature="method#isVariable#0;class#CnlToAspTranslator#0" expanded="false" />
-                <element signature="method#getVerb#0;class#CnlToAspTranslator#0" expanded="false" />
-                <element signature="method#getVariable#0;class#CnlToAspTranslator#0" expanded="false" />
-                <element signature="method#getNumber#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#isNegation#0;class#CnlToAspTranslator#0" expanded="false" />
+                <element signature="method#getSentence#0;class#CnlToAspTranslator#0" expanded="false" />
+                <element signature="method#getVariableCount#0;class#CnlToAspTranslator#0" expanded="false" />
                 <element signature="method#addWhitespacesBeforeDot#0;class#CnlToAspTranslator#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Translation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/Translation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="32" lean-forward="false" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#318#319#0" expanded="true" />
+                <element signature="e#364#365#0" expanded="true" />
+                <element signature="e#402#403#0" expanded="true" />
+                <element signature="e#444#445#0" expanded="true" />
+                <element signature="e#475#476#0" expanded="true" />
+                <element signature="e#530#531#0" expanded="true" />
+                <element signature="e#570#571#0" expanded="true" />
+                <element signature="e#609#610#0" expanded="true" />
+                <element signature="e#638#639#0" expanded="true" />
+                <element signature="e#688#689#0" expanded="true" />
+                <element signature="e#724#725#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -105,8 +111,8 @@
       <file leaf-file-name="MainGuiService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/Service/MainGuiService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="39" column="5" lean-forward="true" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+            <state relative-caret-position="298">
+              <caret line="33" column="5" lean-forward="false" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -114,24 +120,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DLVProgramGenerator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="73" column="9" lean-forward="true" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DLVProgramExecutor.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DLVProgramExecutor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="241">
               <caret line="37" column="29" lean-forward="false" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SentenceValidationException.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/SentenceValidationException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="60" lean-forward="false" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
+              <folding>
+                <element signature="e#193#194#0" expanded="true" />
+                <element signature="e#223#224#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -198,19 +205,21 @@
         <option value="$PROJECT_DIR$/src/at/tuwien/AspRule.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/StanfordParser.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/CnlToAspTranslator.java" />
-        <option value="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/SentenceValidationException.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/StanfordParser.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/ASP/AspRule.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/ASP/Literal.java" />
-        <option value="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/sample.fxml" />
         <option value="$PROJECT_DIR$/src/at/tuwien/Controller.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/GUI/main_gui.fxml" />
         <option value="$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramGenerator.java" />
-        <option value="$PROJECT_DIR$/src/at/tuwien/Main.java" />
-        <option value="$PROJECT_DIR$/src/at/tuwien/Service/MainGuiService.java" />
-        <option value="$PROJECT_DIR$/src/at/tuwien/GUI/MainGuiController.java" />
         <option value="$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/SentenceValidationException.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/Service/Translation.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/CNL2ASP/Translation.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/Service/MainGuiService.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/Main.java" />
+        <option value="$PROJECT_DIR$/src/at/tuwien/GUI/MainGuiController.java" />
       </list>
     </option>
   </component>
@@ -833,12 +842,12 @@
       <updated>1490362946771</updated>
       <workItem from="1490362950583" duration="81230000" />
       <workItem from="1492010771978" duration="104000" />
-      <workItem from="1492010956734" duration="12278000" />
+      <workItem from="1492010956734" duration="14466000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93612000" />
+    <option name="totallyTimeSpent" value="95800000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -851,7 +860,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -947,7 +956,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="62" />
+      <option name="time" value="64" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -987,8 +996,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#801#802#0" expanded="true" />
-            <element signature="e#854#855#0" expanded="true" />
+            <element signature="e#869#870#0" expanded="true" />
+            <element signature="e#922#923#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1001,11 +1010,9 @@
             <element signature="imports" expanded="true" />
             <element signature="method#pNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#thePNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#isVariable#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#getVerb#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#getVariable#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#getNumber#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#isNegation#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#getSentence#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#getVariableCount#0;class#CnlToAspTranslator#0" expanded="false" />
             <element signature="method#addWhitespacesBeforeDot#0;class#CnlToAspTranslator#0" expanded="false" />
           </folding>
         </state>
@@ -1209,14 +1216,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/SentenceValidationException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
@@ -1255,24 +1254,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31">
-          <caret line="372" column="0" lean-forward="true" selection-start-line="372" selection-start-column="0" selection-end-line="372" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#pNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#thePNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#isVariable#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#getVerb#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#getVariable#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#getNumber#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#isNegation#0;class#CnlToAspTranslator#0" expanded="false" />
-            <element signature="method#addWhitespacesBeforeDot#0;class#CnlToAspTranslator#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/TextInputControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -1299,28 +1280,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/at/tuwien/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="94" column="73" lean-forward="false" selection-start-line="94" selection-start-column="73" selection-end-line="94" selection-end-column="73" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/at/tuwien/GUI/MainGuiController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="40" column="85" lean-forward="false" selection-start-line="40" selection-start-column="85" selection-end-line="40" selection-end-column="85" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#801#802#0" expanded="true" />
-            <element signature="e#854#855#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/DLVwrapper-v4.2.jar!/it/unical/mat/wrapper/DLVInvocationImpl.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
@@ -1329,21 +1288,99 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="37" column="29" lean-forward="false" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/SentenceValidationException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="60" lean-forward="false" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
+          <folding>
+            <element signature="e#193#194#0" expanded="true" />
+            <element signature="e#223#224#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/CnlToAspTranslator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="574" column="92" lean-forward="false" selection-start-line="574" selection-start-column="92" selection-end-line="574" selection-end-column="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#pNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#thePNounIsAdjective#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#isNegation#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#getSentence#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#getVariableCount#0;class#CnlToAspTranslator#0" expanded="false" />
+            <element signature="method#addWhitespacesBeforeDot#0;class#CnlToAspTranslator#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/Service/Translation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="32" lean-forward="false" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/CNL2ASP/Translation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="32" lean-forward="false" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#318#319#0" expanded="true" />
+            <element signature="e#364#365#0" expanded="true" />
+            <element signature="e#402#403#0" expanded="true" />
+            <element signature="e#444#445#0" expanded="true" />
+            <element signature="e#475#476#0" expanded="true" />
+            <element signature="e#530#531#0" expanded="true" />
+            <element signature="e#570#571#0" expanded="true" />
+            <element signature="e#609#610#0" expanded="true" />
+            <element signature="e#638#639#0" expanded="true" />
+            <element signature="e#688#689#0" expanded="true" />
+            <element signature="e#724#725#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/at/tuwien/Service/MainGuiService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="39" column="5" lean-forward="true" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+        <state relative-caret-position="298">
+          <caret line="33" column="5" lean-forward="false" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/at/tuwien/DLV/DLVProgramExecutor.java">
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="37" column="29" lean-forward="false" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
-          <folding />
+        <state relative-caret-position="703">
+          <caret line="87" column="85" lean-forward="true" selection-start-line="87" selection-start-column="85" selection-end-line="87" selection-end-column="85" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/at/tuwien/GUI/MainGuiController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="63" column="0" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#869#870#0" expanded="true" />
+            <element signature="e#922#923#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

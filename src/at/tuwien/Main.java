@@ -8,6 +8,7 @@ import at.tuwien.ASP.AspRule;
 import at.tuwien.CNL2ASP.CnlToAspTranslator;
 import at.tuwien.CNL2ASP.SentenceValidationException;
 import at.tuwien.CNL2ASP.StanfordParser;
+import at.tuwien.CNL2ASP.Translation;
 import at.tuwien.DLV.DLVProgramExecutor;
 import at.tuwien.DLV.DLVProgramGenerator;
 import it.unical.mat.dlv.program.Program;
@@ -86,10 +87,10 @@ public class Main extends Application {
 
         CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(inputStrings);
 
-        List<AspRule> aspRules = cnlToAspTranslator.translate();
+        Translation translation = cnlToAspTranslator.translate();
 
         DLVProgramGenerator dlvProgramGenerator = new DLVProgramGenerator();
-        Program program = dlvProgramGenerator.generateDlvProgram(aspRules);
+        Program program = dlvProgramGenerator.generateDlvProgram(translation.getAspRules());
 
         DLVProgramExecutor dlvProgramExecutor = new DLVProgramExecutor();
         List<String> models = dlvProgramExecutor.executeProgram(program,"");
