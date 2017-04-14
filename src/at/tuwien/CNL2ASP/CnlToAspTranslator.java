@@ -79,7 +79,7 @@ public class CnlToAspTranslator {
         {
             aspRule = thereIsACNounVariable(taggedWords);
         }
-        else if(sentence.matches(".* is a .*\\.$")) {
+        else if(sentence.matches(".* is(n't | not | )a .*\\.$")) {
             aspRule = pNounIsACNoun(taggedWords);
         }
         else if(sentence.matches(".* [a-z] is .*\\.$")){
@@ -385,6 +385,8 @@ public class CnlToAspTranslator {
 
         removeWord(taggedWords,"is");
 
+        boolean negated = isNegation(taggedWords);
+
         removeWord(taggedWords,"a");
 
         String cNoun = getCNoun(taggedWords);
@@ -393,7 +395,7 @@ public class CnlToAspTranslator {
         removeWord(taggedWords,".");
 
 
-        Literal literal = new Literal(cNoun);
+        Literal literal = new Literal(cNoun,negated);
         literal.getTerms().add(pNoun);
 
         AspRule aspRule = new AspRule();
@@ -524,10 +526,9 @@ public class CnlToAspTranslator {
 
         removeWord(taggedWords,".");
 
-        Literal literal1 = new Literal(verb);
+        Literal literal1 = new Literal(verb, negated);
         literal1.getTerms().add(variable1);
         literal1.getTerms().add(variable2);
-        literal1.setNegated(negated);
 
         Literal literal2 = new Literal(cNoun1);
         literal2.getTerms().add(variable1);

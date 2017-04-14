@@ -17,8 +17,13 @@ public class Literal {
     }
 
     public Literal(String predicateName, ArrayList<String> terms) {
-        this.predicateName = predicateName;
+        this(predicateName);
         this.terms = terms;
+    }
+
+    public Literal(String predicateName, boolean negated) {
+        this(predicateName);
+        this.negated = negated;
     }
 
     public String getPredicateName() {

@@ -36,7 +36,11 @@ public class DLVProgramGenerator {
                 }
                 else {
                     // TODO throw exception if head > 1
-                    ruleString = generateDlvLiteral(rule.getHead().get(0));
+                    if(rule.getHead().get(0).isNegated())
+                    {
+                        ruleString += " - ";
+                    }
+                    ruleString += generateDlvLiteral(rule.getHead().get(0));
                 }
             }
 

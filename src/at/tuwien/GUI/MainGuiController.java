@@ -57,7 +57,7 @@ public class MainGuiController implements Initializable{
 
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getText().equals(".") ||
-                taCNL.getCaretPosition() < taCNL.getText().lastIndexOf('.'))
+                taCNL.getCaretPosition() <= taCNL.getText().lastIndexOf('.'))
         {
             taASP.setText("");
             taError.setText("");
