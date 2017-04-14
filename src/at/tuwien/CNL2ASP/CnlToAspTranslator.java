@@ -79,7 +79,7 @@ public class CnlToAspTranslator {
         {
             aspRule = thereIsACNounVariable(taggedWords);
         }
-        else if(sentence.matches(".* is(n't | not | )a .*\\.$")) {
+        else if(sentence.matches(".* is(n't | n't | not | )a .*\\.$")) {
             aspRule = pNounIsACNoun(taggedWords);
         }
         else if(sentence.matches(".* [a-z] is .*\\.$")){
@@ -719,12 +719,12 @@ public class CnlToAspTranslator {
     }
 
     private boolean isNegation(ArrayList<TaggedWord> taggedWords) {
-        if(taggedWords.get(0).value().equals("not")){
+        if(taggedWords.get(0).value().matches("(not|n't)")){
             removeFirstWord(taggedWords);
             return true;
         }
         if(taggedWords.get(0).value().matches("(does|do|is|can)") &&
-                taggedWords.get(1).value().equals("not")){
+                taggedWords.get(1).value().matches("(not|n't)")){
             removeFirstWord(taggedWords);
             removeFirstWord(taggedWords);
 

@@ -44,7 +44,7 @@ public class MainGuiService {
 
     private List<String> splitSentences(String cnlSentences)
     {
-        cnlSentences = cnlSentences.replaceAll("\n","");
+        cnlSentences = cnlSentences.replaceAll("\n"," ");
         List<String> sentenceList = Arrays.asList(cnlSentences.split("\\."));
 
         if(cnlSentences.lastIndexOf('.') != cnlSentences.length()-1) // check if last character is .

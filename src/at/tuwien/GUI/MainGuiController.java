@@ -42,16 +42,15 @@ public class MainGuiController implements Initializable{
 
         List<String> models = mainGuiService.solve(taASP.getText(),tfFilter.getText());
 
-        if(models.size() == 0)
-        {
-            taModels.setText("No models exist.");
-        }
+        taModels.setText(String.format("%d models found.%n%n", models.size()));
 
+        int modelNumber = 1;
         for (String model: models) {
             model = model.replaceAll("\\.\n", ", ");
             model = model.substring(0,model.lastIndexOf(", "));
 
-            taModels.setText(taModels.getText() + String.format("{%s}%n",model));
+            taModels.setText(taModels.getText() + String.format("Model %d: {%s}%n", modelNumber, model));
+            modelNumber ++;
         }
     }
 
