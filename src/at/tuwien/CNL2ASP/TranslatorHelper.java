@@ -72,6 +72,11 @@ public class TranslatorHelper {
             verb = StanfordParser.getInstance().getBaseFormOfWord(taggedWords.get(0).value());
             removeFirstWord(taggedWords);
         }
+        if(taggedWords.get(0).tag().matches("(IN)"))
+        {
+            verb = String.format("%s_%s",verb, taggedWords.get(0).value());
+            removeFirstWord(taggedWords);
+        }
         if(verb == ""){
             throw new SentenceValidationException(String.format("\"%s\" is not a verb.", taggedWords.get(0).value()));
         }
@@ -81,7 +86,7 @@ public class TranslatorHelper {
 
     public void removeWord(List<TaggedWord> taggedWords, String word) throws SentenceValidationException {
 
-        if(taggedWords.get(0).value().equals(word))
+        if(taggedWords.get(0).value().toLowerCase().equals(word.toLowerCase()))
         {
             taggedWords.remove(0);
         }
