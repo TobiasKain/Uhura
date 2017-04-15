@@ -51,6 +51,7 @@ public class CnlToAspTranslator {
         AspRule aspRule = null;
 
         sentence = translatorHelper.addWhitespacesBeforeDot(sentence);
+        sentence = sentence.trim();
         ArrayList<TaggedWord> taggedWords = StanfordParser.getInstance().parse(sentence).taggedYield();
 
         sentence = sentence.toLowerCase();
@@ -74,20 +75,20 @@ public class CnlToAspTranslator {
         else if(sentence.matches("the .* is .*\\.$")) {
             aspRule = thePNounIsAdjective(taggedWords);
         }
-        else if(sentence.matches(".* [a-z] is a .*\\.$")){
-            aspRule = cNounVariableIsACNoun(taggedWords);
-        }
         else if(sentence.matches("there is a .* [a-z] \\.$"))
         {
             aspRule = thereIsACNounVariable(taggedWords);
         }
-        else if(sentence.matches(".* is(n't | n't | not | )a .*\\.$")) {
+        else if(sentence.matches(".* [a-z] is(n't | n't | not | )a .*\\.$")){   // documented
+            aspRule = cNounVariableIsACNoun(taggedWords);
+        }
+        else if(sentence.matches(".* is(n't | n't | not | )a .*\\.$")) {    // documented x2
             aspRule = pNounIsACNoun(taggedWords);
         }
-        else if(sentence.matches(".* [a-z] is .*\\.$")){
+        else if(sentence.matches(".* [a-z] is(n't | n't | not | ).*\\.$")){     // documented
             aspRule = cNounVariableIsAdjective(taggedWords);
         }
-        else if(sentence.matches(".* is(n't | n't | not | ).*\\.$")){
+        else if(sentence.matches(".* is(n't | n't | not | ).*\\.$")){       // documented x2
             aspRule = pNounIsAdjective(taggedWords);
         }
         else if(sentence.matches(".* [a-z] .* a .* as .*\\.$")){
@@ -324,11 +325,13 @@ public class CnlToAspTranslator {
 
         translatorHelper.removeWord(taggedWords,"is");
 
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
         String adjective = translatorHelper.getAdjective(taggedWords);
 
         translatorHelper.removeWord(taggedWords,".");
 
-        Literal literal1 = new Literal(adjective);
+        Literal literal1 = new Literal(adjective,negated);
         literal1.getTerms().add(variable);
 
         Literal literal2 = new Literal(cNoun);
@@ -416,6 +419,8 @@ public class CnlToAspTranslator {
 
         translatorHelper.removeWord(taggedWords,"is");
 
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
         translatorHelper.removeWord(taggedWords,"a");
 
         String cNoun2 = translatorHelper.getCNoun(taggedWords);
@@ -424,10 +429,10 @@ public class CnlToAspTranslator {
         translatorHelper.removeWord(taggedWords,".");
 
 
-        Literal literal1 = new Literal(cNoun1);
+        Literal literal1 = new Literal(cNoun2, negated);
         literal1.getTerms().add(variable);
 
-        Literal literal2 = new Literal(cNoun2);
+        Literal literal2 = new Literal(cNoun1);
         literal2.getTerms().add(variable);
 
         AspRule aspRule = new AspRule();

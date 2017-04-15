@@ -9,6 +9,7 @@ import it.unical.mat.dlv.program.Rule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -45,7 +46,7 @@ public class MainGuiService {
     private List<String> splitSentences(String cnlSentences)
     {
         cnlSentences = cnlSentences.replaceAll("\n"," ");
-        List<String> sentenceList = Arrays.asList(cnlSentences.split("\\."));
+        List<String> sentenceList = new LinkedList<String>(Arrays.asList(cnlSentences.split("\\.")));
 
         if(cnlSentences.lastIndexOf('.') != cnlSentences.length()-1) // check if last character is .
         {
