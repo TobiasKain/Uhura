@@ -35,7 +35,21 @@ public class TranslatorHelper {
 
         if(cNoun.equals(""))
         {
-            throw new SentenceValidationException(String.format("\"%s\" is not a common noun.", taggedWords.get(0).value()));
+            /* Workaround for the following problem:
+             * Sometimes if a cnoun is followed by a variable,
+             * then the parser accidentally recognises the cnoun as pnoun.
+             */
+
+            if(isVariable(taggedWords.get(1).value()))
+            {
+                try{
+                    cNoun = getPNoun(taggedWords);
+                }catch (SentenceValidationException e){}
+            }
+
+            if(cNoun.equals("")) {
+                throw new SentenceValidationException(String.format("\"%s\" is not a common noun.", taggedWords.get(0).value()));
+            }
         }
 
         return cNoun;
@@ -79,9 +93,18 @@ public class TranslatorHelper {
     public String getPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
         String pNoun= "";
 
-        while (taggedWords.get(0).tag().matches("(NN|NNP)"))
+        while (taggedWords.get(0).tag().matches("(NN|NNS|NNP)"))
         {
-            pNoun += taggedWords.get(0).value().toLowerCase();
+            if(isVariable(taggedWords.get(0).value()) && !pNoun.equals(""))
+            {
+                return pNoun;
+            }
+
+            pNoun += taggedWords.get(0).value();
+            if(!isVariable(pNoun)){
+                pNoun = pNoun.toLowerCase();
+            }
+
             taggedWords.remove(0);
         }
 
