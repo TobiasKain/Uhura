@@ -32,7 +32,10 @@ public class CnlToAspTranslator {
 
         for (String sentence: inputStrings) {
             try {
-                aspRules.add(translateSentence(sentence));
+                if(!sentence.trim().startsWith("//") &&
+                        !sentence.trim().startsWith("%")) {     // check if sentence is a comment
+                    aspRules.add(translateSentence(sentence));
+                }
             } catch (SentenceValidationException e) {
                 errors.add(String.format("Error in sentence \"%s\": %s",sentence, e.getMessage()));
             }
@@ -56,11 +59,7 @@ public class CnlToAspTranslator {
 
         sentence = sentence.toLowerCase();
 
-        if(sentence.matches("a .* is a .* of a .*\\.$" ))
-        {
-            aspRule = aCNounVariableIsACNounOfACNounVariable(taggedWords);
-        }
-        else if (sentence.matches("if .* then .*\\.$")){
+        if (sentence.matches("if .* then .*\\.$")){
             aspRule = ifThen(taggedWords);
         }
         else if (sentence.matches("exclude that .*\\.$")){
@@ -69,13 +68,17 @@ public class CnlToAspTranslator {
         else if(sentence.matches(".* or .*\\.$")){
             aspRule = or(taggedWords);
         }
-        else if (sentence.matches(".* (more|less) than .*\\.$")){
+        else if(sentence.matches("a .* is(n't | n't | not | )a .* of a .*\\.$" ))
+        {
+            aspRule = aCNounVariableIsACNounOfACNounVariable(taggedWords);
+        }
+        else if (sentence.matches(".* (more|less) than .*\\.$")){       // documented
             aspRule = cNounVariableVerbMoreLessThanNumberCNounVariable(taggedWords, parentSentence);
         }
-        else if(sentence.matches("the .* is .*\\.$")) {
+        /*else if(sentence.matches("the .* is .*\\.$")) {
             aspRule = thePNounIsAdjective(taggedWords);
-        }
-        else if(sentence.matches("there is(n't | n't | not | )a .* [a-z] \\.$"))
+        }*/
+        else if(sentence.matches("there is(n't | n't | not | )a .* [a-z] \\.$"))    // documented
         {
             aspRule = thereIsACNounVariable(taggedWords);
         }
@@ -215,20 +218,29 @@ public class CnlToAspTranslator {
     }
 
     private AspRule aCNounVariableIsACNounOfACNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
         translatorHelper.removeFirstWord(taggedWords);
+
         String cNoun1 = translatorHelper.getCNoun(taggedWords);
+
         String variable1 = translatorHelper.getVariable(taggedWords);
+
         translatorHelper.removeWord(taggedWords,"is");
+        boolean negated = translatorHelper.isNegation(taggedWords);
         translatorHelper.removeWord(taggedWords,"a");
+
         String cNoun2 = translatorHelper.getCNoun(taggedWords);
+
         translatorHelper.removeWord(taggedWords,"of");
         translatorHelper.removeWord(taggedWords,"a");
+
         String cNoun3 = translatorHelper.getCNoun(taggedWords);
+
         String variable2 = translatorHelper.getVariable(taggedWords);
 
         translatorHelper.removeWord(taggedWords,".");
 
-        Literal literal1 = new Literal(cNoun2);
+        Literal literal1 = new Literal(cNoun2, negated);
         literal1.getTerms().add(variable1);
         literal1.getTerms().add(variable2);
 
@@ -382,6 +394,8 @@ public class CnlToAspTranslator {
         return aspRule;
     }
 
+    /*
+    does not really make sense
     private AspRule thePNounIsAdjective(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
         translatorHelper.removeFirstWord(taggedWords);
@@ -401,7 +415,7 @@ public class CnlToAspTranslator {
         aspRule.getHead().add(literal);
 
         return aspRule;
-    }
+    }*/
 
     private AspRule pNounIsACNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
@@ -583,6 +597,8 @@ public class CnlToAspTranslator {
 
         String variable = translatorHelper.getVariable(taggedWords);
 
+        translatorHelper.removeWord(taggedWords,".");
+
         Literal literal1 = new Literal(verb,negated);
         literal1.getTerms().add(pNoun);
         literal1.getTerms().add(variable);
@@ -605,6 +621,8 @@ public class CnlToAspTranslator {
         String verb = translatorHelper.getVerb(taggedWords);
 
         String pNoun2 = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,".");
 
         Literal literal1 = new Literal(verb,negated);
         literal1.getTerms().add(pNoun1);

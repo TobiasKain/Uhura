@@ -237,6 +237,10 @@ public class TranslatorHelper {
     public int getVariableCount(ArrayList<TaggedWord> taggedWords, String variable){
         int count = 0;
 
+        if(taggedWords == null){
+            return count;
+        }
+
         for (TaggedWord tw: taggedWords) {
             if(tw.value().equals(variable))
             {
