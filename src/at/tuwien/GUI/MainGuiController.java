@@ -15,8 +15,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
@@ -70,13 +68,32 @@ public class MainGuiController implements Initializable{
 
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getText().equals(".") ||
-                taCNL.getCaretPosition() <= taCNL.getText().lastIndexOf('.'))
+                (taCNL.getCaretPosition() <= taCNL.getText().lastIndexOf('.') && !keyEvent.getText().equals("")) ||
+                (keyEvent.getText().equals("v") && (keyEvent.isMetaDown() || keyEvent.isControlDown())))    // check CMD + V
         {
             translate();
         }
     }
 
+    Thread thread;
+
     private void translate() {
+
+        TranslatorThread translatorThread;
+
+        translatorThread = new TranslatorThread(taCNL,taError,taASP);
+
+        if(thread == null)
+        {
+            thread = new Thread(translatorThread);
+            thread.start();
+        } else {
+            thread.stop();
+            thread = new Thread(translatorThread);
+            thread.start();
+        }
+
+        /*
         taASP.setText("");
         taError.setText("");
 
@@ -85,7 +102,7 @@ public class MainGuiController implements Initializable{
 
         for (String error : translation.getErrors()) {
             taError.appendText(error + "\n");
-        }
+        }*/
     }
 
     public void openFileClicked(ActionEvent actionEvent) {
@@ -118,7 +135,5 @@ public class MainGuiController implements Initializable{
         } catch (IOException x) {
             taError.appendText(x.getMessage());
         }
-
-
     }
 }
