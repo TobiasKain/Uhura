@@ -1,6 +1,5 @@
 package at.tuwien.GUI;
 
-import at.tuwien.CNL2ASP.Translation;
 import at.tuwien.Service.MainGuiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -92,17 +91,6 @@ public class MainGuiController implements Initializable{
             thread = new Thread(translatorThread);
             thread.start();
         }
-
-        /*
-        taASP.setText("");
-        taError.setText("");
-
-        Translation translation = mainGuiService.translate(taCNL.getText());
-        taASP.setText(translation.getAspCode());
-
-        for (String error : translation.getErrors()) {
-            taError.appendText(error + "\n");
-        }*/
     }
 
     public void openFileClicked(ActionEvent actionEvent) {

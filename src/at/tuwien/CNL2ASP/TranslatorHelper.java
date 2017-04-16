@@ -139,6 +139,23 @@ public class TranslatorHelper {
         return adjective;
     }
 
+    public String getPreposition(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+        String preposition = "";
+
+        if(taggedWords.get(0).tag().matches("(IN|TO)"))
+        {
+            preposition = taggedWords.get(0).value();
+            removeFirstWord(taggedWords);
+        }
+
+        if(preposition.equals(""))
+        {
+            throw new SentenceValidationException(String.format("\"%s\" is not a preposition.", taggedWords.get(0).value()));
+        }
+
+        return preposition;
+    }
+
     public String getVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
         String variable = "";

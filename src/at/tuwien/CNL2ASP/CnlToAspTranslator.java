@@ -51,6 +51,7 @@ public class CnlToAspTranslator {
 
     private AspRule translateSentence(String sentence, ArrayList<TaggedWord> parentSentence) throws SentenceValidationException {
 
+        String error = null;
         AspRule aspRule = null;
 
         sentence = translatorHelper.addWhitespacesBeforeDot(sentence);
@@ -59,55 +60,143 @@ public class CnlToAspTranslator {
 
         sentence = sentence.toLowerCase();
 
-        if (sentence.matches("if .* then .*\\.$")){
-            aspRule = ifThen(taggedWords);
+        if (aspRule == null && sentence.matches("if .* then .*\\.$")){
+            try {
+                aspRule = ifThen((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if (sentence.matches("exclude that .*\\.$")){
-            aspRule = excludeThat(taggedWords);
+        if (aspRule == null && sentence.matches("exclude that .*\\.$")){
+            try {
+                aspRule = excludeThat((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches(".* or .*\\.$")){
-            aspRule = or(taggedWords);
+        if (aspRule == null && sentence.matches(".* or .*\\.$")){
+            try {
+                aspRule = or((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches("a .* is(n't | n't | not | )a .* of a .*\\.$" ))
+        if (aspRule == null && sentence.matches("a .* is(n't | n't | not | )a .* of a .*\\.$" ))
         {
-            aspRule = aCNounVariableIsACNounOfACNounVariable(taggedWords);
+            try {
+                aspRule = aCNounVariableIsACNounOfACNounVariable((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if (sentence.matches(".* (more|less) than .*\\.$")){       // documented
-            aspRule = cNounVariableVerbMoreLessThanNumberCNounVariable(taggedWords, parentSentence);
+        if (aspRule == null && sentence.matches(".* (more|less) than .*\\.$")){       // documented
+            try {
+                aspRule = cNounVariableVerbMoreLessThanNumberCNounVariable((ArrayList<TaggedWord>) taggedWords.clone(), parentSentence);
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
         /*else if(sentence.matches("the .* is .*\\.$")) {
             aspRule = thePNounIsAdjective(taggedWords);
         }*/
-        else if(sentence.matches("there is(n't | n't | not | )a .* [a-z] \\.$"))    // documented
+        if (aspRule == null && sentence.matches("there is(n't | n't | not | )a .* [a-z] \\.$"))    // documented
         {
-            aspRule = thereIsACNounVariable(taggedWords);
+            try {
+                aspRule = thereIsACNounVariable((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches(".* [a-z] is(n't | n't | not | )a .*\\.$")){   // documented x2
-            aspRule = cNounVariableIsACNoun(taggedWords);
+        if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | )a .*\\.$")){   // documented x2
+            try {
+                aspRule = cNounVariableIsACNoun((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches(".* is(n't | n't | not | )a .*\\.$")) {    // documented x4
-            aspRule = pNounIsACNoun(taggedWords);
+        if (aspRule == null && sentence.matches(".* is(n't | n't | not | )a .*\\.$")) {    // documented x4
+            try {
+                aspRule = pNounIsACNoun((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches(".* [a-z] is(n't | n't | not | ).*\\.$")){     // documented x2
-            aspRule = cNounVariableIsAdjective(taggedWords);
+        if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | ).*\\.$")){     // documented x2
+            try {
+                aspRule = cNounVariableIsAdjective(taggedWords);
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches(".* is(n't | n't | not | ).*\\.$")){       // documented x4
-            aspRule = pNounIsAdjective(taggedWords);
+        if (aspRule == null && sentence.matches(".* is(n't | n't | not | ).*\\.$")){       // documented x4
+            try {
+                aspRule = pNounIsAdjective((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches(".* [a-z] .* a .* as .*\\.$")){    // documented x2
-            aspRule = cNounVariableVerbACNounAsPNoun(taggedWords);
+        if (aspRule == null && sentence.matches(".* is(n't | n't | not | ).*\\.$")){
+           try {
+               aspRule = pNounIsAdjectivePrepositionPNoun((ArrayList<TaggedWord>) taggedWords.clone());
+           } catch (SentenceValidationException e) {
+               if(error == null)
+                   error = e.getMessage();
+           }
         }
-        else if(sentence.matches(".* [a-z] .* [a-z] \\.$")){   // documented
-            aspRule = cNounVariableVerbCNounVariable(taggedWords);
+        if (aspRule == null && sentence.matches(".* [a-z] .* a .* as .*\\.$")){    // documented x2
+            try {
+                aspRule = cNounVariableVerbACNounAsPNoun(taggedWords);
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches(".* [a-z] \\.$")){    // documented
-            aspRule = pNounVerbCNounVariable(taggedWords);
+        if (aspRule == null && sentence.matches(".* [a-z] .* [a-z] \\.$")){   // documented
+            try {
+                aspRule = cNounVariableVerbCNounVariable(taggedWords);
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches(".* a .* as .*\\.$")){     // documented
-            aspRule = pNounVerbACNounAsPNoun(taggedWords);
+        if (aspRule == null && sentence.matches(".* [a-z] \\.$")){    // documented
+            try {
+                aspRule = pNounVerbCNounVariable(taggedWords);
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
         }
-        else if(sentence.matches(".* .* .* \\.$")){    // documented
-            aspRule = pNounVerbPNoun(taggedWords);
+        if (aspRule == null && sentence.matches(".* a .* as .*\\.$")){     // documented
+            try {
+                aspRule = pNounVerbACNounAsPNoun(taggedWords);
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches(".* .* .* \\.$")){    // documented
+            try {
+                aspRule = pNounVerbPNoun(taggedWords);
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+
+        if(aspRule == null && error != null)
+        {
+            throw new SentenceValidationException(error);
         }
 
         if(aspRule == null){
@@ -393,6 +482,43 @@ public class CnlToAspTranslator {
 
         return aspRule;
     }
+
+    private AspRule pNounIsAdjectivePrepositionPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        String pNoun1 = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"is");
+
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
+        String adjective = "";
+        try {
+            adjective += translatorHelper.getAdjective(taggedWords);
+        }catch (SentenceValidationException e){
+
+        }
+
+        if(adjective ==""){
+            adjective += translatorHelper.getPreposition(taggedWords);
+        }
+        else{
+            adjective += "_" + translatorHelper.getPreposition(taggedWords);
+        }
+
+        String pNoun2 = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,".");
+
+        Literal literal = new Literal(adjective,negated);
+        literal.getTerms().add(pNoun1);
+        literal.getTerms().add(pNoun2);
+
+        AspRule aspRule = new AspRule();
+        aspRule.getHead().add(literal);
+
+        return aspRule;
+    }
+
 
     /*
     does not really make sense
