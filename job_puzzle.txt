@@ -1,0 +1,47 @@
+Roberta is a person.
+Thelma is a person.
+Steve is a person.
+Pete is a person.
+
+Roberta is female.
+Thelma is female.
+
+Steve is male.
+Pete is male.
+
+Exclude that person X is male and that person X is female.
+
+If there is a person X and there is a job Y then person X holds job Y or person X does not hold job Y.
+Exclude that there is a job Y and that person X holds more than one job Y.
+Exclude that there is a job Y and that person X holds less than one job Y.
+
+Exclude that there is a person X and that person X holds more than two jobs Y.
+Exclude that there is a person X and that person X holds less than two jobs Y.
+
+Chef is a job.
+Guard is a job.
+Nurse is a job.
+Telephone operator is a job.
+Police officer is a job.
+Teacher is a job.
+Actor is a job.
+Boxer is a job.
+
+If a person X holds a job as nurse then person X is male.
+If a person X holds a job as actor then person X is male.
+
+If a person X holds a job as chef and a person Y holds a job as telephone operator then a person Y is a husband of a  person X.
+If a person X is a husband of a person Y then person X is male.
+If a person X is a husband of a person Y then person Y is female.
+
+Exclude that Roberta holds a job as boxer.
+
+Exclude that Pete is educated.
+If a person X holds a job as nurse then person X is educated.
+If a person X holds a job as police officer then person X is educated.
+If a person X holds a job as teacher then person X is educated.
+
+Exclude that Roberta holds a job as chef.
+Exclude that Roberta holds a job as police officer.
+Exclude that a person X holds a job as chef and that person X holds a job as police officer.
+

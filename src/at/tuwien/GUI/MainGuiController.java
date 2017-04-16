@@ -1,17 +1,24 @@
 package at.tuwien.GUI;
 
-import at.tuwien.ASP.AspRule;
 import at.tuwien.CNL2ASP.Translation;
 import at.tuwien.Service.MainGuiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,6 +38,8 @@ public class MainGuiController implements Initializable{
     public TextField tfFilter;
     @FXML
     public Button btnSolve;
+    @FXML
+    public MenuItem miOpenFile;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,14 +51,19 @@ public class MainGuiController implements Initializable{
 
         List<String> models = mainGuiService.solve(taASP.getText(),tfFilter.getText());
 
-        taModels.setText(String.format("%d models found.%n%n", models.size()));
+        if(models.size() == 1){
+            taModels.setText(String.format("%d model found.%n%n", models.size()));
+        }
+        else {
+            taModels.setText(String.format("%d models found.%n%n", models.size()));
+        }
 
         int modelNumber = 1;
         for (String model: models) {
             model = model.replaceAll("\\.\n", ", ");
             model = model.substring(0,model.lastIndexOf(", "));
 
-            taModels.setText(taModels.getText() + String.format("Model %d: {%s}%n", modelNumber, model));
+            taModels.appendText(String.format("Model %d: {%s}%n", modelNumber, model));
             modelNumber ++;
         }
     }
@@ -58,15 +72,53 @@ public class MainGuiController implements Initializable{
         if (keyEvent.getText().equals(".") ||
                 taCNL.getCaretPosition() <= taCNL.getText().lastIndexOf('.'))
         {
-            taASP.setText("");
-            taError.setText("");
-
-            Translation translation = mainGuiService.translate(taCNL.getText());
-            taASP.setText(translation.getAspCode());
-
-            for (String error : translation.getErrors()) {
-                taError.setText(taError.getText() + error + "\n");
-            }
+            translate();
         }
+    }
+
+    private void translate() {
+        taASP.setText("");
+        taError.setText("");
+
+        Translation translation = mainGuiService.translate(taCNL.getText());
+        taASP.setText(translation.getAspCode());
+
+        for (String error : translation.getErrors()) {
+            taError.appendText(error + "\n");
+        }
+    }
+
+    public void openFileClicked(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open CNL problem description");
+
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("TXT", "*.txt")
+        );
+
+        Stage stage = (Stage) btnSolve.getScene().getWindow();
+
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            openFile(file);
+        }
+    }
+
+    private void openFile(File file) {
+
+        try {
+            List<String> lines = Files.readAllLines(file.toPath());
+            taCNL.setText("");
+
+            for (String line: lines) {
+                taCNL.appendText(line + "\n");
+            }
+
+            translate();
+        } catch (IOException x) {
+            taError.appendText(x.getMessage());
+        }
+
+
     }
 }

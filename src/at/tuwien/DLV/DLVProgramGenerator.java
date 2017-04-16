@@ -58,8 +58,6 @@ public class DLVProgramGenerator {
 
             ruleString += ".";
 
-            System.out.println(ruleString);
-
             program.add(new Rule(ruleString));
 
             // TODO check if rule.toString() == null // check with "person X holds more than two jobs Y"
