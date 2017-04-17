@@ -121,6 +121,32 @@ public class TranslatorHelper {
         return pNoun;
     }
 
+    public String getAdjectiveAndOrPreposition(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+        String adjective = "";
+
+        try {
+            adjective = getAdjective(taggedWords);
+        }catch (SentenceValidationException e){}
+
+        if(taggedWords.get(0).tag().matches("(IN|TO)"))
+        {
+            if(adjective.equals("")) {
+                adjective = String.format("%s", taggedWords.get(0).value());
+            }else {
+                adjective = String.format("%s_%s", adjective, taggedWords.get(0).value());
+            }
+
+            removeFirstWord(taggedWords);
+        }
+
+        if(adjective.equals(""))
+        {
+            throw new SentenceValidationException(String.format("\"%s\" is not a adjective.", taggedWords.get(0).value()));
+        }
+
+        return adjective;
+    }
+
     public String getAdjective(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
         String adjective = "";

@@ -121,6 +121,14 @@ public class CnlToAspTranslator {
                     error = e.getMessage();
             }
         }
+        if (aspRule == null && sentence.matches(".* is(n't | n't | not | ).* [a-z] \\.$")){   // documented x2
+            try {
+                aspRule = pNounIsAdjectivePrepositionCNounVariable((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
         if (aspRule == null && sentence.matches(".* is(n't | n't | not | )a .*\\.$")) {    // documented x4
             try {
                 aspRule = pNounIsACNoun((ArrayList<TaggedWord>) taggedWords.clone());
@@ -131,7 +139,15 @@ public class CnlToAspTranslator {
         }
         if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | ).*\\.$")){     // documented x2
             try {
-                aspRule = cNounVariableIsAdjective(taggedWords);
+                aspRule = cNounVariableIsAdjective((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | ).*\\.$")){     // documented x2
+            try {
+                aspRule = cNounVariableIsAdjectivePrepositionPNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = e.getMessage();
@@ -155,7 +171,7 @@ public class CnlToAspTranslator {
         }
         if (aspRule == null && sentence.matches(".* [a-z] .* a .* as .*\\.$")){    // documented x2
             try {
-                aspRule = cNounVariableVerbACNounAsPNoun(taggedWords);
+                aspRule = cNounVariableVerbACNounAsPNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = e.getMessage();
@@ -163,7 +179,7 @@ public class CnlToAspTranslator {
         }
         if (aspRule == null && sentence.matches(".* [a-z] .* [a-z] \\.$")){   // documented
             try {
-                aspRule = cNounVariableVerbCNounVariable(taggedWords);
+                aspRule = cNounVariableVerbCNounVariable((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = e.getMessage();
@@ -171,7 +187,7 @@ public class CnlToAspTranslator {
         }
         if (aspRule == null && sentence.matches(".* [a-z] \\.$")){    // documented
             try {
-                aspRule = pNounVerbCNounVariable(taggedWords);
+                aspRule = pNounVerbCNounVariable((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = e.getMessage();
@@ -179,7 +195,7 @@ public class CnlToAspTranslator {
         }
         if (aspRule == null && sentence.matches(".* a .* as .*\\.$")){     // documented
             try {
-                aspRule = pNounVerbACNounAsPNoun(taggedWords);
+                aspRule = pNounVerbACNounAsPNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = e.getMessage();
@@ -187,7 +203,7 @@ public class CnlToAspTranslator {
         }
         if (aspRule == null && sentence.matches(".* .* .* \\.$")){    // documented
             try {
-                aspRule = pNounVerbPNoun(taggedWords);
+                aspRule = pNounVerbPNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = e.getMessage();
@@ -462,6 +478,66 @@ public class CnlToAspTranslator {
         return aspRule;
     }
 
+    private AspRule cNounVariableIsAdjectivePrepositionPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        String cNoun = translatorHelper.getCNoun(taggedWords);
+
+        String variable = translatorHelper.getVariable(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"is");
+
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
+        String adjective = translatorHelper.getAdjectiveAndOrPreposition(taggedWords);
+
+        String pNoun = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,".");
+
+        Literal literal1 = new Literal(adjective,negated);
+        literal1.getTerms().add(variable);
+        literal1.getTerms().add(pNoun);
+
+        Literal literal2 = new Literal(cNoun);
+        literal2.getTerms().add(variable);
+
+        AspRule aspRule = new AspRule();
+        aspRule.getHead().add(literal1);
+        aspRule.getHead().add(literal2);
+
+        return aspRule;
+    }
+
+
+    private AspRule pNounIsAdjectivePrepositionCNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+        String pNoun = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"is");
+
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
+        String adjective = translatorHelper.getAdjectiveAndOrPreposition(taggedWords);
+
+        String cNoun = translatorHelper.getCNoun(taggedWords);
+
+        String variable = translatorHelper.getVariable(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,".");
+
+        Literal literal1 = new Literal(adjective,negated);
+        literal1.getTerms().add(pNoun);
+        literal1.getTerms().add(variable);
+
+        Literal literal2 = new Literal(cNoun);
+        literal2.getTerms().add(variable);
+
+        AspRule aspRule = new AspRule();
+        aspRule.getHead().add(literal1);
+        aspRule.getHead().add(literal2);
+
+        return aspRule;
+    }
+
     private AspRule pNounIsAdjective(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
         String pNoun = translatorHelper.getPNoun(taggedWords);
@@ -491,19 +567,7 @@ public class CnlToAspTranslator {
 
         boolean negated = translatorHelper.isNegation(taggedWords);
 
-        String adjective = "";
-        try {
-            adjective += translatorHelper.getAdjective(taggedWords);
-        }catch (SentenceValidationException e){
-
-        }
-
-        if(adjective ==""){
-            adjective += translatorHelper.getPreposition(taggedWords);
-        }
-        else{
-            adjective += "_" + translatorHelper.getPreposition(taggedWords);
-        }
+        String adjective = translatorHelper.getAdjective(taggedWords);
 
         String pNoun2 = translatorHelper.getPNoun(taggedWords);
 
