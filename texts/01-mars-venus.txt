@@ -1,0 +1,62 @@
+
+%Every Martian is from Mars.   
+If X is Martian then X is from Mars.
+
+%Exclude that a Venusian is from Mars.
+Exclude that X is a Venusian and that X is from Mars.
+
+%Every Venusian is from Venus.   
+If X is a Venusian then X is from Venus.
+
+%Exclude that a Martian is from Venus.
+Exclude that X is a Martian and that X is from Venus.
+
+%Every person is a Martian or is a Venusian.
+If X is a person then person X is a Martian or person X is a Venusian. 
+
+%Every person is female or is male.   
+If X is a person then person X is female or Person X is male.
+
+%Every person who is a female Martian or who is a male Venusian lies.
+If person X is female and person X is a Martian then person X is a liar.
+If person X is male and person X is a Venusian then person X is a liar.
+
+%Every person who is a male Martian or who is a female Venusian is truthful.   
+If person X is male and person X is a Martian then person X is truthful.
+If person X is female and person X is a Venusian then person X is truthful.
+
+%Exclude that a person who lies is truthful.  
+Exclude that X is a person and that X is a liar and that X is trusthful.  
+
+%Ork is a person and Bog is a person.  
+Ork is a person.
+Bog is a person. 
+
+%If Ork is truthful then Bog is from Venus.
+If Ork is truthful then Bog is from Venus.
+
+%Exclude that Bog is from Venus and that Ork lies. 
+Exclude that Bog is from Venus and that Ork is a liar.
+ 
+%If Bog is truthful then Ork is from Mars.  
+If Bog is truthful then Ork is from Mars.  
+
+%Exclude that Bog lies and that Ork is from Mars.  
+Exclude that Bog is a liar and that Ork is from Mars.  
+
+%If Ork is truthful then Bog is male.  
+If Ork is truthful then Bog is male.
+
+%Exclude that Ork lies and that Bog is male.  
+Exclude that Ork is a liar and that Bog is male.  
+
+%If Bog is truthful then Ork is female.  
+If Bog is truthful then Ork is female.
+
+%Exclude that Bog lies and that Ork is female.
+Exclude that Bog is a liar and that Ork is female.             
+
+%Who is a Martian?
+
+%Is Ork male?
+

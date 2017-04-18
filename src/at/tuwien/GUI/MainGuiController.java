@@ -13,7 +13,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
@@ -37,6 +39,9 @@ public class MainGuiController implements Initializable{
     public Button btnSolve;
     @FXML
     public MenuItem miOpenFile;
+    @FXML
+    public MenuItem miSaveFile;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -121,8 +126,31 @@ public class MainGuiController implements Initializable{
             }
 
             translate();
-        } catch (IOException x) {
-            taError.appendText(x.getMessage());
+        } catch (IOException e) {
+            taError.appendText(e.getMessage());
+        }
+    }
+
+    public void saveFileClicked(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save CNL problem description");
+
+        Stage stage = (Stage) btnSolve.getScene().getWindow();
+
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+
+            String path = file.getPath();
+            if(!file.getPath().endsWith(".txt"))
+            {
+                path += ".txt";
+            }
+
+            try(  PrintWriter out = new PrintWriter( path) ){
+                out.println( taCNL.getText() );
+            } catch (FileNotFoundException e) {
+                taError.appendText(e.getMessage());
+            }
         }
     }
 }

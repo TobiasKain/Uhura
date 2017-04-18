@@ -18,7 +18,7 @@ public class TranslatorHelper {
 
         String cNoun = "";
 
-        while (taggedWords.get(0).tag().matches("(NN|NNS)"))
+        while (taggedWords.get(0).tag().matches("(NN|NNS|NNP)"))
         {
             if(isVariable(taggedWords.get(0).value()) && !cNoun.equals(""))
             {
