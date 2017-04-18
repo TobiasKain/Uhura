@@ -113,6 +113,14 @@ public class CnlToAspTranslator {
                     error = e.getMessage();
             }
         }
+        if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | ).* [a-z] \\.$")){   // documented x2
+            try {
+                aspRule = cNounVariableIsAdjectivePrepositionCNounVariableIs((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
         if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | )a .*\\.$")){   // documented x2
             try {
                 aspRule = cNounVariableIsACNoun((ArrayList<TaggedWord>) taggedWords.clone());
@@ -534,6 +542,41 @@ public class CnlToAspTranslator {
         AspRule aspRule = new AspRule();
         aspRule.getHead().add(literal1);
         aspRule.getHead().add(literal2);
+
+        return aspRule;
+    }
+
+    private AspRule cNounVariableIsAdjectivePrepositionCNounVariableIs(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+        String cNoun1 = translatorHelper.getCNoun(taggedWords);
+
+        String variable1 = translatorHelper.getVariable(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"is");
+
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
+        String adjective = translatorHelper.getAdjectiveAndOrPreposition(taggedWords);
+
+        String cNoun2 = translatorHelper.getCNoun(taggedWords);
+
+        String variable2 = translatorHelper.getVariable(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,".");
+
+        Literal literal1 = new Literal(adjective,negated);
+        literal1.getTerms().add(variable1);
+        literal1.getTerms().add(variable2);
+
+        Literal literal2 = new Literal(cNoun1);
+        literal2.getTerms().add(variable1);
+
+        Literal literal3 = new Literal(cNoun2);
+        literal3.getTerms().add(variable2);
+
+        AspRule aspRule = new AspRule();
+        aspRule.getHead().add(literal1);
+        aspRule.getHead().add(literal2);
+        aspRule.getHead().add(literal3);
 
         return aspRule;
     }

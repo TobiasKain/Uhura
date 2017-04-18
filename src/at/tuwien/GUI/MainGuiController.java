@@ -58,8 +58,9 @@ public class MainGuiController implements Initializable{
         int modelNumber = 1;
         for (String model: models) {
             model = model.replaceAll("\\.\n", ", ");
-            model = model.substring(0,model.lastIndexOf(", "));
-
+            if(model.contains(",")) {
+                model = model.substring(0, model.lastIndexOf(", "));
+            }
             taModels.appendText(String.format("Model %d: {%s}%n", modelNumber, model));
             modelNumber ++;
         }
