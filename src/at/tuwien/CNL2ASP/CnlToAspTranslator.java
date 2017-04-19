@@ -225,6 +225,14 @@ public class CnlToAspTranslator {
                     error = e.getMessage();
             }
         }
+        if (aspRule == null && sentence.matches(".* [a-z] .*\\.$")){    // documented
+            try {
+                aspRule = cNounVariableVerbPnoun((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
         if (aspRule == null && sentence.matches(".* a .* as .*\\.$")){     // documented
             try {
                 aspRule = pNounVerbACNounAsPNoun((ArrayList<TaggedWord>) taggedWords.clone());
@@ -261,6 +269,7 @@ public class CnlToAspTranslator {
 
         return aspRule;
     }
+
 
     private AspRule excludeThat(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
@@ -846,6 +855,42 @@ public class CnlToAspTranslator {
         aspRule.getHead().add(literal1);
         aspRule.getHead().add(literal2);
         aspRule.getHead().add(literal3);
+
+        return aspRule;
+    }
+
+    private AspRule cNounVariableVerbPnoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        if(taggedWords.get(0).value().equals("a")) {
+            translatorHelper.removeFirstWord(taggedWords);
+        }
+
+        String cNoun = translatorHelper.getCNoun(taggedWords);
+
+        String variable = translatorHelper.getVariable(taggedWords);
+
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
+        String verb = translatorHelper.getVerb(taggedWords);
+
+        if(taggedWords.get(0).value().equals("a")) {
+            translatorHelper.removeFirstWord(taggedWords);
+        }
+
+        String pNoun = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,".");
+
+        Literal literal1 = new Literal(verb, negated);
+        literal1.getTerms().add(variable);
+        literal1.getTerms().add(pNoun);
+
+        Literal literal2 = new Literal(cNoun);
+        literal2.getTerms().add(variable);
+
+        AspRule aspRule = new AspRule();
+        aspRule.getHead().add(literal1);
+        aspRule.getHead().add(literal2);
 
         return aspRule;
     }
