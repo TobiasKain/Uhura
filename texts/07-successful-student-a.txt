@@ -1,0 +1,26 @@
+%Every student who works is successful.
+If X is a student and X works then X is successful.
+
+%Every student who studies at Macquarie University works or parties.
+If student X studies at Macquarie University then
+student X works or student X celebrates.
+
+%It is not the case that a student who is enrolled in Information Technology parties.
+Exclude that student X is enrolled in Information Technology and that student X celebrates.
+
+%Tom is a student.
+Tom is a student.
+
+%Tom studies at Macquarie and is enrolled in Information Technology.
+Tom studies at Macquarie University.
+Tom is enrolled in Information Technology.
+
+%Bob is a student who studies at Macquarie and does not work.
+Bob is a student.
+Bob studies at Macquarie.
+Bob does not work.
+
+%Who is successful?
+% TOM
+
+

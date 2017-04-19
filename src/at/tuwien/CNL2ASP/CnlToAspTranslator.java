@@ -115,7 +115,7 @@ public class CnlToAspTranslator {
         }
         if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | ).* [a-z] \\.$")){   // documented x2
             try {
-                aspRule = cNounVariableIsAdjectivePrepositionCNounVariableIs((ArrayList<TaggedWord>) taggedWords.clone());
+                aspRule = cNounVariableIsAdjectivePrepositionCNounVariable((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = e.getMessage();
@@ -587,7 +587,7 @@ public class CnlToAspTranslator {
         return aspRule;
     }
 
-    private AspRule cNounVariableIsAdjectivePrepositionCNounVariableIs(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+    private AspRule cNounVariableIsAdjectivePrepositionCNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
         String cNoun1 = translatorHelper.getCNoun(taggedWords);
 
         String variable1 = translatorHelper.getVariable(taggedWords);
@@ -651,7 +651,7 @@ public class CnlToAspTranslator {
 
         boolean negated = translatorHelper.isNegation(taggedWords);
 
-        String adjective = translatorHelper.getAdjective(taggedWords);
+        String adjective = translatorHelper.getAdjectiveAndOrPreposition(taggedWords);
 
         String pNoun2 = translatorHelper.getPNoun(taggedWords);
 
