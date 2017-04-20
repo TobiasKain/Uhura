@@ -52,6 +52,11 @@
                                           <TextArea fx:id="taError" editable="false" prefHeight="200.0" prefWidth="200.0" />
                                        </content>
                                     </Tab>
+                                    <Tab closable="false" text="Sentence Patterns">
+                                       <content>
+                                          <WebView fx:id="wvSentencePatterns" prefHeight="200.0" prefWidth="200.0" />
+                                       </content>
+                                    </Tab>
                                  </tabs>
                                  <GridPane.margin>
                                     <Insets />

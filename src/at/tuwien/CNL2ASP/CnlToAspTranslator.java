@@ -93,6 +93,33 @@ public class CnlToAspTranslator {
                     error = e.getMessage();
             }
         }
+        if (aspRule == null && sentence.matches(".* is(n't | n't | not | ).* of .* [a-z] \\." ))
+        {
+            try {
+                aspRule = pNounIsCNounOfCNounVariable((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches(".* is(n't | n't | not | ).* of .*\\." ))
+        {
+            try {
+                aspRule = pNounIsCNounOfPNoun((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | ).* of .*\\." ))
+        {
+            try {
+                aspRule = cNounVariableIsCNounOfPNoun((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
         if (aspRule == null && sentence.matches(".* (more|less) than .*\\.$")){       // documented
             try {
                 aspRule = cNounVariableVerbMoreLessThanNumberCNounVariable((ArrayList<TaggedWord>) taggedWords.clone(), parentSentence);
@@ -409,6 +436,116 @@ public class CnlToAspTranslator {
         aspRule.getHead().add(literal1);
         aspRule.getHead().add(literal2);
         aspRule.getHead().add(literal3);
+
+        return aspRule;
+    }
+
+    private AspRule pNounIsCNounOfCNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        String pNoun = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"is");
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
+        if(taggedWords.get(0).value().equals("the")) {
+            translatorHelper.removeFirstWord(taggedWords);
+        }
+
+        String cNoun1 = translatorHelper.getCNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"of");
+
+        if(taggedWords.get(0).value().equals("a")) {
+            translatorHelper.removeFirstWord(taggedWords);
+        }
+
+        String cNoun2 = translatorHelper.getCNoun(taggedWords);
+
+        String variable = translatorHelper.getVariable(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,".");
+
+        Literal literal1 = new Literal(cNoun1, negated);
+        literal1.getTerms().add(pNoun);
+        literal1.getTerms().add(variable);
+
+        Literal literal2 = new Literal(cNoun2);
+        literal2.getTerms().add(variable);
+
+        AspRule aspRule = new AspRule();
+
+        aspRule.getHead().add(literal1);
+        aspRule.getHead().add(literal2);
+
+        return aspRule;
+    }
+
+    private AspRule pNounIsCNounOfPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        String pNoun1 = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"is");
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
+        if(taggedWords.get(0).value().equals("the")) {
+            translatorHelper.removeFirstWord(taggedWords);
+        }
+
+        String cNoun1 = translatorHelper.getCNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"of");
+
+        String pNoun2 = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,".");
+
+        Literal literal1 = new Literal(cNoun1, negated);
+        literal1.getTerms().add(pNoun1);
+        literal1.getTerms().add(pNoun2);
+
+        AspRule aspRule = new AspRule();
+
+        aspRule.getHead().add(literal1);
+
+        return aspRule;
+    }
+
+    private AspRule cNounVariableIsCNounOfPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+
+        if(taggedWords.get(0).value().equals("a")) {
+            translatorHelper.removeFirstWord(taggedWords);
+        }
+
+        String cNoun1 = translatorHelper.getCNoun(taggedWords);
+
+        String variable = translatorHelper.getVariable(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"is");
+        boolean negated = translatorHelper.isNegation(taggedWords);
+
+        if(taggedWords.get(0).value().equals("the")) {
+            translatorHelper.removeFirstWord(taggedWords);
+        }
+
+        String cNoun2 = translatorHelper.getCNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,"of");
+
+        String pNoun = translatorHelper.getPNoun(taggedWords);
+
+        translatorHelper.removeWord(taggedWords,".");
+
+        Literal literal1 = new Literal(cNoun2, negated);
+        literal1.getTerms().add(variable);
+        literal1.getTerms().add(pNoun);
+
+        Literal literal2 = new Literal(cNoun1);
+        literal2.getTerms().add(variable);
+
+        AspRule aspRule = new AspRule();
+
+        aspRule.getHead().add(literal1);
+        aspRule.getHead().add(literal2);
 
         return aspRule;
     }

@@ -1,0 +1,59 @@
+%John is a student who works and Bob is a student who parties.
+John is a student. 
+John works.
+Bob is a student.
+Bob celebrates.
+
+%Mary is a student who does not work.
+Marry is a student.
+Mary does not work.
+
+%Sue is a student who exercises.
+Sue is a student.
+Sue exercieses.
+
+%Olivier is a student and drinks.
+Oliver is a student.
+Oliver drinks.
+
+%If a person exercises then the person works.
+If person X exercises then person X works.
+
+%Every lecturer works.
+If X is a lecturer then X works.
+
+%Alice is a lecturer.
+Alice is a lecturer.
+
+%Every student and every lecturer is a person.
+If X is a student then X is a person.
+If X is a lecturer then X is a person.
+
+%If a person does not provably work then the person does not work.
+If person X does not work then person X does not work.
+
+%How many persons work?
+%{work(john), work(alice)}
+
+%How many persons do not work?
+% {-work(bob), -work(marry), -work(mary), -work(sue), -work(oliver)}
+
+%Do most persons work?
+% NO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

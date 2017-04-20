@@ -1,0 +1,22 @@
+V1 is a vertex.
+V2 is a vertex.
+V3 is a vertex.
+V4 is a vertex.
+
+apple is a fruit.
+banana is a fruit.
+lime is a fruit.
+
+If X is a vertex and Y is a fruit then X is on Y or Y is not on X.
+
+V1 is connected to V2.
+V2 is connected to V1.
+V2 is connected to V3.
+V3 is connected to V2.
+C3 is connected to V4.
+C4 is connected to V3.
+V4 is connected to V1.
+V1 is connected to V4.
+
+Exclude that 
+

@@ -8,7 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -16,6 +19,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
@@ -23,6 +27,7 @@ import java.util.ResourceBundle;
 
 public class MainGuiController implements Initializable{
 
+    public WebView wvSentencePatterns;
     private MainGuiService mainGuiService;
 
     @FXML
@@ -46,6 +51,11 @@ public class MainGuiController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainGuiService = new MainGuiService();
+        try {
+            loadSentencePatterns();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     public void btnSolveClicked(ActionEvent actionEvent) {
@@ -74,7 +84,8 @@ public class MainGuiController implements Initializable{
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getText().equals(".") ||
                 (taCNL.getCaretPosition() <= taCNL.getText().lastIndexOf('.') && !keyEvent.getText().equals("")) ||
-                (keyEvent.getText().equals("v") && (keyEvent.isMetaDown() || keyEvent.isControlDown())))    // check CMD + V
+                (keyEvent.getText().equals("v") && (keyEvent.isMetaDown() || keyEvent.isControlDown())) ||  // check CMD + V
+                keyEvent.getCode().equals(KeyCode.BACK_SPACE) || keyEvent.getCode().equals(KeyCode.DELETE))
         {
             translate();
         }
@@ -152,5 +163,13 @@ public class MainGuiController implements Initializable{
                 taError.appendText(e.getMessage());
             }
         }
+    }
+
+    private void loadSentencePatterns() throws URISyntaxException {
+
+        WebEngine webEngine = wvSentencePatterns.getEngine();
+
+        File f = new File(getClass().getResource("sentences.htm").toURI());
+        webEngine.load(f.toURI().toString());
     }
 }

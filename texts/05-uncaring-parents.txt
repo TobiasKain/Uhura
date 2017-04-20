@@ -1,0 +1,26 @@
+
+%Sam is a child.
+Sam is a child.
+
+%John is the father of Sam and Alice is the mother of Sam.
+
+%Every father of a child is a parent of the child.
+If X is a father then X is a parent.
+
+%Every mother of a child is a parent of the child.
+If X is mother of child Y then X is a parent of Y.
+
+%Parents of a child normally care about the child.
+if X is a parent 
+
+%If a parent of a child is not provably not absent then the parent abnormally cares about the child.
+
+%John does not care about Sam.
+John does not care about Sam.
+
+%Alice is absent.
+Alice is absent.
+
+%Who cares about Sam?
+
+
