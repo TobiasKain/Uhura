@@ -13,20 +13,20 @@
 
 <BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.tuwien.GUI.MainGuiController">
    <center>
-      <SplitPane dividerPositions="0.5" prefHeight="800.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.7" orientation="VERTICAL" prefHeight="800.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
         <items>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <top>
-                  <Label alignment="TOP_CENTER" text="CNL" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-               </top>
-               <center>
-                  <SplitPane dividerPositions="0.7183833116036505" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
-                    <items>
-                        <GridPane>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+               <items>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <Label alignment="TOP_CENTER" text="CNL" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </top>
+                     <center>
+                        <GridPane BorderPane.alignment="CENTER">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                            </columnConstraints>
@@ -37,49 +37,18 @@
                               <TextArea fx:id="taCNL" onKeyReleased="#tfCnlOnKeyPressed" prefHeight="200.0" prefWidth="200.0" promptText="insert problem description ..." />
                            </children>
                         </GridPane>
-                        <GridPane>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <TabPane>
-                                 <tabs>
-                                    <Tab closable="false" text="Errors">
-                                       <content>
-                                          <TextArea fx:id="taError" editable="false" prefHeight="200.0" prefWidth="200.0" />
-                                       </content>
-                                    </Tab>
-                                    <Tab text="Sentence Patterns">
-                                       <content>
-                                          <WebView fx:id="wvSentencePatterns" prefHeight="200.0" prefWidth="200.0" />
-                                       </content>
-                                    </Tab>
-                                 </tabs>
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </TabPane>
-                           </children>
-                        </GridPane>
-                    </items>
-                  </SplitPane>
-               </center>
-            </BorderPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <top>
-                  <Label alignment="TOP_CENTER" text="ASP" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-               </top>
-               <center>
-                  <SplitPane dividerPositions="0.7196870925684485" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
-                    <items>
-                        <GridPane>
+                     </center>
+                  </BorderPane>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <Label alignment="TOP_CENTER" text="ASP" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </top>
+                     <center>
+                        <GridPane BorderPane.alignment="CENTER">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                            </columnConstraints>
@@ -94,42 +63,75 @@
                               </TextArea>
                            </children>
                         </GridPane>
-                        <GridPane>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <VBox>
-                                 <children>
-                                    <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" spacing="20.0">
-                                       <children>
-                                          <Label text="Filter:" />
-                                          <TextField fx:id="tfFilter" prefHeight="27.0" prefWidth="240.0" promptText="predicates (comma-separated)" />
-                                          <Button fx:id="btnSolve" mnemonicParsing="false" onAction="#btnSolveClicked" text="Solve">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <VBox.margin>
-                                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <TextArea fx:id="taModels" editable="false" prefHeight="200.0" prefWidth="200.0" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </GridPane>
-                    </items>
-                  </SplitPane>
-               </center>
-            </BorderPane>
+                     </center>
+                  </BorderPane>
+               </items>
+            </SplitPane>
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <GridPane>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TabPane>
+                           <tabs>
+                              <Tab closable="false" text="Errors">
+                                 <content>
+                                    <TextArea fx:id="taError" editable="false" prefHeight="200.0" prefWidth="200.0" />
+                                 </content>
+                              </Tab>
+                              <Tab closable="false" text="Sentence Patterns">
+                                 <content>
+                                    <WebView fx:id="wvSentencePatterns" prefHeight="200.0" prefWidth="200.0" />
+                                 </content>
+                              </Tab>
+                              <Tab closable="false" text="Solver">
+                                 <content>
+                                    <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                       <center>
+                                          <TextArea fx:id="taModels" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER" />
+                                       </center>
+                                       <top>
+                                          <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" spacing="20.0" BorderPane.alignment="CENTER">
+                                             <children>
+                                                <Label text="Filter:" />
+                                                <TextField fx:id="tfFilter" prefHeight="27.0" prefWidth="240.0" promptText="predicates (comma-separated)" />
+                                                <Button fx:id="btnSolve" mnemonicParsing="false" onAction="#btnSolveClicked" text="Solve">
+                                                   <HBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <BorderPane.margin>
+                                                <Insets bottom="8.0" top="8.0" />
+                                             </BorderPane.margin>
+                                          </HBox>
+                                       </top>
+                                    </BorderPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </TabPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </GridPane>
         </items>
       </SplitPane>
    </center>
