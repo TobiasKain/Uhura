@@ -1,13 +1,10 @@
-package at.tuwien.Service;
+package at.tuwien.service;
 
-import at.tuwien.ASP.AspRule;
 import at.tuwien.CNL2ASP.*;
-import at.tuwien.DLV.DLVProgramExecutor;
-import at.tuwien.DLV.DLVProgramGenerator;
+import at.tuwien.dlv.DLVProgramExecutor;
+import at.tuwien.dlv.DLVProgramGenerator;
 import it.unical.mat.dlv.program.Program;
-import it.unical.mat.dlv.program.Rule;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,8 +12,9 @@ import java.util.List;
 /**
  * Created by tobiaskain on 13/04/2017.
  */
-public class MainGuiService {
+public class MainGuiService implements IMainGuiService {
 
+    @Override
     public Translation translate(String cnlSentences) {
 
         CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(splitSentences(cnlSentences));
@@ -31,6 +29,7 @@ public class MainGuiService {
         return translation;
     }
 
+    @Override
     public List<String> solve(String aspRules, String filter)
     {
         DLVProgramGenerator dlvProgramGenerator = new DLVProgramGenerator();

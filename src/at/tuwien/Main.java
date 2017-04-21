@@ -1,16 +1,23 @@
 package at.tuwien;
 
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.tuwien.ASP.AspRule;
 import at.tuwien.CNL2ASP.CnlToAspTranslator;
 import at.tuwien.CNL2ASP.SentenceValidationException;
 import at.tuwien.CNL2ASP.StanfordParser;
 import at.tuwien.CNL2ASP.Translation;
-import at.tuwien.DLV.DLVProgramExecutor;
-import at.tuwien.DLV.DLVProgramGenerator;
+import at.tuwien.dao.DaoException;
+import at.tuwien.dao.H2Handler;
+import at.tuwien.dao.WordDAO;
+import at.tuwien.dao.impl.JDBCWordDAO;
+import at.tuwien.dlv.DLVProgramExecutor;
+import at.tuwien.dlv.DLVProgramGenerator;
+import at.tuwien.entity.Word;
+import at.tuwien.entity.WordType;
 import it.unical.mat.dlv.program.Program;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +30,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/main_gui.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/main_gui.fxml"));
         primaryStage.setTitle("CNL2ASP-Translator");
         primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
@@ -31,6 +38,27 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws SentenceValidationException {
+
+        try {
+            Connection connection = H2Handler.getConnection();
+            H2Handler.setupDatabase();
+
+            Word word = new Word();
+            word.setWord("yellow");
+            word.setWordType(WordType.PNoun);
+
+            WordDAO wordDAO = new JDBCWordDAO();
+            wordDAO.createWord(word);
+
+            List<Word> words = wordDAO.readAllWords();
+
+            int  i = 0;
+        } catch (DaoException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         launch(args);
 
         List<String> inputStrings = new ArrayList<>();

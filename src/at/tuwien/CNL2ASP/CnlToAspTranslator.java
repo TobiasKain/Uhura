@@ -1,7 +1,7 @@
 package at.tuwien.CNL2ASP;
 
-import at.tuwien.ASP.AspRule;
-import at.tuwien.ASP.Literal;
+import at.tuwien.asp.AspRule;
+import at.tuwien.asp.Literal;
 import edu.stanford.nlp.ling.TaggedWord;
 
 import java.util.ArrayList;

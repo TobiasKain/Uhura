@@ -1,4 +1,4 @@
-package at.tuwien.DLV;
+package at.tuwien.dlv;
 
 import it.unical.mat.dlv.program.Program;
 import it.unical.mat.wrapper.*;

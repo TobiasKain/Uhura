@@ -1,6 +1,7 @@
-package at.tuwien.GUI;
+package at.tuwien.gui;
 
-import at.tuwien.Service.MainGuiService;
+import at.tuwien.service.IMainGuiService;
+import at.tuwien.service.MainGuiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,8 +28,7 @@ import java.util.ResourceBundle;
 
 public class MainGuiController implements Initializable{
 
-    public WebView wvSentencePatterns;
-    private MainGuiService mainGuiService;
+    private IMainGuiService mainGuiService;
 
     @FXML
     public TextArea taCNL;
@@ -46,6 +46,9 @@ public class MainGuiController implements Initializable{
     public MenuItem miOpenFile;
     @FXML
     public MenuItem miSaveFile;
+    @FXML
+    public WebView wvSentencePatterns;
+
 
 
     @Override

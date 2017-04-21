@@ -38,14 +38,15 @@ public class TranslatorHelper {
             /* Workaround for the following problem:
              * Sometimes if a cnoun is followed by a variable,
              * then the parser accidentally recognises the cnoun as pnoun.
-             */
+
+            TODO REMOVE: as implimentation of CNOUN AND PNOUN IS THE SAME
 
             if(isVariable(taggedWords.get(1).value()))
             {
                 try{
                     cNoun = getPNoun(taggedWords);
                 }catch (SentenceValidationException e){}
-            }
+            } */
 
             if(cNoun.equals("")) {
                 throw new SentenceValidationException(String.format("\"%s\" is not a common noun.", taggedWords.get(0).value()));

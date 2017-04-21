@@ -1,7 +1,7 @@
-package at.tuwien.GUI;
+package at.tuwien.gui;
 
 import at.tuwien.CNL2ASP.Translation;
-import at.tuwien.Service.MainGuiService;
+import at.tuwien.service.MainGuiService;
 import javafx.scene.control.TextArea;
 
 /**

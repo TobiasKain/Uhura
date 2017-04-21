@@ -1,6 +1,6 @@
 package at.tuwien.CNL2ASP;
 
-import at.tuwien.ASP.AspRule;
+import at.tuwien.asp.AspRule;
 
 import java.util.List;
 
