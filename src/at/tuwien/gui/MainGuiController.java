@@ -31,8 +31,6 @@ import java.util.ResourceBundle;
 
 public class MainGuiController implements Initializable{
 
-    private IMainGuiService mainGuiService;
-
     @FXML
     public TextArea taCNL;
     @FXML
@@ -51,8 +49,11 @@ public class MainGuiController implements Initializable{
     public MenuItem miSaveFile;
     @FXML
     public WebView wvSentencePatterns;
+    @FXML
+    public Button btnTranslate;
 
-
+    private IMainGuiService mainGuiService;
+    private TranslationType translationType;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,6 +63,7 @@ public class MainGuiController implements Initializable{
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+        translationType = TranslationType.AUTOMATIC;
     }
 
     public void btnSolveClicked(ActionEvent actionEvent) {
@@ -88,12 +90,13 @@ public class MainGuiController implements Initializable{
     }
 
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getText().equals(".") ||
-                (taCNL.getCaretPosition() <= taCNL.getText().lastIndexOf('.') && !keyEvent.getText().equals("")) ||
-                (keyEvent.getText().equals("v") && (keyEvent.isMetaDown() || keyEvent.isControlDown())) ||  // check CMD + V
-                keyEvent.getCode().equals(KeyCode.BACK_SPACE) || keyEvent.getCode().equals(KeyCode.DELETE))
-        {
-            translate();
+        if(translationType == TranslationType.AUTOMATIC) {
+            if (keyEvent.getText().equals(".") ||
+                    (taCNL.getCaretPosition() <= taCNL.getText().lastIndexOf('.') && !keyEvent.getText().equals("")) ||
+                    (keyEvent.getText().equals("v") && (keyEvent.isMetaDown() || keyEvent.isControlDown())) ||  // check CMD + V
+                    keyEvent.getCode().equals(KeyCode.BACK_SPACE) || keyEvent.getCode().equals(KeyCode.DELETE)) {
+                translate();
+            }
         }
     }
 
@@ -221,6 +224,26 @@ public class MainGuiController implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        mainGuiService.updateDirectory();
+
     }
 
+    public void miTranslateClicked(ActionEvent actionEvent) {
+        translate();
+    }
+
+    public void rmiAutomaticTranslationSelected(ActionEvent actionEvent) {
+        translationType = TranslationType.AUTOMATIC;
+        btnTranslate.setVisible(false);
+    }
+
+    public void rmiManualTranslationSelected(ActionEvent actionEvent) {
+        translationType = TranslationType.MANUAL;
+        btnTranslate.setVisible(true);
+    }
+
+    public void btnTranslateClicked(ActionEvent actionEvent) {
+        translate();
+    }
 }

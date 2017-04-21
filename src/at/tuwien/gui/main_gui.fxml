@@ -18,13 +18,6 @@
             <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
                <items>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <top>
-                        <Label alignment="TOP_CENTER" text="CNL" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </top>
                      <center>
                         <GridPane BorderPane.alignment="CENTER">
                            <columnConstraints>
@@ -38,6 +31,27 @@
                            </children>
                         </GridPane>
                      </center>
+                     <top>
+                        <BorderPane BorderPane.alignment="CENTER">
+                           <center>
+                              <Label alignment="TOP_CENTER" text="CNL" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </center>
+                           <right>
+                              <Button fx:id="btnTranslate" mnemonicParsing="false" onAction="#btnTranslateClicked" text="Translate" visible="false" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets />
+                                 </BorderPane.margin>
+                              </Button>
+                           </right>
+                           <BorderPane.margin>
+                              <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
+                           </BorderPane.margin>
+                        </BorderPane>
+                     </top>
                   </BorderPane>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <top>
@@ -45,6 +59,9 @@
                            <font>
                               <Font size="24.0" />
                            </font>
+                           <BorderPane.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </BorderPane.margin>
                         </Label>
                      </top>
                      <center>
@@ -148,6 +165,18 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#addWordClicked" text="Add Word ..." />
                   <MenuItem mnemonicParsing="false" onAction="#openDictionaryClicked" text="Open Dictionary ..." />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Translation">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#miTranslateClicked" text="Translate CNL to ASP" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiAutomaticTranslationSelected" selected="true" text="Automatic Translation">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="translationType" />
+                     </toggleGroup>
+                  </RadioMenuItem>
+                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiManualTranslationSelected" text="Manual Translation" toggleGroup="$translationType" />
               </items>
             </Menu>
         </menus>
