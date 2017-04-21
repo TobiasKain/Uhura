@@ -1,8 +1,9 @@
-package at.tuwien.service;
+package at.tuwien.service.impl;
 
 import at.tuwien.CNL2ASP.*;
 import at.tuwien.dlv.DLVProgramExecutor;
 import at.tuwien.dlv.DLVProgramGenerator;
+import at.tuwien.service.IMainGuiService;
 import it.unical.mat.dlv.program.Program;
 
 import java.util.Arrays;

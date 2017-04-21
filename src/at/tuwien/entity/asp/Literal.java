@@ -1,4 +1,4 @@
-package at.tuwien.asp;
+package at.tuwien.entity.asp;
 
 import java.util.ArrayList;
 

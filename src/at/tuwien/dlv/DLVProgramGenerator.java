@@ -1,7 +1,7 @@
 package at.tuwien.dlv;
 
-import at.tuwien.asp.AspRule;
-import at.tuwien.asp.Literal;
+import at.tuwien.entity.asp.AspRule;
+import at.tuwien.entity.asp.Literal;
 import it.unical.mat.dlv.program.Program;
 import it.unical.mat.dlv.program.Rule;
 

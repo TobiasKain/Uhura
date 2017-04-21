@@ -144,6 +144,12 @@
                   <MenuItem fx:id="miSaveFile" mnemonicParsing="false" onAction="#saveFileClicked" text="Save ..." />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Dictionary">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#addWordClicked" text="Add Word ..." />
+                  <MenuItem mnemonicParsing="false" onAction="#openDictionaryClicked" text="Open Dictionary ..." />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>

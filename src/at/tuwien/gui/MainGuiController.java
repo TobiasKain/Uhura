@@ -1,10 +1,12 @@
 package at.tuwien.gui;
 
 import at.tuwien.service.IMainGuiService;
-import at.tuwien.service.MainGuiService;
+import at.tuwien.service.impl.MainGuiService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
@@ -14,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -175,4 +178,29 @@ public class MainGuiController implements Initializable{
         File f = new File(getClass().getResource("sentences.htm").toURI());
         webEngine.load(f.toURI().toString());
     }
+
+    public void addWordClicked(ActionEvent actionEvent) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("add_word.fxml"));
+
+            Stage stage = new Stage();
+
+            /* block parent window */
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(btnSolve.getScene().getWindow());
+
+            /* set the scene */
+            stage.setScene(new Scene(loader.load(), 391, 59));
+            stage.setTitle("add word to dictionary");
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openDictionaryClicked(ActionEvent actionEvent) {
+    }
+
 }
