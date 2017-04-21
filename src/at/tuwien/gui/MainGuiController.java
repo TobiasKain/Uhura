@@ -201,6 +201,24 @@ public class MainGuiController implements Initializable{
     }
 
     public void openDictionaryClicked(ActionEvent actionEvent) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("directory.fxml"));
+
+            Stage stage = new Stage();
+
+            /* block parent window */
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(btnSolve.getScene().getWindow());
+
+            /* set the scene */
+            stage.setScene(new Scene(loader.load(), 538, 400));
+            stage.setTitle("Dictionary");
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
