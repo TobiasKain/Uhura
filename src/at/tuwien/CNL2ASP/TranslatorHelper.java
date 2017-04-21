@@ -1,5 +1,7 @@
 package at.tuwien.CNL2ASP;
 
+import at.tuwien.entity.Word;
+import at.tuwien.entity.WordType;
 import edu.stanford.nlp.ling.TaggedWord;
 
 import java.util.ArrayList;
@@ -10,6 +12,12 @@ import java.util.List;
  */
 public class TranslatorHelper {
 
+    private List<Word> dictionary;
+
+    public TranslatorHelper(List<Word> dictionary) {
+        this.dictionary = dictionary;
+    }
+
     public void removeFirstWord(ArrayList<TaggedWord> taggedWords){
         taggedWords.remove(0);
     }
@@ -18,7 +26,8 @@ public class TranslatorHelper {
 
         String cNoun = "";
 
-        while (taggedWords.get(0).tag().matches("(NN|NNS|NNP)"))
+        while (taggedWords.get(0).tag().matches("(NN|NNS|NNP)") ||
+                wordInDictionary(taggedWords.get(0).value(),WordType.CNoun))
         {
             if(isVariable(taggedWords.get(0).value()) && !cNoun.equals(""))
             {
@@ -68,12 +77,14 @@ public class TranslatorHelper {
     public String getVerb(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
         String verb = "";
-        if(taggedWords.get(0).tag().matches("(VB|VBD|VBG|VBN|VBP|VBZ)"))
+        if(taggedWords.get(0).tag().matches("(VB|VBD|VBG|VBN|VBP|VBZ)") ||
+                wordInDictionary(taggedWords.get(0).value(),WordType.Verb))
         {
             verb = StanfordParser.getInstance().getBaseFormOfWord(taggedWords.get(0).value());
             removeFirstWord(taggedWords);
         }
-        if(taggedWords.get(0).tag().matches("(IN)"))
+        if(taggedWords.get(0).tag().matches("(IN)") ||
+                wordInDictionary(taggedWords.get(0).value(),WordType.Preposition))
         {
             verb = String.format("%s_%s",verb, taggedWords.get(0).value());
             removeFirstWord(taggedWords);
@@ -85,21 +96,11 @@ public class TranslatorHelper {
         return verb;
     }
 
-    public void removeWord(List<TaggedWord> taggedWords, String word) throws SentenceValidationException {
-
-        if(taggedWords.get(0).value().toLowerCase().equals(word.toLowerCase()))
-        {
-            taggedWords.remove(0);
-        }
-        else {
-            throw new SentenceValidationException(String.format("Expected \"%s\" instead of \"%s\".",word,taggedWords.get(0).value()));
-        }
-    }
-
     public String getPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
         String pNoun= "";
 
-        while (taggedWords.get(0).tag().matches("(NN|NNS|NNP)"))
+        while (taggedWords.get(0).tag().matches("(NN|NNS|NNP)") ||
+                wordInDictionary(taggedWords.get(0).value(),WordType.PNoun))
         {
             if(isVariable(taggedWords.get(0).value()) && !pNoun.equals(""))
             {
@@ -129,7 +130,8 @@ public class TranslatorHelper {
             adjective = getAdjective(taggedWords);
         }catch (SentenceValidationException e){}
 
-        if(taggedWords.get(0).tag().matches("(IN|TO)"))
+        if(taggedWords.get(0).tag().matches("(IN|TO)") ||
+                wordInDictionary(taggedWords.get(0).value(),WordType.Preposition))
         {
             if(adjective.equals("")) {
                 adjective = String.format("%s", taggedWords.get(0).value());
@@ -152,7 +154,8 @@ public class TranslatorHelper {
 
         String adjective = "";
 
-        while (taggedWords.get(0).tag().matches("(JJ|VBN)"))
+        while (taggedWords.get(0).tag().matches("(JJ|VBN)") ||
+                wordInDictionary(taggedWords.get(0).value(),WordType.Adjective))
         {
             adjective += taggedWords.get(0).value().toLowerCase();
             taggedWords.remove(0);
@@ -169,7 +172,8 @@ public class TranslatorHelper {
     public String getPreposition(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
         String preposition = "";
 
-        if(taggedWords.get(0).tag().matches("(IN|TO)"))
+        if(taggedWords.get(0).tag().matches("(IN|TO)") ||
+                wordInDictionary(taggedWords.get(0).value(),WordType.Preposition))
         {
             preposition = taggedWords.get(0).value();
             removeFirstWord(taggedWords);
@@ -268,6 +272,18 @@ public class TranslatorHelper {
         return false;
     }
 
+
+    public void removeWord(List<TaggedWord> taggedWords, String word) throws SentenceValidationException {
+
+        if(taggedWords.get(0).value().toLowerCase().equals(word.toLowerCase()))
+        {
+            taggedWords.remove(0);
+        }
+        else {
+            throw new SentenceValidationException(String.format("Expected \"%s\" instead of \"%s\".",word,taggedWords.get(0).value()));
+        }
+    }
+
     public String getSentence(ArrayList<TaggedWord> taggedWords) {
         String sentence = "";
 
@@ -309,5 +325,16 @@ public class TranslatorHelper {
         }
 
         return sentence;
+    }
+
+    public boolean wordInDictionary(String word, WordType wordType)
+    {
+        for (Word w: dictionary) {
+            if(w.getWord().equals(word) && w.getWordType().equals(wordType)){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -1,4 +1,4 @@
-package at.tuwien.CNL2ASP;
+package at.tuwien.entity.asp;
 
 import at.tuwien.entity.asp.AspRule;
 

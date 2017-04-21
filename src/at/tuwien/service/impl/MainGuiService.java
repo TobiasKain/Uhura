@@ -1,11 +1,17 @@
 package at.tuwien.service.impl;
 
 import at.tuwien.CNL2ASP.*;
+import at.tuwien.dao.DaoException;
+import at.tuwien.dao.WordDAO;
+import at.tuwien.dao.impl.JDBCWordDAO;
 import at.tuwien.dlv.DLVProgramExecutor;
 import at.tuwien.dlv.DLVProgramGenerator;
+import at.tuwien.entity.Word;
+import at.tuwien.entity.asp.Translation;
 import at.tuwien.service.IMainGuiService;
 import it.unical.mat.dlv.program.Program;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,10 +21,34 @@ import java.util.List;
  */
 public class MainGuiService implements IMainGuiService {
 
+    private List<Word> directory;
+    private WordDAO wordDAO;
+
+    public MainGuiService() {
+        directory = new ArrayList<>();
+        try {
+            wordDAO = new JDBCWordDAO();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        updateDirectory();
+    }
+
+    @Override
+    public void updateDirectory() {
+        directory.clear();
+
+        try {
+            directory.addAll(wordDAO.readAllWords());
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public Translation translate(String cnlSentences) {
 
-        CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(splitSentences(cnlSentences));
+        CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(splitSentences(cnlSentences), directory);
 
         Translation translation = cnlToAspTranslator.translate();
 

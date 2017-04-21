@@ -1,7 +1,9 @@
 package at.tuwien.CNL2ASP;
 
+import at.tuwien.entity.Word;
 import at.tuwien.entity.asp.AspRule;
 import at.tuwien.entity.asp.Literal;
+import at.tuwien.entity.asp.Translation;
 import edu.stanford.nlp.ling.TaggedWord;
 
 import java.util.ArrayList;
@@ -13,15 +15,17 @@ import java.util.List;
 public class CnlToAspTranslator {
 
     private List<String> inputStrings = new ArrayList<>();
+    private List<Word> directory;
     private TranslatorHelper translatorHelper;
 
-    public CnlToAspTranslator(List<String> inputStrings) {
+    public CnlToAspTranslator(List<String> inputStrings, List<Word> directory) {
         this.inputStrings = inputStrings;
+        this.directory = directory;
     }
 
     public Translation translate()
     {
-        translatorHelper = new TranslatorHelper();
+        translatorHelper = new TranslatorHelper(directory);
         Translation translation = new Translation();
 
         List<AspRule> aspRules = new ArrayList<>();

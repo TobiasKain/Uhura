@@ -198,6 +198,8 @@ public class MainGuiController implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        mainGuiService.updateDirectory();
     }
 
     public void openDictionaryClicked(ActionEvent actionEvent) {

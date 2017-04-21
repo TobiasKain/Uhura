@@ -1,6 +1,6 @@
 package at.tuwien.gui;
 
-import at.tuwien.CNL2ASP.Translation;
+import at.tuwien.entity.asp.Translation;
 import at.tuwien.service.impl.MainGuiService;
 import javafx.scene.control.TextArea;
 
