@@ -1,5 +1,6 @@
 package at.tuwien.CNL2ASP;
 
+import at.tuwien.CNL2ASP.sentences.AristotleSentences;
 import at.tuwien.CNL2ASP.sentences.ComplexSentences;
 import at.tuwien.CNL2ASP.sentences.DefaultSentences;
 import at.tuwien.CNL2ASP.sentences.SimpleSentences;
@@ -20,6 +21,7 @@ public class CnlToAspTranslator {
     private SimpleSentences simpleSentences;
     private ComplexSentences complexSentences;
     private DefaultSentences defaultSentences;
+    private AristotleSentences aristotleSentences;
 
     public CnlToAspTranslator(List<String> inputStrings, List<Word> directory) {
         this.inputStrings = inputStrings;
@@ -29,6 +31,7 @@ public class CnlToAspTranslator {
         simpleSentences = new SimpleSentences(wordDetector);
         complexSentences = new ComplexSentences(wordDetector,this);
         defaultSentences = new DefaultSentences(wordDetector);
+        aristotleSentences = new AristotleSentences(wordDetector);
     }
 
     public Translation translate()
@@ -126,6 +129,60 @@ public class CnlToAspTranslator {
         {
             try {
                 aspRule = defaultSentences.cNounNormallyVerb((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches("all .* are .*\\.$" ))
+        {
+            try {
+                aspRule = aristotleSentences.allCNounAreCNoun((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches("all .* are .*\\.$" ))
+        {
+            try {
+                aspRule = aristotleSentences.allCNounAreAdjective((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches("no .* are .*\\.$" ))
+        {
+            try {
+                aspRule = aristotleSentences.noCNounAreCNoun((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches("no .* are .*\\.$" ))
+        {
+            try {
+                aspRule = aristotleSentences.noCNounAreAdjective((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches("some .* are(n't | n't | not | ).*\\.$" ))
+        {
+            try {
+                aspRule = aristotleSentences.someCNounAreCNoun((ArrayList<TaggedWord>) taggedWords.clone());
+            } catch (SentenceValidationException e) {
+                if(error == null)
+                    error = e.getMessage();
+            }
+        }
+        if (aspRule == null && sentence.matches("some .* are(n't | n't | not | ).*\\.$" ))
+        {
+            try {
+                aspRule = aristotleSentences.someCNounAreAdjective((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = e.getMessage();
