@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * Created by tobiaskain on 14/04/2017.
  */
-public class TranslatorHelper {
+public class WordDetector {
 
     private List<Word> dictionary;
 
-    public TranslatorHelper(List<Word> dictionary) {
+    public WordDetector(List<Word> dictionary) {
         this.dictionary = dictionary;
     }
 
@@ -34,7 +34,7 @@ public class TranslatorHelper {
                 return cNoun;
             }
 
-            cNoun += taggedWords.get(0).value();
+            cNoun += StanfordParser.getInstance().getBaseFormOfWord(taggedWords.get(0).value());
             if(!isVariable(cNoun)){
                 cNoun = cNoun.toLowerCase();
             }
@@ -311,23 +311,19 @@ public class TranslatorHelper {
         return count;
     }
 
-    /* Workaround for the following problem:
-     * if a Variable is followed by a dot then
-     * the parser tags the variable and the dot
-     * together as NNP.
-     * e.g "X." --> X./NNP
-     */
-    public String addWhitespacesBeforeDot(String sentence) {
-        if(sentence.matches(".*\\.$"))
+    public String getDefaultTag(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+        if(taggedWords.get(0).value().matches("d\\d+"))
         {
-            sentence = sentence.substring(0,sentence.lastIndexOf('.'));
-            sentence = sentence + " .";
+            String defaultTag = taggedWords.get(0).value();
+            removeFirstWord(taggedWords);
+
+            return defaultTag;
         }
 
-        return sentence;
+        throw new SentenceValidationException(String.format("\"%s\" is not a default-tag.", taggedWords.get(0).value()));
     }
 
-    public boolean wordInDictionary(String word, WordType wordType)
+    private boolean wordInDictionary(String word, WordType wordType)
     {
         for (Word w: dictionary) {
             if(w.getWord().equals(word) && w.getWordType().equals(wordType)){

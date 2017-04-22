@@ -51,6 +51,9 @@ public class DLVProgramGenerator {
                     if(literal.isNegated()){
                         ruleString += " not ";
                     }
+                    if(literal.isStrongNegated()){
+                        ruleString += "-";
+                    }
                     ruleString += generateDlvLiteral(literal) + ", ";
                 }
                 ruleString = ruleString.substring(0,ruleString.lastIndexOf(", "));  // remove last ','

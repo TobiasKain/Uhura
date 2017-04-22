@@ -9,11 +9,13 @@ public class Literal {
     private String predicateName;
     private ArrayList<String> terms;
     private boolean negated;
+    private boolean strongNegated;
 
     public Literal(String predicateName) {
         this.predicateName = predicateName;
         terms = new ArrayList<>();
         negated = false;
+        strongNegated = false;
     }
 
     public Literal(String predicateName, ArrayList<String> terms) {
@@ -48,5 +50,13 @@ public class Literal {
 
     public void setNegated(boolean negated) {
         this.negated = negated;
+    }
+
+    public boolean isStrongNegated() {
+        return strongNegated;
+    }
+
+    public void setStrongNegated(boolean strongNegated) {
+        this.strongNegated = strongNegated;
     }
 }
