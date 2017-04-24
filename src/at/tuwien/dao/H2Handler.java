@@ -63,8 +63,13 @@ public class H2Handler {
     public static void setupDatabase() throws DaoException, SQLException {
 
         Statement stmt = getConnection().createStatement();
+
         stmt.execute("CREATE SEQUENCE IF NOT EXISTS seq_wordID START WITH 0;");
         stmt.execute("CREATE TABLE IF NOT EXISTS Word (wordId BIGINT DEFAULT NEXTVAL('seq_wordID') PRIMARY KEY, word VARCHAR(255), wordType VARCHAR(255));");
+
+        stmt.execute("CREATE SEQUENCE IF NOT EXISTS seq_translationPatternID START WITH 0;");
+        stmt.execute("CREATE TABLE IF NOT EXISTS TranslationPattern (translationPatternId BIGINT DEFAULT NEXTVAL('seq_translationPatternID') PRIMARY KEY, nlSentence VARCHAR(1024), regex VARCHAR(1024), translation VARCHAR(1024));");
+
         connection.commit();
     }
 }

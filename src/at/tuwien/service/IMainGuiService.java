@@ -10,6 +10,7 @@ import java.util.List;
  */
 public interface IMainGuiService {
     void updateDirectory();
+    void updatedTranslationPatterns();
 
     Translation translate(String cnlSentences);
 

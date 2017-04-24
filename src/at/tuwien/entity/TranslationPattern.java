@@ -4,9 +4,18 @@ package at.tuwien.entity;
  * Created by tobiaskain on 23/04/2017.
  */
 public class TranslationPattern {
+    private long translationPatternId;
     private String nlSentence;
     private String regexPattern;
     private String translation;
+
+    public long getTranslationPatternId() {
+        return translationPatternId;
+    }
+
+    public void setTranslationPatternId(long translationPatternId) {
+        this.translationPatternId = translationPatternId;
+    }
 
     public String getNlSentence() {
         return nlSentence;

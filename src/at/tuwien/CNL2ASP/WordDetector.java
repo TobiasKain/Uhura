@@ -284,16 +284,6 @@ public class WordDetector {
         }
     }
 
-    public String getSentence(ArrayList<TaggedWord> taggedWords) {
-        String sentence = "";
-
-        for (TaggedWord tw: taggedWords) {
-            sentence += tw.value() + " ";
-        }
-
-        return sentence.trim();
-    }
-
     public int getVariableCount(ArrayList<TaggedWord> taggedWords, String variable){
         int count = 0;
 

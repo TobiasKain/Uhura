@@ -21,8 +21,10 @@ public class NL2CNLTranslator {
     public List<String> translate(String sentence){
         List<String> translations = new ArrayList<>();
 
+        sentence = sentence.replaceAll("\\."," .");
+
         for (TranslationPattern tp:translationPatterns) {
-            if(sentence.matches(tp.getRegexPattern()))
+            if(sentence.toLowerCase().matches(tp.getRegexPattern().toLowerCase()))
             {
                 translations = splitSentences(translateSentence(sentence,tp));
                 return translations;
@@ -52,10 +54,10 @@ public class NL2CNLTranslator {
         {
             if(isVariable(patternParts.get(0))){
                 String variable = patternParts.get(0);
-                String nextWord = patternParts.get(1);
+                String nextWord = patternParts.get(1).toLowerCase();
                 String replaceSequence = "";
 
-                while (!sentenceParts.get(0).equals(nextWord)){
+                while (!sentenceParts.get(0).toLowerCase().equals(nextWord)){
                     replaceSequence += sentenceParts.get(0) + " ";
                     sentenceParts.remove(0);
                 }
@@ -64,7 +66,7 @@ public class NL2CNLTranslator {
                 translatedSentence = translatedSentence.replaceAll(variable,replaceSequence.trim());
             }
             else {
-                if(patternParts.get(0).equals(sentenceParts.get(0))) {
+                if(patternParts.get(0).toLowerCase().equals(sentenceParts.get(0).toLowerCase())) {
                     patternParts.remove(0);
                     sentenceParts.remove(0);
                 }

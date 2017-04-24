@@ -163,8 +163,8 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Dictionary">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#addWordClicked" text="Add Word ..." />
-                  <MenuItem mnemonicParsing="false" onAction="#openDictionaryClicked" text="Open Dictionary ..." />
+                <MenuItem mnemonicParsing="false" onAction="#addWordClicked" text="Add Word" />
+                  <MenuItem mnemonicParsing="false" onAction="#openDictionaryClicked" text="Open Dictionary" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Translation">
@@ -177,6 +177,9 @@
                      </toggleGroup>
                   </RadioMenuItem>
                   <RadioMenuItem mnemonicParsing="false" onAction="#rmiManualTranslationSelected" text="Manual Translation" toggleGroup="$translationType" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#addTranslationPatternClicked" text="Add Translation Pattern" />
+                  <MenuItem mnemonicParsing="false" onAction="#showTranslationPatternsClicked" text="Show Translation Patterns" />
               </items>
             </Menu>
         </menus>

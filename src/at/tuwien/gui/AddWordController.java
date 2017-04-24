@@ -50,9 +50,24 @@ public class AddWordController implements Initializable {
         word.setWord(tfWord.getText());
         word.setWordType((WordType)cbWordType.getValue());
 
-        directoryService.addWord(word);
+        if(checkInput()) {
+            directoryService.addWord(word);
 
-        closeStage();
+            closeStage();
+        }
+    }
+
+    private boolean checkInput(){
+        if(tfWord.getText().isEmpty()){
+            ErrorDialog.showErrorDialog("Word field is empty.");
+            return false;
+        }
+        if(tfWord.getText().length() > 255){
+            ErrorDialog.showErrorDialog("Word is too long.");
+            return false;
+        }
+
+        return true;
     }
 
     private void closeStage() {
