@@ -246,4 +246,48 @@ public class MainGuiController implements Initializable{
     public void btnTranslateClicked(ActionEvent actionEvent) {
         translate();
     }
+
+    public void addTranslationPatternClicked(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("add_translation_pattern.fxml"));
+
+            Stage stage = new Stage();
+
+            /* block parent window */
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(btnSolve.getScene().getWindow());
+
+            /* set the scene */
+            stage.setScene(new Scene(loader.load(), 411, 206));
+            stage.setTitle("add translation pattern");
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mainGuiService.updatedTranslationPatterns();
+    }
+
+    public void showTranslationPatternsClicked(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("translation_patterns.fxml"));
+
+            Stage stage = new Stage();
+
+            /* block parent window */
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(btnSolve.getScene().getWindow());
+
+            /* set the scene */
+            stage.setScene(new Scene(loader.load(), 900, 400));
+            stage.setTitle("Translation Patterns");
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mainGuiService.updateDirectory();
+    }
 }

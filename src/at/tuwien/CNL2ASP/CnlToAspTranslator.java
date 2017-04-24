@@ -4,9 +4,11 @@ import at.tuwien.CNL2ASP.sentences.AristotleSentences;
 import at.tuwien.CNL2ASP.sentences.ComplexSentences;
 import at.tuwien.CNL2ASP.sentences.DefaultSentences;
 import at.tuwien.CNL2ASP.sentences.SimpleSentences;
+import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.asp.AspRule;
 import at.tuwien.entity.asp.Translation;
+import at.tuwien.nl2cln.NL2CNLTranslator;
 import edu.stanford.nlp.ling.TaggedWord;
 
 import java.util.ArrayList;
@@ -22,8 +24,9 @@ public class CnlToAspTranslator {
     private ComplexSentences complexSentences;
     private DefaultSentences defaultSentences;
     private AristotleSentences aristotleSentences;
+    private NL2CNLTranslator nl2CNLTranslator;
 
-    public CnlToAspTranslator(List<String> inputStrings, List<Word> directory) {
+    public CnlToAspTranslator(List<String> inputStrings, List<Word> directory, List<TranslationPattern> translationPatterns) {
         this.inputStrings = inputStrings;
 
         WordDetector wordDetector = new WordDetector(directory);
@@ -32,6 +35,7 @@ public class CnlToAspTranslator {
         complexSentences = new ComplexSentences(wordDetector,this);
         defaultSentences = new DefaultSentences(wordDetector);
         aristotleSentences = new AristotleSentences(wordDetector);
+        nl2CNLTranslator = new NL2CNLTranslator(translationPatterns);
     }
 
     public Translation translate()
@@ -51,11 +55,42 @@ public class CnlToAspTranslator {
                     aspRules.add(translateSentence(sentence));
                 }
             } catch (SentenceValidationException e) {
-                errors.add(String.format("Error in sentence \"%s\": %s",sentence, e.getMessage()));
+                List<AspRule> result = null;
+                try {
+                    result = translateNlSentence(sentence);
+                    if(result == null) {
+                        errors.add(String.format("Error in sentence \"%s\": %s", sentence, e.getMessage()));
+                    }else {
+                        aspRules.addAll(result);
+                    }
+                } catch (SentenceValidationException e1) {
+                    errors.add(String.format("Error in sentence \"%s\": %s", sentence, e.getMessage()));
+                }
             }
         }
 
         return translation;
+    }
+
+    private List<AspRule> translateNlSentence(String sentence) throws SentenceValidationException {
+        List<AspRule> aspRules = new ArrayList<>();
+
+        List<String> clnSentences = nl2CNLTranslator.translate(sentence);
+
+        if(clnSentences.isEmpty())
+        {
+            return null;
+        }
+
+        for (String s: clnSentences) {
+            try {
+                aspRules.add(translateSentence(s));
+            } catch (SentenceValidationException e) {
+                throw new SentenceValidationException(String.format("Error in translated CLN sentence \"%s\": %s",s,e.getMessage()));
+            }
+        }
+
+        return aspRules;
     }
 
 

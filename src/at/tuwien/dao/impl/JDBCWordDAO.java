@@ -48,8 +48,6 @@ public class JDBCWordDAO implements WordDAO {
             createStatement.setString(2, word.getWordType().name());
             createStatement.executeUpdate();
 
-            ResultSet generatedKey = createStatement.getGeneratedKeys();
-
             sequenceStatement.close();
             createStatement.close();
 

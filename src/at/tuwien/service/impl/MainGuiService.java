@@ -2,10 +2,13 @@ package at.tuwien.service.impl;
 
 import at.tuwien.CNL2ASP.*;
 import at.tuwien.dao.DaoException;
+import at.tuwien.dao.TranslationPatternDAO;
 import at.tuwien.dao.WordDAO;
+import at.tuwien.dao.impl.JDBCTranslationPatternDAO;
 import at.tuwien.dao.impl.JDBCWordDAO;
 import at.tuwien.dlv.DLVProgramExecutor;
 import at.tuwien.dlv.DLVProgramGenerator;
+import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.asp.Translation;
 import at.tuwien.service.IMainGuiService;
@@ -24,6 +27,9 @@ public class MainGuiService implements IMainGuiService {
     private List<Word> directory;
     private WordDAO wordDAO;
 
+    private List<TranslationPattern> translationPatterns;
+    private TranslationPatternDAO translationPatternDAO;
+
     public MainGuiService() {
         directory = new ArrayList<>();
         try {
@@ -32,6 +38,14 @@ public class MainGuiService implements IMainGuiService {
             e.printStackTrace();
         }
         updateDirectory();
+
+        translationPatterns = new ArrayList<>();
+        try {
+            translationPatternDAO = new JDBCTranslationPatternDAO();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        updatedTranslationPatterns();
     }
 
     @Override
@@ -46,9 +60,21 @@ public class MainGuiService implements IMainGuiService {
     }
 
     @Override
+    public void updatedTranslationPatterns(){
+        translationPatterns.clear();
+
+        try {
+
+            translationPatterns.addAll(translationPatternDAO.readAllTranslationPatterns());
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public Translation translate(String cnlSentences) {
 
-        CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(splitSentences(cnlSentences), directory);
+        CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(splitSentences(cnlSentences), directory, translationPatterns);
 
         Translation translation = cnlToAspTranslator.translate();
 
