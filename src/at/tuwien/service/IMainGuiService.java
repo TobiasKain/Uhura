@@ -13,7 +13,7 @@ public interface IMainGuiService {
     void updateDirectory();
     void updatedTranslationPatterns();
 
-    Translation translate(String cnlSentences);
+    Translation translate(String cnlSentences) throws DLVException;
 
     List<String> solve(String aspRules, String filter) throws DLVException;
 }

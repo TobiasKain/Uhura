@@ -238,18 +238,12 @@ public class MainGuiController implements Initializable{
 
     }
 
-    public void miTranslateClicked(ActionEvent actionEvent) {
-        translate();
-    }
-
     public void rmiAutomaticTranslationSelected(ActionEvent actionEvent) {
         translationType = TranslationType.AUTOMATIC;
-        btnTranslate.setVisible(false);
     }
 
     public void rmiManualTranslationSelected(ActionEvent actionEvent) {
         translationType = TranslationType.MANUAL;
-        btnTranslate.setVisible(true);
     }
 
     public void btnTranslateClicked(ActionEvent actionEvent) {

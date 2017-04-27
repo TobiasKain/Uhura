@@ -41,7 +41,7 @@
                               </Label>
                            </center>
                            <right>
-                              <Button fx:id="btnTranslate" mnemonicParsing="false" onAction="#btnTranslateClicked" text="Translate" visible="false" BorderPane.alignment="CENTER">
+                              <Button fx:id="btnTranslate" mnemonicParsing="false" onAction="#btnTranslateClicked" text="Translate" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
                                     <Insets />
                                  </BorderPane.margin>
@@ -169,8 +169,6 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Translation">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#miTranslateClicked" text="Translate CNL to ASP" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
                   <RadioMenuItem mnemonicParsing="false" onAction="#rmiAutomaticTranslationSelected" selected="true" text="Automatic Translation">
                      <toggleGroup>
                         <ToggleGroup fx:id="translationType" />

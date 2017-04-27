@@ -106,17 +106,17 @@ public class DLVProgramGenerator {
         return literalString;
     }
 
-    public String getCode(Program program) {
+    public String getCode(Program program) throws DLVException {
 
         String code = "";
 
         for (Rule rule: program.getRules()) {
-            if(rule.toString() == null)
+            try {
+                code += rule + "\n";
+            }catch (Exception e)
             {
-                continue;
+                throw new DLVException("Check sentences for unsupported characters.");
             }
-
-            code += rule + "\n";
         }
 
         return code;

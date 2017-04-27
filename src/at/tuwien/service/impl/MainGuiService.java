@@ -73,7 +73,7 @@ public class MainGuiService implements IMainGuiService {
     }
 
     @Override
-    public Translation translate(String cnlSentences) {
+    public Translation translate(String cnlSentences) throws DLVException {
 
         CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(splitSentences(cnlSentences), directory, translationPatterns);
 
