@@ -60,7 +60,7 @@ public class DefaultSentences {
 
         aspRule.getHead().add(literal1);
         aspRule.getBody().add(literal2);
-        aspRule.getBody().add(literal3);
+        //aspRule.getBody().add(literal3);
         aspRule.getBody().add(literal4);
 
         return aspRule;
@@ -105,7 +105,7 @@ public class DefaultSentences {
 
         aspRule.getHead().add(literal1);
         aspRule.getBody().add(literal2);
-        aspRule.getBody().add(literal3);
+        //aspRule.getBody().add(literal3);
         aspRule.getBody().add(literal4);
 
         return aspRule;
@@ -143,7 +143,7 @@ public class DefaultSentences {
 
         aspRule.getHead().add(literal1);
         aspRule.getBody().add(literal2);
-        aspRule.getBody().add(literal3);
+        //aspRule.getBody().add(literal3);
         aspRule.getBody().add(literal4);
 
         return aspRule;

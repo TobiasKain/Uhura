@@ -133,7 +133,7 @@ public class CnlToAspTranslator {
                     error = e.getMessage();
             }
         }
-        if (aspRule == null && sentence.matches(".* is abnormal with respect to .*\\.$" ))
+        /*if (aspRule == null && sentence.matches(".* is abnormal with respect to .*\\.$" ))
         {
             try {
                 aspRule = defaultSentences.pNounIsAbnormalWithRespectToDefaultRuleTag((ArrayList<TaggedWord>) taggedWords.clone());
@@ -141,7 +141,7 @@ public class CnlToAspTranslator {
                 if(error == null)
                     error = e.getMessage();
             }
-        }
+        }*/
         if (aspRule == null && sentence.matches(".* normally are(n't | n't | not | ).*\\.$" ))
         {
             try {
