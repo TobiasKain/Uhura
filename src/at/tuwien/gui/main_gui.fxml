@@ -159,6 +159,7 @@
             <items>
               <MenuItem fx:id="miOpenFile" mnemonicParsing="false" onAction="#openFileClicked" text="Open ..." />
                   <MenuItem fx:id="miSaveFile" mnemonicParsing="false" onAction="#saveFileClicked" text="Save ..." />
+                  <MenuItem mnemonicParsing="false" onAction="#exportASPClicked" text="Export ASP ..." />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Dictionary">

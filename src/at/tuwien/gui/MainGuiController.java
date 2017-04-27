@@ -293,4 +293,27 @@ public class MainGuiController implements Initializable{
 
         mainGuiService.updateDirectory();
     }
+
+    public void exportASPClicked(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export ASP program");
+
+        Stage stage = (Stage) btnSolve.getScene().getWindow();
+
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+
+            String path = file.getPath();
+            if(!file.getPath().endsWith(".dl"))
+            {
+                path += ".dl";
+            }
+
+            try(  PrintWriter out = new PrintWriter( path) ){
+                out.println( taASP.getText() );
+            } catch (FileNotFoundException e) {
+                taError.appendText(e.getMessage());
+            }
+        }
+    }
 }
