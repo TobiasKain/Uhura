@@ -1,21 +1,17 @@
 package at.tuwien.gui;
 
-import at.tuwien.dlv.DLVException;
 import at.tuwien.service.IMainGuiService;
 import at.tuwien.service.impl.MainGuiService;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,108 +20,35 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainGuiController implements Initializable{
 
     @FXML
-    public TextArea taCNL;
-    @FXML
-    public TextArea taError;
-    @FXML
-    public TextArea taASP;
-    @FXML
-    public TextArea taModels;
-    @FXML
-    public TextField tfFilter;
-    @FXML
-    public Button btnSolve;
-    @FXML
     public MenuItem miOpenFile;
     @FXML
     public MenuItem miSaveFile;
     @FXML
-    public WebView wvSentencePatterns;
-    @FXML
-    public Button btnTranslate;
+    public TabPane tabPane;
+
+
+    public HashMap<Tab,TranslationTabController> tabTranslationTabControllerHashMap;
+
+    private static int tabCount = 1;
 
     private IMainGuiService mainGuiService;
-    private TranslationType translationType;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        tabTranslationTabControllerHashMap = new HashMap<>();
         mainGuiService = new MainGuiService();
-        try {
-            loadSentencePatterns();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        translationType = TranslationType.AUTOMATIC;
-    }
+        mainGuiService.setTranslationType(TranslationType.AUTOMATIC);
 
-    public void btnSolveClicked(ActionEvent actionEvent) {
-        taModels.setText("");
-
-
-        List<String> models = null;
-        try {
-            models = mainGuiService.solve(taASP.getText(),tfFilter.getText());
-
-            if(models.size() == 1){
-                taModels.setText(String.format("%d model found.%n%n", models.size()));
-            }
-            else {
-                taModels.setText(String.format("%d models found.%n%n", models.size()));
-            }
-
-            int modelNumber = 1;
-            for (String model: models) {
-                model = model.replaceAll("\\.\n", ", ");
-                if(model.contains(",")) {
-                    model = model.substring(0, model.lastIndexOf(", "));
-                }
-                taModels.appendText(String.format("Model %d: {%s}%n", modelNumber, model));
-                modelNumber ++;
-            }
-        } catch (DLVException e) {
-            taModels.setText(e.getMessage());
-        }
-
-
-    }
-
-    public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
-        if(translationType == TranslationType.AUTOMATIC) {
-            if (keyEvent.getText().equals(".") ||
-                    (taCNL.getCaretPosition() <= taCNL.getText().lastIndexOf('.') && !keyEvent.getText().equals("")) ||
-                    (keyEvent.getText().equals("v") && (keyEvent.isMetaDown() || keyEvent.isControlDown())) ||  // check CMD + V
-                    keyEvent.getCode().equals(KeyCode.BACK_SPACE) || keyEvent.getCode().equals(KeyCode.DELETE)) {
-                translate();
-            }
-        }
-    }
-
-    Thread thread;
-
-    private void translate() {
-
-        TranslatorThread translatorThread;
-
-        translatorThread = new TranslatorThread(taCNL,taError,taASP);
-
-        if(thread == null)
-        {
-            thread = new Thread(translatorThread);
-            thread.start();
-        } else {
-            thread.stop();
-            thread = new Thread(translatorThread);
-            thread.start();
-        }
+        createNewTab();
     }
 
     public void openFileClicked(ActionEvent actionEvent) {
@@ -136,7 +59,7 @@ public class MainGuiController implements Initializable{
                 new FileChooser.ExtensionFilter("TXT", "*.txt")
         );
 
-        Stage stage = (Stage) btnSolve.getScene().getWindow();
+        Stage stage = (Stage) tabPane.getScene().getWindow();
 
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -148,25 +71,50 @@ public class MainGuiController implements Initializable{
 
         try {
             List<String> lines = Files.readAllLines(file.toPath());
-            taCNL.setText("");
+            getControllerOfSelectedTab().taCNL.setText("");
 
             for (String line: lines) {
-                taCNL.appendText(line + "\n");
+                getControllerOfSelectedTab().taCNL.appendText(line + "\n");
             }
 
-            translate();
+            getSelectedTab().setText(file.getName());
+            getControllerOfSelectedTab().setFile(file);
+
+            getControllerOfSelectedTab().translate();
         } catch (IOException e) {
-            taError.appendText(e.getMessage());
+            getControllerOfSelectedTab().taError.appendText(e.getMessage());
         }
     }
 
     public void saveFileClicked(ActionEvent actionEvent) {
+        if(getControllerOfSelectedTab().getFile() != null)
+        {
+            saveCLN(getControllerOfSelectedTab().getFile());
+        }
+        else {
+            File file = showSaveDialog();
+            saveCLN(file);
+        }
+    }
+
+    public void saveAsFileClicked(ActionEvent actionEvent) {
+        File file = showSaveDialog();
+        saveCLN(file);
+    }
+
+    private File showSaveDialog(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save CNL problem description");
 
-        Stage stage = (Stage) btnSolve.getScene().getWindow();
+        Stage stage = (Stage) tabPane.getScene().getWindow();
 
         File file = fileChooser.showSaveDialog(stage);
+
+        return file;
+    }
+
+    private void saveCLN(File file){
+
         if (file != null) {
 
             String path = file.getPath();
@@ -176,19 +124,13 @@ public class MainGuiController implements Initializable{
             }
 
             try(  PrintWriter out = new PrintWriter( path) ){
-                out.println( taCNL.getText() );
+                out.println( getControllerOfSelectedTab().taCNL.getText() );
             } catch (FileNotFoundException e) {
-                taError.appendText(e.getMessage());
+                getControllerOfSelectedTab().taError.appendText(e.getMessage());
             }
+
+            getSelectedTab().setText(file.getName());
         }
-    }
-
-    private void loadSentencePatterns() throws URISyntaxException {
-
-        WebEngine webEngine = wvSentencePatterns.getEngine();
-
-        File f = new File(getClass().getResource("sentences.htm").toURI());
-        webEngine.load(f.toURI().toString());
     }
 
     public void addWordClicked(ActionEvent actionEvent) {
@@ -200,7 +142,7 @@ public class MainGuiController implements Initializable{
 
             /* block parent window */
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(btnSolve.getScene().getWindow());
+            stage.initOwner(tabPane.getScene().getWindow());
 
             /* set the scene */
             stage.setScene(new Scene(loader.load(), 391, 59));
@@ -223,7 +165,7 @@ public class MainGuiController implements Initializable{
 
             /* block parent window */
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(btnSolve.getScene().getWindow());
+            stage.initOwner(tabPane.getScene().getWindow());
 
             /* set the scene */
             stage.setScene(new Scene(loader.load(), 538, 400));
@@ -239,15 +181,11 @@ public class MainGuiController implements Initializable{
     }
 
     public void rmiAutomaticTranslationSelected(ActionEvent actionEvent) {
-        translationType = TranslationType.AUTOMATIC;
+        mainGuiService.setTranslationType(TranslationType.AUTOMATIC);
     }
 
     public void rmiManualTranslationSelected(ActionEvent actionEvent) {
-        translationType = TranslationType.MANUAL;
-    }
-
-    public void btnTranslateClicked(ActionEvent actionEvent) {
-        translate();
+        mainGuiService.setTranslationType(TranslationType.MANUAL);
     }
 
     public void addTranslationPatternClicked(ActionEvent actionEvent) {
@@ -258,7 +196,7 @@ public class MainGuiController implements Initializable{
 
             /* block parent window */
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(btnSolve.getScene().getWindow());
+            stage.initOwner(tabPane.getScene().getWindow());
 
             /* set the scene */
             stage.setScene(new Scene(loader.load(), 411, 206));
@@ -280,7 +218,7 @@ public class MainGuiController implements Initializable{
 
             /* block parent window */
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(btnSolve.getScene().getWindow());
+            stage.initOwner(tabPane.getScene().getWindow());
 
             /* set the scene */
             stage.setScene(new Scene(loader.load(), 900, 400));
@@ -295,10 +233,11 @@ public class MainGuiController implements Initializable{
     }
 
     public void exportASPClicked(ActionEvent actionEvent) {
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Export ASP program");
 
-        Stage stage = (Stage) btnSolve.getScene().getWindow();
+        Stage stage = (Stage) tabPane.getScene().getWindow();
 
         File file = fileChooser.showSaveDialog(stage);
         if (file != null) {
@@ -310,10 +249,45 @@ public class MainGuiController implements Initializable{
             }
 
             try(  PrintWriter out = new PrintWriter( path) ){
-                out.println( taASP.getText() );
+                out.println( getControllerOfSelectedTab().taASP.getText() );
             } catch (FileNotFoundException e) {
-                taError.appendText(e.getMessage());
+                getControllerOfSelectedTab().taError.appendText(e.getMessage());
             }
         }
+    }
+
+
+    private boolean firstStart = true;  // Workaround: addTabClicked is called before initialize => e.g. translationTabControllerList == NULL
+    public void addTabClicked(Event event) {
+        if(!firstStart) {
+            createNewTab();
+        }
+        firstStart = false;
+    }
+
+    public void createNewTab(){
+        try {
+            Tab tab = new Tab(String.format("new Tab (%d)",tabCount++));
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Node n = fxmlLoader.load(getClass().getResource("translation_tab.fxml").openStream());
+
+            TranslationTabController translationTabController = (TranslationTabController) fxmlLoader.getController();
+            translationTabController.setMainGuiService(mainGuiService);
+            tabTranslationTabControllerHashMap.put(tab,translationTabController);
+
+            tab.setContent(n);
+            tabPane.getTabs().add(tabPane.getTabs().size()-1,tab);
+            tabPane.getSelectionModel().select(tab);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private TranslationTabController getControllerOfSelectedTab(){
+        return tabTranslationTabControllerHashMap.get(tabPane.getSelectionModel().getSelectedItem());
+    }
+
+    private Tab getSelectedTab(){
+        return tabPane.getSelectionModel().getSelectedItem();
     }
 }

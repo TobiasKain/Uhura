@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<SplitPane dividerPositions="0.7" orientation="VERTICAL" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.tuwien.gui.TranslationTabController">
+   <items>
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+         <items>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <GridPane BorderPane.alignment="CENTER">
+                     <children>
+                        <TextArea fx:id="taCNL" onKeyReleased="#tfCnlOnKeyPressed" prefHeight="200.0" prefWidth="200.0" promptText="insert problem description ..." />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </center>
+               <top>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <center>
+                        <Label alignment="TOP_CENTER" text="CNL" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </center>
+                     <right>
+                        <Button fx:id="btnTranslate" mnemonicParsing="false" onAction="#btnTranslateClicked" text="Translate" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                        </Button>
+                     </right>
+                     <BorderPane.margin>
+                        <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
+                     </BorderPane.margin>
+                  </BorderPane>
+               </top>
+            </BorderPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <GridPane BorderPane.alignment="CENTER">
+                     <children>
+                        <TextArea fx:id="taASP" prefHeight="200.0" prefWidth="200.0">
+                           <font>
+                              <Font name="Monospaced Regular" size="13.0" />
+                           </font>
+                        </TextArea>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </center>
+               <top>
+                  <Label alignment="TOP_CENTER" text="ASP" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </top>
+            </BorderPane>
+         </items>
+      </SplitPane>
+      <GridPane>
+         <children>
+            <GridPane>
+               <children>
+                  <TabPane fx:id="infoTabs">
+                     <tabs>
+                        <Tab closable="false" text="Errors">
+                           <content>
+                              <TextArea fx:id="taError" editable="false" prefHeight="200.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                        <Tab closable="false" text="Sentence Patterns">
+                           <content>
+                              <WebView fx:id="wvSentencePatterns" prefHeight="200.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                        <Tab closable="false" text="Solver">
+                           <content>
+                              <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                 <center>
+                                    <TextArea fx:id="taModels" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER" />
+                                 </center>
+                                 <top>
+                                    <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" spacing="20.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label text="Filter:" />
+                                          <TextField fx:id="tfFilter" prefHeight="27.0" prefWidth="240.0" promptText="predicates (comma-separated)" />
+                                          <Button fx:id="btnSolve" mnemonicParsing="false" onAction="#btnSolveClicked" text="Solve">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <BorderPane.margin>
+                                          <Insets bottom="8.0" top="8.0" />
+                                       </BorderPane.margin>
+                                    </HBox>
+                                 </top>
+                              </BorderPane>
+                           </content>
+                        </Tab>
+                     </tabs>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TabPane>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+   </items>
+</SplitPane>

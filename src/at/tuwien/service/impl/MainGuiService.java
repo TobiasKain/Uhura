@@ -12,6 +12,7 @@ import at.tuwien.dlv.DLVProgramGenerator;
 import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.asp.Translation;
+import at.tuwien.gui.TranslationType;
 import at.tuwien.service.IMainGuiService;
 import it.unical.mat.dlv.program.Program;
 
@@ -30,6 +31,8 @@ public class MainGuiService implements IMainGuiService {
 
     private List<TranslationPattern> translationPatterns;
     private TranslationPatternDAO translationPatternDAO;
+
+    private TranslationType translationType;
 
     public MainGuiService() {
         directory = new ArrayList<>();
@@ -95,6 +98,16 @@ public class MainGuiService implements IMainGuiService {
         List<String> models = dlvProgramExecutor.executeProgram(program,filter);
 
         return models;
+    }
+
+    @Override
+    public TranslationType getTranslationType() {
+        return translationType;
+    }
+
+    @Override
+    public void setTranslationType(TranslationType translationType) {
+        this.translationType = translationType;
     }
 
     private List<String> splitSentences(String cnlSentences)
