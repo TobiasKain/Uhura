@@ -80,9 +80,7 @@ public class MainGuiService implements IMainGuiService {
         Translation translation = cnlToAspTranslator.translate();
 
         DLVProgramGenerator dlvProgramGenerator = new DLVProgramGenerator();
-        Program program = dlvProgramGenerator.generateDlvProgram(translation.getAspRules());
-
-        translation.setAspCode(dlvProgramGenerator.getCode(program));
+        translation.setAspCode(dlvProgramGenerator.generateDlvProgram(translation.getAspRules()));
 
         return translation;
     }
@@ -101,19 +99,41 @@ public class MainGuiService implements IMainGuiService {
 
     private List<String> splitSentences(String cnlSentences)
     {
-        cnlSentences = cnlSentences.replaceAll("\n"," ");
         List<String> sentenceList = new LinkedList<String>(Arrays.asList(cnlSentences.split("\\.")));
+        List<String> resultList = new ArrayList<>();
 
         if(cnlSentences.lastIndexOf('.') != cnlSentences.length()-1) // check if last character is .
         {
             sentenceList.remove(sentenceList.size()-1);
         }
 
-        for (int i = 0; i < sentenceList.size(); i++) {
-            sentenceList.set(i,sentenceList.get(i) + ".");
+        for (String s : sentenceList) {
+
+            for(int i = 0; i < countNewLines(s); i++){
+                resultList.add("\n");
+            }
+            s = s.replaceAll("\n","");
+
+            resultList.add(s.trim() + ".");
         }
 
-        return sentenceList;
+        return resultList;
+    }
+
+    private int countNewLines(String sentence){
+        int newLineCount = 0;
+
+        for(int i = 0; i < sentence.length(); i++){
+            if(sentence.charAt(i) == ' '){
+                continue;
+            } else if(sentence.charAt(i) == '\n'){
+                newLineCount ++;
+            } else {
+                return newLineCount;
+            }
+        }
+
+        return newLineCount;
     }
 
 }

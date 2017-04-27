@@ -7,6 +7,7 @@ import at.tuwien.CNL2ASP.sentences.SimpleSentences;
 import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.asp.AspRule;
+import at.tuwien.entity.asp.NewLine;
 import at.tuwien.entity.asp.Translation;
 import at.tuwien.nl2cln.NL2CNLTranslator;
 import edu.stanford.nlp.ling.TaggedWord;
@@ -50,7 +51,9 @@ public class CnlToAspTranslator {
 
         for (String sentence: inputStrings) {
             try {
-                if(!sentence.trim().startsWith("//") &&
+                if(sentence.equals("\n")){
+                    aspRules.add(new NewLine());
+                } else if(!sentence.trim().startsWith("//") &&
                         !sentence.trim().startsWith("%")) {     // check if sentence is a comment
                     aspRules.add(translateSentence(sentence));
                 }

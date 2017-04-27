@@ -2,17 +2,19 @@ package at.tuwien.dlv;
 
 import at.tuwien.entity.asp.AspRule;
 import at.tuwien.entity.asp.Literal;
+import at.tuwien.entity.asp.NewLine;
 import it.unical.mat.dlv.program.Program;
 import it.unical.mat.dlv.program.Rule;
+import org.h2.util.New;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class DLVProgramGenerator {
 
-    public Program generateDlvProgram(List<AspRule> rules){
+    public String generateDlvProgram(List<AspRule> rules){
 
-        Program program = new Program();
+        String program = "";
 
         for (AspRule rule:rules)
         {
@@ -21,49 +23,48 @@ public class DLVProgramGenerator {
                 continue;
             }
 
+            if(rule instanceof NewLine){
+                program += "\n";
+                continue;
+            }
+
             String ruleString = "";
 
-            if(!rule.getHead().isEmpty())
-            {
-                if(rule.isOr()) {
+            if (!rule.getHead().isEmpty()) {
+                if (rule.isOr()) {
                     for (Literal literal : rule.getHead()) {
-                        if(literal.isNegated()){
+                        if (literal.isNegated()) {
                             ruleString += " - ";
                         }
                         ruleString += generateDlvLiteral(literal) + " v ";
                     }
                     ruleString = ruleString.substring(0, ruleString.lastIndexOf(" v "));  // remove last 'v'
-                }
-                else {
+                } else {
                     // TODO throw exception if head > 1
-                    if(rule.getHead().get(0).isNegated())
-                    {
+                    if (rule.getHead().get(0).isNegated()) {
                         ruleString += " - ";
                     }
                     ruleString += generateDlvLiteral(rule.getHead().get(0));
                 }
             }
 
-            if(!rule.getBody().isEmpty())
-            {
+            if (!rule.getBody().isEmpty()) {
                 ruleString += " :- ";
-                for (Literal literal:rule.getBody()) {
-                    if(literal.isNegated()){
+                for (Literal literal : rule.getBody()) {
+                    if (literal.isNegated()) {
                         ruleString += " not ";
                     }
-                    if(literal.isStrongNegated()){
+                    if (literal.isStrongNegated()) {
                         ruleString += "-";
                     }
                     ruleString += generateDlvLiteral(literal) + ", ";
                 }
-                ruleString = ruleString.substring(0,ruleString.lastIndexOf(", "));  // remove last ','
+                ruleString = ruleString.substring(0, ruleString.lastIndexOf(", "));  // remove last ','
             }
 
             ruleString += ".";
 
-            program.add(new Rule(ruleString));
-
-            // TODO check if rule.toString() == null // check with "person X holds more than two jobs Y"
+            program += ruleString.trim();
         }
 
         return program;
