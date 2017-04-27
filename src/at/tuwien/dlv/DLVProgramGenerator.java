@@ -69,7 +69,7 @@ public class DLVProgramGenerator {
         return program;
     }
 
-    public Program generateDlvProgram(String rules) {
+    public Program generateDlvProgram(String rules) throws DLVException {
         Program program = new Program();
 
         rules = rules.replaceAll("\n", "");
@@ -77,7 +77,11 @@ public class DLVProgramGenerator {
         List<String> ruleList = Arrays.asList(rules.split("\\."));
 
         for (String rule: ruleList) {
-            program.add(new Rule(rule + "."));
+            try {
+                program.add(new Rule(rule + "."));
+            }catch (Exception e){
+                throw new DLVException(e.getMessage());
+            }
         }
 
         return program;

@@ -6,6 +6,7 @@ import at.tuwien.dao.TranslationPatternDAO;
 import at.tuwien.dao.WordDAO;
 import at.tuwien.dao.impl.JDBCTranslationPatternDAO;
 import at.tuwien.dao.impl.JDBCWordDAO;
+import at.tuwien.dlv.DLVException;
 import at.tuwien.dlv.DLVProgramExecutor;
 import at.tuwien.dlv.DLVProgramGenerator;
 import at.tuwien.entity.TranslationPattern;
@@ -87,8 +88,7 @@ public class MainGuiService implements IMainGuiService {
     }
 
     @Override
-    public List<String> solve(String aspRules, String filter)
-    {
+    public List<String> solve(String aspRules, String filter) throws DLVException {
         DLVProgramGenerator dlvProgramGenerator = new DLVProgramGenerator();
 
         Program program = dlvProgramGenerator.generateDlvProgram(aspRules);

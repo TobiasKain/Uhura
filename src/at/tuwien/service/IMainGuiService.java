@@ -1,5 +1,6 @@
 package at.tuwien.service;
 
+import at.tuwien.dlv.DLVException;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.asp.Translation;
 
@@ -14,5 +15,5 @@ public interface IMainGuiService {
 
     Translation translate(String cnlSentences);
 
-    List<String> solve(String aspRules, String filter);
+    List<String> solve(String aspRules, String filter) throws DLVException;
 }

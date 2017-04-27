@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class DLVProgramExecutor {
 
-    public List<String> executeProgram(Program program, String pfilter){
+    public List<String> executeProgram(Program program, String pfilter) throws DLVException {
 
         DLVInvocation invocation= DLVWrapper.getInstance(). createInvocation("/Users/tobiaskain/dlv.i386-apple-darwin.bin");
 
@@ -39,10 +39,10 @@ public class DLVProgramExecutor {
 
             invocation.waitUntilExecutionFinishes();
 
-        } catch (DLVInvocationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (DLVInvocationException | IOException e) {
+            throw new DLVException(e.getMessage());
+        } catch (NullPointerException e){
+            throw new DLVException("Couldn't solve APS Code. Check rules for errors!");
         }
 
         return generateModelStringList(models);

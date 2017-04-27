@@ -30,56 +30,6 @@ public class AristotleSentences {
 
         String variable = "X";
 
-        Literal literal1 = new Literal(cNoun2, true);
-        literal1.getTerms().add(variable);
-
-        Literal literal2 = new Literal(cNoun1);
-        literal2.getTerms().add(variable);
-
-        AspRule aspRule = new AspRule();
-
-        aspRule.getBody().add(literal1);
-        aspRule.getBody().add(literal2);
-
-        return aspRule;
-    }
-
-    public AspRule allCNounAreAdjective(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
-        wordDetector.removeWord(taggedWords,"all");
-
-        String cNoun = wordDetector.getCNoun(taggedWords);
-
-        wordDetector.removeWord(taggedWords,"are");
-
-        String adjective = wordDetector.getAdjectiveAndOrPreposition(taggedWords);
-
-        String variable = "X";
-
-        Literal literal1 = new Literal(adjective, true);
-        literal1.getTerms().add(variable);
-
-        Literal literal2 = new Literal(cNoun);
-        literal2.getTerms().add(variable);
-
-        AspRule aspRule = new AspRule();
-
-        aspRule.getBody().add(literal1);
-        aspRule.getBody().add(literal2);
-
-        return aspRule;
-    }
-
-    public AspRule noCNounAreCNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
-        wordDetector.removeWord(taggedWords,"no");
-
-        String cNoun1 = wordDetector.getCNoun(taggedWords);
-
-        wordDetector.removeWord(taggedWords,"are");
-
-        String cNoun2 = wordDetector.getCNoun(taggedWords);
-
-        String variable = "X";
-
         Literal literal1 = new Literal(cNoun2);
         literal1.getTerms().add(variable);
 
@@ -88,14 +38,14 @@ public class AristotleSentences {
 
         AspRule aspRule = new AspRule();
 
-        aspRule.getBody().add(literal1);
+        aspRule.getHead().add(literal1);
         aspRule.getBody().add(literal2);
 
         return aspRule;
     }
 
-    public AspRule noCNounAreAdjective(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
-        wordDetector.removeWord(taggedWords,"no");
+    public AspRule allCNounAreAdjective(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+        wordDetector.removeWord(taggedWords,"all");
 
         String cNoun = wordDetector.getCNoun(taggedWords);
 
@@ -113,7 +63,57 @@ public class AristotleSentences {
 
         AspRule aspRule = new AspRule();
 
-        aspRule.getBody().add(literal1);
+        aspRule.getHead().add(literal1);
+        aspRule.getBody().add(literal2);
+
+        return aspRule;
+    }
+
+    public AspRule noCNounAreCNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+        wordDetector.removeWord(taggedWords,"no");
+
+        String cNoun1 = wordDetector.getCNoun(taggedWords);
+
+        wordDetector.removeWord(taggedWords,"are");
+
+        String cNoun2 = wordDetector.getCNoun(taggedWords);
+
+        String variable = "X";
+
+        Literal literal1 = new Literal(cNoun2,true);
+        literal1.getTerms().add(variable);
+
+        Literal literal2 = new Literal(cNoun1);
+        literal2.getTerms().add(variable);
+
+        AspRule aspRule = new AspRule();
+
+        aspRule.getHead().add(literal1);
+        aspRule.getBody().add(literal2);
+
+        return aspRule;
+    }
+
+    public AspRule noCNounAreAdjective(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
+        wordDetector.removeWord(taggedWords,"no");
+
+        String cNoun = wordDetector.getCNoun(taggedWords);
+
+        wordDetector.removeWord(taggedWords,"are");
+
+        String adjective = wordDetector.getAdjectiveAndOrPreposition(taggedWords);
+
+        String variable = "X";
+
+        Literal literal1 = new Literal(adjective,true);
+        literal1.getTerms().add(variable);
+
+        Literal literal2 = new Literal(cNoun);
+        literal2.getTerms().add(variable);
+
+        AspRule aspRule = new AspRule();
+
+        aspRule.getHead().add(literal1);
         aspRule.getBody().add(literal2);
 
         return aspRule;

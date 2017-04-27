@@ -1,5 +1,6 @@
 package at.tuwien.gui;
 
+import at.tuwien.dlv.DLVException;
 import at.tuwien.service.IMainGuiService;
 import at.tuwien.service.impl.MainGuiService;
 import javafx.event.ActionEvent;
@@ -69,24 +70,32 @@ public class MainGuiController implements Initializable{
     public void btnSolveClicked(ActionEvent actionEvent) {
         taModels.setText("");
 
-        List<String> models = mainGuiService.solve(taASP.getText(),tfFilter.getText());
 
-        if(models.size() == 1){
-            taModels.setText(String.format("%d model found.%n%n", models.size()));
-        }
-        else {
-            taModels.setText(String.format("%d models found.%n%n", models.size()));
-        }
+        List<String> models = null;
+        try {
+            models = mainGuiService.solve(taASP.getText(),tfFilter.getText());
 
-        int modelNumber = 1;
-        for (String model: models) {
-            model = model.replaceAll("\\.\n", ", ");
-            if(model.contains(",")) {
-                model = model.substring(0, model.lastIndexOf(", "));
+            if(models.size() == 1){
+                taModels.setText(String.format("%d model found.%n%n", models.size()));
             }
-            taModels.appendText(String.format("Model %d: {%s}%n", modelNumber, model));
-            modelNumber ++;
+            else {
+                taModels.setText(String.format("%d models found.%n%n", models.size()));
+            }
+
+            int modelNumber = 1;
+            for (String model: models) {
+                model = model.replaceAll("\\.\n", ", ");
+                if(model.contains(",")) {
+                    model = model.substring(0, model.lastIndexOf(", "));
+                }
+                taModels.appendText(String.format("Model %d: {%s}%n", modelNumber, model));
+                modelNumber ++;
+            }
+        } catch (DLVException e) {
+            taModels.setText(e.getMessage());
         }
+
+
     }
 
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
