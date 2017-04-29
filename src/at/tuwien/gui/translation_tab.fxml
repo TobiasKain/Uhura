@@ -17,17 +17,7 @@
          <items>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <GridPane BorderPane.alignment="CENTER">
-                     <children>
-                        <TextArea fx:id="taCNL" onKeyReleased="#tfCnlOnKeyPressed" prefHeight="200.0" prefWidth="200.0" promptText="insert problem description ..." />
-                     </children>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
+                  <StackPane fx:id="spCNL" />
                </center>
                <top>
                   <BorderPane BorderPane.alignment="CENTER">
@@ -53,21 +43,7 @@
             </BorderPane>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <GridPane BorderPane.alignment="CENTER">
-                     <children>
-                        <TextArea fx:id="taASP" prefHeight="200.0" prefWidth="200.0">
-                           <font>
-                              <Font name="Monospaced Regular" size="13.0" />
-                           </font>
-                        </TextArea>
-                     </children>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
+                  <StackPane fx:id="spASP" />
                </center>
                <top>
                   <Label alignment="TOP_CENTER" text="ASP" BorderPane.alignment="CENTER">

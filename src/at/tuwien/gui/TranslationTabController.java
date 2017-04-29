@@ -1,8 +1,9 @@
 package at.tuwien.gui;
 
 import at.tuwien.dlv.DLVException;
+import at.tuwien.entity.asp.Translation;
 import at.tuwien.service.IMainGuiService;
-import at.tuwien.service.impl.MainGuiService;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,8 +13,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -27,11 +32,7 @@ import java.util.ResourceBundle;
 public class TranslationTabController implements Initializable{
 
     @FXML
-    public TextArea taCNL;
-    @FXML
     public TextArea taError;
-    @FXML
-    public TextArea taASP;
     @FXML
     public TextArea taModels;
     @FXML
@@ -44,6 +45,13 @@ public class TranslationTabController implements Initializable{
     public TabPane infoTabs;
     @FXML
     public WebView wvSentencePatterns;
+    @FXML
+    public StackPane spCNL;
+    @FXML
+    public StackPane spASP;
+
+    public CodeArea caCNL;
+    public CodeArea caASP;
 
     private File file;
 
@@ -51,6 +59,16 @@ public class TranslationTabController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        caCNL = new CodeArea();
+        caCNL.setParagraphGraphicFactory(LineNumberFactory.get(caCNL));
+        caCNL.setOnKeyPressed(this::tfCnlOnKeyPressed);
+        spCNL.getChildren().add(new VirtualizedScrollPane<>(caCNL));
+
+        caASP = new CodeArea();
+        caASP.setParagraphGraphicFactory(LineNumberFactory.get(caASP));
+        spASP.getChildren().add(new VirtualizedScrollPane<>(caASP));
+
         try {
             loadSentencePatterns();
         } catch (URISyntaxException e) {
@@ -72,7 +90,7 @@ public class TranslationTabController implements Initializable{
 
         List<String> models = null;
         try {
-            models = mainGuiService.solve(taASP.getText(),tfFilter.getText());
+            models = mainGuiService.solve(caASP.getText(),tfFilter.getText());
 
             if(models.size() == 1){
                 taModels.setText(String.format("%d model found.%n%n", models.size()));
@@ -100,7 +118,7 @@ public class TranslationTabController implements Initializable{
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
         if(mainGuiService.getTranslationType() == TranslationType.AUTOMATIC) {
             if (keyEvent.getText().equals(".") ||
-                    (taCNL.getCaretPosition() <= taCNL.getText().lastIndexOf('.') && !keyEvent.getText().equals("")) ||
+                    (caCNL.getCaretPosition() <= caCNL.getText().lastIndexOf('.') && !keyEvent.getText().equals("")) ||
                     (keyEvent.getText().equals("v") && (keyEvent.isMetaDown() || keyEvent.isControlDown())) ||  // check CMD + V
                     keyEvent.getCode().equals(KeyCode.BACK_SPACE) || keyEvent.getCode().equals(KeyCode.DELETE)) {
                 translate();
@@ -112,9 +130,30 @@ public class TranslationTabController implements Initializable{
 
     public void translate() {
 
-        TranslatorThread translatorThread;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                caASP.replaceText("");
+                taError.setText("");
 
-        translatorThread = new TranslatorThread(taCNL,taError,taASP);
+                Translation translation = null;
+                try {
+                    translation = mainGuiService.translate(caCNL.getText());
+
+                    caASP.replaceText(translation.getAspCode());
+
+                    for (String error : translation.getErrors()) {
+                        taError.appendText(error + "\n");
+                    }
+                } catch (DLVException e) {
+                    taError.appendText(e.getMessage());
+                }
+            }
+        });
+
+       /* TranslatorThread translatorThread;
+
+        translatorThread = new TranslatorThread(caCNL,taError, caASP);
 
         if(thread == null)
         {
@@ -124,7 +163,7 @@ public class TranslationTabController implements Initializable{
             thread.stop();
             thread = new Thread(translatorThread);
             thread.start();
-        }
+        }*/
     }
 
     private void loadSentencePatterns() throws URISyntaxException {

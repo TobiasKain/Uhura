@@ -71,10 +71,10 @@ public class MainGuiController implements Initializable{
 
         try {
             List<String> lines = Files.readAllLines(file.toPath());
-            getControllerOfSelectedTab().taCNL.setText("");
+            getControllerOfSelectedTab().caCNL.replaceText("");
 
             for (String line: lines) {
-                getControllerOfSelectedTab().taCNL.appendText(line + "\n");
+                getControllerOfSelectedTab().caCNL.appendText(line + "\n");
             }
 
             getSelectedTab().setText(file.getName());
@@ -124,7 +124,7 @@ public class MainGuiController implements Initializable{
             }
 
             try(  PrintWriter out = new PrintWriter( path) ){
-                out.println( getControllerOfSelectedTab().taCNL.getText() );
+                out.println( getControllerOfSelectedTab().caCNL.getText() );
             } catch (FileNotFoundException e) {
                 getControllerOfSelectedTab().taError.appendText(e.getMessage());
             }
@@ -249,7 +249,7 @@ public class MainGuiController implements Initializable{
             }
 
             try(  PrintWriter out = new PrintWriter( path) ){
-                out.println( getControllerOfSelectedTab().taASP.getText() );
+                out.println( getControllerOfSelectedTab().caASP.getText() );
             } catch (FileNotFoundException e) {
                 getControllerOfSelectedTab().taError.appendText(e.getMessage());
             }
