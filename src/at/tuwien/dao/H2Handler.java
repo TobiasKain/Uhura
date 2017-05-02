@@ -3,6 +3,7 @@ package at.tuwien.dao;
 import at.tuwien.entity.WordType;
 import org.h2.jdbcx.JdbcDataSource;
 
+import java.io.File;
 import java.sql.*;
 
 public class H2Handler {
@@ -63,12 +64,31 @@ public class H2Handler {
     public static void setupDatabase() throws DaoException, SQLException {
 
         Statement stmt = getConnection().createStatement();
+        PreparedStatement pst;
+        ResultSet rs;
+
+        stmt.execute("DROP TABLE IF EXISTS Word;");
+        stmt.execute("DROP TABLE IF EXISTS TranslationPattern;");
+        stmt.execute("DROP TABLE IF EXISTS ManualTranslation;");
+
+        stmt.execute("DROP SEQUENCE IF EXISTS seq_wordID");
+        stmt.execute("DROP SEQUENCE IF EXISTS seq_translationPatternID");
+        stmt.execute("DROP SEQUENCE IF EXISTS seq_manualTranslationID");
 
         stmt.execute("CREATE SEQUENCE IF NOT EXISTS seq_wordID START WITH 0;");
         stmt.execute("CREATE TABLE IF NOT EXISTS Word (wordId BIGINT DEFAULT NEXTVAL('seq_wordID') PRIMARY KEY, word VARCHAR(255), wordType VARCHAR(255));");
 
         stmt.execute("CREATE SEQUENCE IF NOT EXISTS seq_translationPatternID START WITH 0;");
         stmt.execute("CREATE TABLE IF NOT EXISTS TranslationPattern (translationPatternId BIGINT DEFAULT NEXTVAL('seq_translationPatternID') PRIMARY KEY, nlSentence VARCHAR(1024), regex VARCHAR(1024), translation VARCHAR(1024));");
+
+        pst = getConnection().prepareStatement("SELECT seq_translationPatternID.NEXTVAL from dual");
+        rs = pst.executeQuery();
+        if(rs.next()) {
+            long seq_translationPatternID = rs.getLong(1);
+            if(seq_translationPatternID == 0){
+                executeSqlFile("translation_pattern_insert.sql");
+            }
+        }
 
         stmt.execute("CREATE SEQUENCE IF NOT EXISTS seq_manualTranslationID START WITH 0;");
         stmt.execute("CREATE TABLE IF NOT EXISTS ManualTranslation (manualTranslationId BIGINT DEFAULT NEXTVAL('seq_manualTranslationID') PRIMARY KEY, cnlSentence VARCHAR(1024), aspRule VARCHAR(1024));");

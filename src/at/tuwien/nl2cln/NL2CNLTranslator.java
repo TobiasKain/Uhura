@@ -63,7 +63,8 @@ public class NL2CNLTranslator {
                 }
                 patternParts.remove(0);
 
-                translatedSentence = translatedSentence.replaceAll(variable,replaceSequence.trim());
+                translatedSentence = translatedSentence.replaceAll(variable + " ",replaceSequence.trim() + " ");
+                translatedSentence = translatedSentence.replaceAll(" " + variable, " " + replaceSequence.trim());
             }
             else {
                 if(patternParts.get(0).toLowerCase().equals(sentenceParts.get(0).toLowerCase())) {
