@@ -4,6 +4,7 @@ import at.tuwien.dao.DaoException;
 import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.Word;
 import at.tuwien.service.IDirectoryService;
+import at.tuwien.service.IMainGuiService;
 import at.tuwien.service.ITranslationPatternService;
 import at.tuwien.service.impl.DirectoryService;
 import at.tuwien.service.impl.TranslationPatternService;
@@ -40,6 +41,7 @@ public class TranslationPatternsController implements Initializable{
     private ObservableList<TranslationPattern> translationPatterns = FXCollections.emptyObservableList();
 
     private ITranslationPatternService translationPatternService;
+    private IMainGuiService mainGuiService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -87,6 +89,7 @@ public class TranslationPatternsController implements Initializable{
                         try {
                             translationPatternService.deleteTranslationPattern(translationPattern);
                             loadData();
+                            mainGuiService.updatedTranslationPatterns();
                         } catch (DaoException e) {
                             e.printStackTrace();
                         }
@@ -113,5 +116,9 @@ public class TranslationPatternsController implements Initializable{
     private void closeStage() {
         Stage stage = (Stage) tvTranslationPatterns.getScene().getWindow();
         stage.close();
+    }
+
+    public void setMainGuiService(IMainGuiService mainGuiService) {
+        this.mainGuiService = mainGuiService;
     }
 }

@@ -98,10 +98,13 @@ public class CnlToAspTranslator {
         for (String s: clnSentences) {
             try {
                 aspRules.add(translateSentence(s));
+                aspRules.add(new NewLine());
             } catch (SentenceValidationException e) {
                 throw new SentenceValidationException(String.format("Error in translated CLN sentence \"%s\": %s",s,e.getMessage()));
             }
         }
+
+        aspRules.remove(aspRules.size()-1); // remove last new line
 
         return aspRules;
     }

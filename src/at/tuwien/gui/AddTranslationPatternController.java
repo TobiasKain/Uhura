@@ -2,6 +2,7 @@ package at.tuwien.gui;
 
 import at.tuwien.dao.DaoException;
 import at.tuwien.entity.TranslationPattern;
+import at.tuwien.service.IMainGuiService;
 import at.tuwien.service.impl.TranslationPatternService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ public class AddTranslationPatternController {
     public TextField tfNlSentence;
 
     private TranslationPatternService translationPatternService;
+    private IMainGuiService mainGuiService;
 
     public AddTranslationPatternController() {
         try {
@@ -39,6 +41,7 @@ public class AddTranslationPatternController {
             if(checkInput()) {
                 translationPatternService.addTranslationPattern(translationPattern);
                 closeStage();
+                mainGuiService.updatedTranslationPatterns();
             }
         } catch (DaoException e) {
             e.printStackTrace();
@@ -65,5 +68,9 @@ public class AddTranslationPatternController {
     private void closeStage() {
         Stage stage = (Stage) tfNlSentence.getScene().getWindow();
         stage.close();
+    }
+
+    public void setMainGuiService(IMainGuiService mainGuiService) {
+        this.mainGuiService = mainGuiService;
     }
 }

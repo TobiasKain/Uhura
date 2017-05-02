@@ -1,5 +1,6 @@
 package at.tuwien.gui;
 
+import at.tuwien.entity.asp.Translation;
 import at.tuwien.service.IMainGuiService;
 import at.tuwien.service.impl.MainGuiService;
 import javafx.event.ActionEvent;
@@ -151,6 +152,10 @@ public class MainGuiController implements Initializable{
             stage.setTitle("add word to dictionary");
 
             stage.show();
+
+            AddWordController addWordController = (AddWordController) loader.getController();
+            addWordController.setMainGuiService(mainGuiService);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -174,6 +179,9 @@ public class MainGuiController implements Initializable{
             stage.setTitle("Dictionary");
 
             stage.show();
+
+            DictionaryController dictionaryController = (DictionaryController) loader.getController();
+            dictionaryController.setMainGuiService(mainGuiService);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -205,6 +213,10 @@ public class MainGuiController implements Initializable{
             stage.setTitle("add translation pattern");
 
             stage.show();
+
+            AddTranslationPatternController addTranslationPatternController = (AddTranslationPatternController) loader.getController();
+            addTranslationPatternController.setMainGuiService(mainGuiService);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -227,6 +239,10 @@ public class MainGuiController implements Initializable{
             stage.setTitle("Translation Patterns");
 
             stage.show();
+
+            TranslationPatternsController translationPatternsController = (TranslationPatternsController) loader.getController();
+            translationPatternsController.setMainGuiService(mainGuiService);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

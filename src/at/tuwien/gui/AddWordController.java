@@ -4,6 +4,7 @@ import at.tuwien.dao.DaoException;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.WordType;
 import at.tuwien.service.IDirectoryService;
+import at.tuwien.service.IMainGuiService;
 import at.tuwien.service.impl.DirectoryService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +32,7 @@ public class AddWordController implements Initializable {
     public ChoiceBox cbWordType;
 
     private IDirectoryService directoryService;
+    private IMainGuiService mainGuiService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,6 +56,8 @@ public class AddWordController implements Initializable {
             directoryService.addWord(word);
 
             closeStage();
+
+            mainGuiService.updateDirectory();
         }
     }
 
@@ -73,5 +77,9 @@ public class AddWordController implements Initializable {
     private void closeStage() {
         Stage stage = (Stage) tfWord.getScene().getWindow();
         stage.close();
+    }
+
+    public void setMainGuiService(IMainGuiService mainGuiService) {
+        this.mainGuiService = mainGuiService;
     }
 }

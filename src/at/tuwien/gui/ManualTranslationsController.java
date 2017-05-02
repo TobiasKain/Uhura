@@ -72,7 +72,7 @@ public class ManualTranslationsController implements Initializable{
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation Delete Entry");
                     alert.setHeaderText("Delete Entry?");
-                    alert.setContentText(String.format("Are you sure you want to delete entry (%s,%s)?", manualTranslation.getCnlSentence(), manualTranslation.getAspRule()));
+                    alert.setContentText(String.format("Are you sure you want to delete the manual translation with ID %d?", manualTranslation.getManualTranslationId()));
 
                     ButtonType buttonTypeYes = new ButtonType("Yes");
                     ButtonType buttonTypeNo = new ButtonType("No");

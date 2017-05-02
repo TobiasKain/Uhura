@@ -4,6 +4,7 @@ import at.tuwien.dao.DaoException;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.WordType;
 import at.tuwien.service.IDirectoryService;
+import at.tuwien.service.IMainGuiService;
 import at.tuwien.service.impl.DirectoryService;
 import com.sun.javafx.scene.control.TableColumnSortTypeWrapper;
 import javafx.collections.FXCollections;
@@ -37,6 +38,8 @@ public class DictionaryController implements Initializable {
     private ObservableList<Word> words = FXCollections.emptyObservableList();
 
     private IDirectoryService directoryService;
+
+    private IMainGuiService mainGuiService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,6 +86,7 @@ public class DictionaryController implements Initializable {
                         try {
                             directoryService.deleteWord(word);
                             loadData();
+                            mainGuiService.updateDirectory();
                         } catch (DaoException e) {
                             e.printStackTrace();
                         }
@@ -109,5 +113,9 @@ public class DictionaryController implements Initializable {
     private void closeStage() {
         Stage stage = (Stage) tvWords.getScene().getWindow();
         stage.close();
+    }
+
+    public void setMainGuiService(IMainGuiService mainGuiService) {
+        this.mainGuiService = mainGuiService;
     }
 }
