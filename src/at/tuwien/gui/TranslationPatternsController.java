@@ -13,11 +13,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -42,6 +46,11 @@ public class TranslationPatternsController implements Initializable{
 
     private ITranslationPatternService translationPatternService;
     private IMainGuiService mainGuiService;
+    private TranslationPatternsController translationPatternsController;
+
+    public TranslationPatternsController() {
+        translationPatternsController = this;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -98,12 +107,44 @@ public class TranslationPatternsController implements Initializable{
             }
         });
 
-        tvTranslationPatterns.setContextMenu(new ContextMenu(menuItemDelete));
+        MenuItem menuItemEdit = new MenuItem("update");
+        menuItemEdit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                TranslationPattern translationPattern = translationPatterns.get(tvTranslationPatterns.getSelectionModel().getSelectedIndex());
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_translation_pattern.fxml"));
+
+                    Stage stage = new Stage();
+
+                    /* block parent window */
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initOwner(tvTranslationPatterns.getScene().getWindow());
+
+                    /* set the scene */
+                    stage.setScene(new Scene(loader.load(), 411, 206));
+                    stage.setTitle("Edit Entry");
+
+                    stage.show();
+
+                    EditTranslationPatternController editTranslationPatternController = (EditTranslationPatternController) loader.getController();
+                    editTranslationPatternController.setMainGuiService(mainGuiService);
+                    editTranslationPatternController.setTranslationPattern(translationPattern);
+                    editTranslationPatternController.setTranslationPatternsController(translationPatternsController);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        tvTranslationPatterns.setContextMenu(new ContextMenu(menuItemDelete,menuItemEdit));
 
         loadData();
     }
 
-    private void loadData(){
+    public void loadData(){
         try {
             translationPatterns = FXCollections.observableArrayList(translationPatternService.getAllTranslationPatterns());
         } catch (DaoException e) {

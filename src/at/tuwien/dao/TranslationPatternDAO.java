@@ -15,4 +15,5 @@ public interface TranslationPatternDAO {
 
     void deleteTranslationPattern(TranslationPattern translationPattern) throws DaoException;
 
+    void update(TranslationPattern translationPattern) throws DaoException;
 }

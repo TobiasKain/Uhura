@@ -41,6 +41,13 @@ public class TranslationPatternService implements ITranslationPatternService {
         return translationPatternDAO.readAllTranslationPatterns();
     }
 
+    @Override
+    public void updateTranslationPattern(TranslationPattern translationPattern) throws DaoException {
+        translationPattern.setRegexPattern(createRegexPattern(translationPattern.getNlSentence()));
+
+        translationPatternDAO.update(translationPattern);
+    }
+
     private String createRegexPattern(String nlSentence){
         nlSentence = nlSentence.replace("."," . ");
         nlSentence = nlSentence.replace(","," , ");

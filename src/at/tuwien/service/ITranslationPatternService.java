@@ -13,4 +13,6 @@ public interface ITranslationPatternService {
     void addTranslationPattern(TranslationPattern translationPattern) throws DaoException;
     void deleteTranslationPattern(TranslationPattern translationPattern) throws DaoException;
     List<TranslationPattern> getAllTranslationPatterns() throws DaoException;
+    void updateTranslationPattern(TranslationPattern translationPattern) throws DaoException;
+
 }

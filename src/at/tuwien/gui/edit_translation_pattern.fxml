@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.tuwien.gui.EditTranslationPatternController">
+   <center>
+      <VBox spacing="4.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Translate" />
+            <TextField fx:id="tfNlSentence" promptText="e.g. All A and B are C." />
+            <Label text="to" />
+            <TextArea fx:id="taTranslation" prefHeight="82.0" prefWidth="395.0" promptText="e.g. If X is a A then X is a C. If X is a B then X is a C." />
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <VBox alignment="TOP_RIGHT">
+         <children>
+            <Button mnemonicParsing="false" onAction="#btnUpdateClicked" text="Update" BorderPane.alignment="CENTER">
+               <VBox.margin>
+                  <Insets top="8.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </bottom>
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+   </padding>
+</BorderPane>

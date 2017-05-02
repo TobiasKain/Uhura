@@ -108,7 +108,32 @@ public class JDBCTranslationPatternDAO implements TranslationPatternDAO {
             deleteStatement.close();
 
         } catch (SQLException e) {
-            throw new DaoException("Couldn't delete word.");
+            throw new DaoException("Couldn't delete translation-pattern.");
+        }
+    }
+
+    @Override
+    public void update(TranslationPattern translationPattern) throws DaoException {
+        PreparedStatement updateStatement;
+
+        if (translationPattern == null) {
+            throw new DaoException("Couldn't update translation-pattern.\nTranslation-pattern is null.");
+        }
+
+        try {
+            updateStatement = connection.prepareStatement("UPDATE TranslationPattern SET nlSentence = ?, regex = ?, translation = ? WHERE translationPatternId = ?");
+
+            updateStatement.setString(1, translationPattern.getNlSentence());
+            updateStatement.setString(2, translationPattern.getRegexPattern());
+            updateStatement.setString(3, translationPattern.getTranslation());
+            updateStatement.setLong(4, translationPattern.getTranslationPatternId());
+
+            updateStatement.executeUpdate();
+
+            updateStatement.close();
+
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't update translation-pattern in database.");
         }
     }
 }
