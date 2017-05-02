@@ -12,11 +12,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -40,6 +44,11 @@ public class DictionaryController implements Initializable {
     private IDirectoryService directoryService;
 
     private IMainGuiService mainGuiService;
+    private DictionaryController dictionaryController;
+
+    public DictionaryController() {
+        dictionaryController = this;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -95,12 +104,44 @@ public class DictionaryController implements Initializable {
             }
         });
 
-        tvWords.setContextMenu(new ContextMenu(menuItemDelete));
+        MenuItem menuItemEdit = new MenuItem("update");
+        menuItemEdit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Word word = words.get(tvWords.getSelectionModel().getSelectedIndex());
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_word.fxml"));
+
+                    Stage stage = new Stage();
+
+                    /* block parent window */
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initOwner(tvWords.getScene().getWindow());
+
+                    /* set the scene */
+                    stage.setScene(new Scene(loader.load(), 410, 59));
+                    stage.setTitle("Edit Entry");
+
+                    stage.show();
+
+                    EditWordController editWordController = (EditWordController) loader.getController();
+                    editWordController.setMainGuiService(mainGuiService);
+                    editWordController.setWord(word);
+                    editWordController.setDictionaryController(dictionaryController);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        tvWords.setContextMenu(new ContextMenu(menuItemDelete,menuItemEdit));
 
         loadData();
     }
 
-    private void loadData(){
+    public void loadData(){
         try {
             words = FXCollections.observableArrayList(directoryService.getAllWords());
         } catch (DaoException e) {

@@ -80,6 +80,30 @@ public class JDBCWordDAO implements WordDAO {
     }
 
     @Override
+    public void update(Word word) throws DaoException {
+        PreparedStatement updateStatement;
+
+        if (word == null) {
+            throw new DaoException("Couldn't update word.\nWord is null.");
+        }
+
+        try {
+            updateStatement = connection.prepareStatement("UPDATE Word SET word = ?, wordType = ? WHERE wordId = ?");
+
+            updateStatement.setString(1, word.getWord());
+            updateStatement.setString(2, word.getWordType().name());
+            updateStatement.setLong(3, word.getWordId());
+
+            updateStatement.executeUpdate();
+
+            updateStatement.close();
+
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't update word in database.");
+        }
+    }
+
+    @Override
     public List<Word> readAllWords() throws DaoException {
 
         Statement selectAllStatement;

@@ -10,6 +10,8 @@ public interface WordDAO {
 
     List<Word> readAllWords() throws DaoException;
 
-    void deleteWord(Word invoice) throws DaoException;
+    void deleteWord(Word word) throws DaoException;
+
+    void update(Word word) throws DaoException;
 
 }

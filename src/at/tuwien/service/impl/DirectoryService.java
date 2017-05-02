@@ -33,4 +33,9 @@ public class DirectoryService implements IDirectoryService {
     public List<Word> getAllWords() throws DaoException {
         return wordDAO.readAllWords();
     }
+
+    @Override
+    public void updateWord(Word word) throws DaoException {
+        wordDAO.update(word);
+    }
 }

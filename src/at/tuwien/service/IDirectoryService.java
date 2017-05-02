@@ -10,4 +10,5 @@ public interface IDirectoryService {
     void addWord(Word word) throws DaoException;
     void deleteWord(Word word) throws DaoException;
     List<Word> getAllWords() throws DaoException;
+    void updateWord(Word word) throws DaoException;
 }
