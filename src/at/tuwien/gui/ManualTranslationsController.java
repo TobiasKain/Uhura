@@ -12,10 +12,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -38,6 +43,12 @@ public class ManualTranslationsController implements Initializable{
     private ManualTranslationService manualTranslationService;
 
     private IMainGuiService mainGuiService;
+
+    private ManualTranslationsController manualTranslationsController;
+
+    public ManualTranslationsController() {
+        manualTranslationsController = this;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,12 +104,45 @@ public class ManualTranslationsController implements Initializable{
             }
         });
 
-        tvManualTranslations.setContextMenu(new ContextMenu(menuItemDelete));
+        MenuItem menuItemEdit = new MenuItem("edit");
+        menuItemEdit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ManualTranslation manualTranslation = manualTranslations.get(tvManualTranslations.getSelectionModel().getSelectedIndex());
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_manual_translation.fxml"));
+
+                    Stage stage = new Stage();
+
+                    /* block parent window */
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initOwner(tvManualTranslations.getScene().getWindow());
+
+                    /* set the scene */
+                    stage.setScene(new Scene(loader.load(), 411, 206));
+
+                    stage.setTitle("Edit Manual Translation");
+
+                    stage.show();
+
+                    EditManualTranslationController editManualTranslationController = (EditManualTranslationController) loader.getController();
+                    editManualTranslationController.setMainGuiService(mainGuiService);
+                    editManualTranslationController.setManualTranslation(manualTranslation);
+                    editManualTranslationController.setManualTranslationsController(manualTranslationsController);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        tvManualTranslations.setContextMenu(new ContextMenu(menuItemDelete,menuItemEdit));
 
         loadData();
     }
 
-    private void loadData(){
+    public void loadData(){
         try {
             manualTranslations = FXCollections.observableArrayList(manualTranslationService.getAllManualTranslations());
         } catch (DaoException e) {

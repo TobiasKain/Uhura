@@ -33,4 +33,9 @@ public class ManualTranslationService implements IManualTranslationService{
     public List<ManualTranslation> getAllManualTranslations() throws DaoException {
         return manualTranslationDAO.readAllManualTranslations();
     }
+
+    @Override
+    public void updateManualTranslation(ManualTranslation manualTranslation) throws DaoException {
+        manualTranslationDAO.update(manualTranslation);
+    }
 }

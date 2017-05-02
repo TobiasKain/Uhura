@@ -107,7 +107,7 @@ public class TranslationPatternsController implements Initializable{
             }
         });
 
-        MenuItem menuItemEdit = new MenuItem("update");
+        MenuItem menuItemEdit = new MenuItem("edit");
         menuItemEdit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -103,4 +103,28 @@ public class JDBCManualTranslationDAO implements ManualTranslationDAO {
             throw new DaoException("Couldn't delete manual translation.");
         }
     }
+
+    @Override
+    public void update(ManualTranslation manualTranslation) throws DaoException {
+        PreparedStatement updateStatement;
+
+        if (manualTranslation == null) {
+            throw new DaoException("Couldn't update manual translation.\nManual translation is null.");
+        }
+
+        try {
+            updateStatement = connection.prepareStatement("UPDATE ManualTranslation SET cnlSentence = ?, aspRule = ? WHERE manualTranslationId = ?");
+
+            updateStatement.setString(1, manualTranslation.getCnlSentence());
+            updateStatement.setString(2, manualTranslation.getAspRule());
+            updateStatement.setLong(3, manualTranslation.getManualTranslationId());
+
+            updateStatement.executeUpdate();
+
+            updateStatement.close();
+
+        } catch (SQLException e) {
+            throw new DaoException("Couldn't update manual translation in database.");
+        }
+    }
 }

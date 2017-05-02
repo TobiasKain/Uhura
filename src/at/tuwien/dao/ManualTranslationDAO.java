@@ -2,6 +2,7 @@ package at.tuwien.dao;
 
 import at.tuwien.entity.ManualTranslation;
 import at.tuwien.entity.TranslationPattern;
+import at.tuwien.entity.Word;
 
 import java.util.List;
 
@@ -14,5 +15,7 @@ public interface ManualTranslationDAO {
     List<ManualTranslation> readAllManualTranslations() throws DaoException;
 
     void deleteManualTranslation(ManualTranslation manualTranslation) throws DaoException;
+
+    void update(ManualTranslation manualTranslation) throws DaoException;
 
 }
