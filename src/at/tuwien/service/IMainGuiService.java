@@ -13,6 +13,7 @@ import java.util.List;
 public interface IMainGuiService {
     void updateDirectory();
     void updatedTranslationPatterns();
+    void updateManualTranslation();
 
     Translation translate(String cnlSentences) throws DLVException;
 

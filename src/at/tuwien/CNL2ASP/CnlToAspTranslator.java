@@ -4,6 +4,7 @@ import at.tuwien.CNL2ASP.sentences.AristotleSentences;
 import at.tuwien.CNL2ASP.sentences.ComplexSentences;
 import at.tuwien.CNL2ASP.sentences.DefaultSentences;
 import at.tuwien.CNL2ASP.sentences.SimpleSentences;
+import at.tuwien.entity.ManualTranslation;
 import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.asp.AspRule;
@@ -26,8 +27,9 @@ public class CnlToAspTranslator {
     private DefaultSentences defaultSentences;
     private AristotleSentences aristotleSentences;
     private NL2CNLTranslator nl2CNLTranslator;
+    private ManualTranslator manualTranslator;
 
-    public CnlToAspTranslator(List<String> inputStrings, List<Word> directory, List<TranslationPattern> translationPatterns) {
+    public CnlToAspTranslator(List<String> inputStrings, List<Word> directory, List<TranslationPattern> translationPatterns, List <ManualTranslation> manualTranslations) {
         this.inputStrings = inputStrings;
 
         WordDetector wordDetector = new WordDetector(directory);
@@ -37,6 +39,8 @@ public class CnlToAspTranslator {
         defaultSentences = new DefaultSentences(wordDetector);
         aristotleSentences = new AristotleSentences(wordDetector);
         nl2CNLTranslator = new NL2CNLTranslator(translationPatterns);
+        manualTranslator = new ManualTranslator(manualTranslations);
+
     }
 
     public Translation translate()
@@ -55,7 +59,13 @@ public class CnlToAspTranslator {
                     aspRules.add(new NewLine());
                 } else if(!sentence.trim().startsWith("//") &&
                         !sentence.trim().startsWith("%")) {     // check if sentence is a comment
-                    aspRules.add(translateSentence(sentence));
+
+                    AspRule aspRule;
+                    if((aspRule = manualTranslator.translate(sentence)) != null){
+                        aspRules.add(aspRule);
+                    }else {
+                        aspRules.add(translateSentence(sentence));
+                    }
                 }
             } catch (SentenceValidationException e) {
                 List<AspRule> result = null;

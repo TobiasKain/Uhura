@@ -9,6 +9,7 @@ public class AspRule {
 
     private ArrayList<Literal> head;
     private ArrayList<Literal> body;
+    private String rule;
     private boolean or;
 
 
@@ -37,6 +38,14 @@ public class AspRule {
 
     public void setBody(ArrayList<Literal> body) {
         this.body = body;
+    }
+
+    public String getRule() {
+        return rule;
+    }
+
+    public void setRule(String rule) {
+        this.rule = rule;
     }
 
     public boolean isOr() {

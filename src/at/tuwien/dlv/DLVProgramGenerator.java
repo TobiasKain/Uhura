@@ -23,6 +23,11 @@ public class DLVProgramGenerator {
                 continue;
             }
 
+            if(rule.getRule() != null){
+                program += rule.getRule().trim();
+                continue;
+            }
+
             if(rule instanceof NewLine){
                 program += "\n";
                 continue;

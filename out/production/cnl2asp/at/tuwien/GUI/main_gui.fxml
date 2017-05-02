@@ -42,15 +42,17 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Translation">
               <items>
-                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiAutomaticTranslationSelected" selected="true" text="Automatic Translation">
+                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiAutomaticTranslationSelected" text="Automatic Translation">
                      <toggleGroup>
                         <ToggleGroup fx:id="translationType" />
                      </toggleGroup>
                   </RadioMenuItem>
-                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiManualTranslationSelected" text="Manual Translation" toggleGroup="$translationType" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiManualTranslationSelected" selected="true" text="Manual Translation" toggleGroup="$translationType" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#addTranslationPatternClicked" text="Add Translation Pattern" />
                   <MenuItem mnemonicParsing="false" onAction="#showTranslationPatternsClicked" text="Show Translation Patterns" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="miManualTranslations" mnemonicParsing="false" onAction="#showManualTranslationsClicked" text="Show Manual Translations" />
               </items>
             </Menu>
         </menus>

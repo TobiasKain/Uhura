@@ -33,6 +33,8 @@ public class MainGuiController implements Initializable{
     @FXML
     public MenuItem miSaveFile;
     @FXML
+    public MenuItem miManualTranslations;
+    @FXML
     public TabPane tabPane;
 
 
@@ -46,7 +48,7 @@ public class MainGuiController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         tabTranslationTabControllerHashMap = new HashMap<>();
         mainGuiService = new MainGuiService();
-        mainGuiService.setTranslationType(TranslationType.AUTOMATIC);
+        mainGuiService.setTranslationType(TranslationType.MANUAL);
 
         createNewTab();
     }
@@ -229,7 +231,31 @@ public class MainGuiController implements Initializable{
             e.printStackTrace();
         }
 
-        mainGuiService.updateDirectory();
+        mainGuiService.updatedTranslationPatterns();
+    }
+
+    public void showManualTranslationsClicked(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("manual_translations.fxml"));
+
+            Stage stage = new Stage();
+
+            /* block parent window */
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(tabPane.getScene().getWindow());
+
+            /* set the scene */
+            stage.setScene(new Scene(loader.load(), 900, 400));
+            stage.setTitle("Manual Translations");
+
+            stage.show();
+
+            ManualTranslationsController manualTranslationsController = (ManualTranslationsController) loader.getController();
+            manualTranslationsController.setMainGuiService(mainGuiService);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void exportASPClicked(ActionEvent actionEvent) {

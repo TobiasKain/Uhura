@@ -5,22 +5,26 @@ import at.tuwien.entity.asp.Translation;
 import at.tuwien.service.IMainGuiService;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
@@ -56,6 +60,11 @@ public class TranslationTabController implements Initializable{
     private File file;
 
     private IMainGuiService mainGuiService;
+    private TranslationTabController translationTabController;
+
+    public TranslationTabController() {
+        translationTabController = this;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,6 +72,43 @@ public class TranslationTabController implements Initializable{
         caCNL = new CodeArea();
         caCNL.setParagraphGraphicFactory(LineNumberFactory.get(caCNL));
         caCNL.setOnKeyPressed(this::tfCnlOnKeyPressed);
+
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem miTranslate = new MenuItem("manually translate sentence");
+        miTranslate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String sentence = caCNL.getSelectedText();
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("add_manual_translation.fxml"));
+
+                    Stage stage = new Stage();
+
+                    /* block parent window */
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initOwner(btnSolve.getScene().getWindow());
+
+                    /* set the scene */
+                    stage.setScene(new Scene(loader.load(), 411, 206));
+
+                    stage.setTitle("Add Manual Translation");
+
+                    AddManualTranslationController addManualTranslationController = (AddManualTranslationController) loader.getController();
+                    addManualTranslationController.tfCNlSentence.setText(sentence);
+                    addManualTranslationController.setMainGuiService(mainGuiService);
+                    addManualTranslationController.setTranslationTabController(translationTabController);
+
+                    stage.show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        contextMenu.getItems().add(miTranslate);
+        caCNL.setContextMenu(contextMenu);
+
         spCNL.getChildren().add(new VirtualizedScrollPane<>(caCNL));
 
         caASP = new CodeArea();

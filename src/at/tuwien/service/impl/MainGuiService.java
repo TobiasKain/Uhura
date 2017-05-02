@@ -2,13 +2,16 @@ package at.tuwien.service.impl;
 
 import at.tuwien.CNL2ASP.*;
 import at.tuwien.dao.DaoException;
+import at.tuwien.dao.ManualTranslationDAO;
 import at.tuwien.dao.TranslationPatternDAO;
 import at.tuwien.dao.WordDAO;
+import at.tuwien.dao.impl.JDBCManualTranslationDAO;
 import at.tuwien.dao.impl.JDBCTranslationPatternDAO;
 import at.tuwien.dao.impl.JDBCWordDAO;
 import at.tuwien.dlv.DLVException;
 import at.tuwien.dlv.DLVProgramExecutor;
 import at.tuwien.dlv.DLVProgramGenerator;
+import at.tuwien.entity.ManualTranslation;
 import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.asp.Translation;
@@ -32,6 +35,9 @@ public class MainGuiService implements IMainGuiService {
     private List<TranslationPattern> translationPatterns;
     private TranslationPatternDAO translationPatternDAO;
 
+    private List<ManualTranslation> manualTranslations;
+    private ManualTranslationDAO manualTranslationDAO;
+
     private TranslationType translationType;
 
     public MainGuiService() {
@@ -50,6 +56,14 @@ public class MainGuiService implements IMainGuiService {
             e.printStackTrace();
         }
         updatedTranslationPatterns();
+
+        manualTranslations = new ArrayList<>();
+        try {
+            manualTranslationDAO = new JDBCManualTranslationDAO();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        updateManualTranslation();
     }
 
     @Override
@@ -68,8 +82,18 @@ public class MainGuiService implements IMainGuiService {
         translationPatterns.clear();
 
         try {
-
             translationPatterns.addAll(translationPatternDAO.readAllTranslationPatterns());
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateManualTranslation() {
+        manualTranslations.clear();
+
+        try {
+            manualTranslations.addAll(manualTranslationDAO.readAllManualTranslations());
         } catch (DaoException e) {
             e.printStackTrace();
         }
@@ -78,7 +102,7 @@ public class MainGuiService implements IMainGuiService {
     @Override
     public Translation translate(String cnlSentences) throws DLVException {
 
-        CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(splitSentences(cnlSentences), directory, translationPatterns);
+        CnlToAspTranslator cnlToAspTranslator = new CnlToAspTranslator(splitSentences(cnlSentences), directory, translationPatterns, manualTranslations);
 
         Translation translation = cnlToAspTranslator.translate();
 

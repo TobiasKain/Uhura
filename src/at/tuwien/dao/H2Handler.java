@@ -70,6 +70,9 @@ public class H2Handler {
         stmt.execute("CREATE SEQUENCE IF NOT EXISTS seq_translationPatternID START WITH 0;");
         stmt.execute("CREATE TABLE IF NOT EXISTS TranslationPattern (translationPatternId BIGINT DEFAULT NEXTVAL('seq_translationPatternID') PRIMARY KEY, nlSentence VARCHAR(1024), regex VARCHAR(1024), translation VARCHAR(1024));");
 
+        stmt.execute("CREATE SEQUENCE IF NOT EXISTS seq_manualTranslationID START WITH 0;");
+        stmt.execute("CREATE TABLE IF NOT EXISTS ManualTranslation (manualTranslationId BIGINT DEFAULT NEXTVAL('seq_manualTranslationID') PRIMARY KEY, cnlSentence VARCHAR(1024), aspRule VARCHAR(1024));");
+
         connection.commit();
     }
 }
