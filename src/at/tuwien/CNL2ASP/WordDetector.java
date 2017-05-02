@@ -275,7 +275,7 @@ public class WordDetector {
 
     public void removeWord(List<TaggedWord> taggedWords, String word) throws SentenceValidationException {
 
-        if(taggedWords.get(0).value().toLowerCase().equals(word.toLowerCase()))
+        if(taggedWords.get(0).value().toLowerCase().matches(word.toLowerCase()))
         {
             taggedWords.remove(0);
         }

@@ -31,12 +31,12 @@ public class SimpleSentences {
 
         wordDetector.removeWord(taggedWords,"is");
         boolean negated = wordDetector.isNegation(taggedWords);
-        wordDetector.removeWord(taggedWords,"a");
+        wordDetector.removeWord(taggedWords,"(a|an)");
 
         String cNoun2 = wordDetector.getCNoun(taggedWords);
 
         wordDetector.removeWord(taggedWords,"of");
-        wordDetector.removeWord(taggedWords,"a");
+        wordDetector.removeWord(taggedWords,"(a|an)");
 
         String cNoun3 = wordDetector.getCNoun(taggedWords);
 
@@ -78,7 +78,7 @@ public class SimpleSentences {
 
         wordDetector.removeWord(taggedWords,"of");
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -135,7 +135,7 @@ public class SimpleSentences {
 
     public AspRule cNounVariableIsCNounOfPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -175,7 +175,7 @@ public class SimpleSentences {
 
     public AspRule cNounVariableVerbACNounAsPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -187,13 +187,13 @@ public class SimpleSentences {
 
         String verb = wordDetector.getVerb(taggedWords);
 
-        wordDetector.removeWord(taggedWords,"a");
+        wordDetector.removeWord(taggedWords,"(a|an)");
 
         String cNoun2 = wordDetector.getCNoun(taggedWords);
 
         wordDetector.removeWord(taggedWords,"as");
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -221,7 +221,7 @@ public class SimpleSentences {
 
     public AspRule pNounVerbACNounAsPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -231,13 +231,13 @@ public class SimpleSentences {
 
         String verb = wordDetector.getVerb(taggedWords);
 
-        wordDetector.removeWord(taggedWords,"a");
+        wordDetector.removeWord(taggedWords,"(a|an)");
 
         String cNoun = wordDetector.getCNoun(taggedWords);
 
         wordDetector.removeWord(taggedWords,"as");
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -433,7 +433,7 @@ public class SimpleSentences {
 
         boolean negated = wordDetector.isNegation(taggedWords);
 
-        wordDetector.removeWord(taggedWords,"a");
+        wordDetector.removeWord(taggedWords,"(a|an)");
 
         String cNoun = wordDetector.getCNoun(taggedWords);
 
@@ -460,7 +460,7 @@ public class SimpleSentences {
 
         boolean negated = wordDetector.isNegation(taggedWords);
 
-        wordDetector.removeWord(taggedWords,"a");
+        wordDetector.removeWord(taggedWords,"(a|an)");
 
         String cNoun2 = wordDetector.getCNoun(taggedWords);
 
@@ -553,7 +553,7 @@ public class SimpleSentences {
 
     public AspRule cNounVariableVerbCNounVariable(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -565,7 +565,7 @@ public class SimpleSentences {
 
         String verb = wordDetector.getVerb(taggedWords);
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -595,7 +595,7 @@ public class SimpleSentences {
 
     public AspRule cNounVariableVerbPnoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -607,7 +607,7 @@ public class SimpleSentences {
 
         String verb = wordDetector.getVerb(taggedWords);
 
-        if(taggedWords.get(0).value().equals("a")) {
+        if(taggedWords.get(0).value().equals("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 

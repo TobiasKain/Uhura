@@ -239,7 +239,7 @@ public class CnlToAspTranslator {
                     error = createErrorMessage(sentence,e.getMessage(),"Some CNoun are [not] Adjective.");
             }
         }
-        if (aspRule == null && sentence.matches("a .* is(n't | n't | not | )a .* of a .*\\.$" ))
+        if (aspRule == null && sentence.matches("(a|an) .* is(n't | n't | not | )a .* of a .*\\.$" ))
         {
             try {
                 aspRule = simpleSentences.aCNounVariableIsACNounOfACNounVariable((ArrayList<TaggedWord>) taggedWords.clone());
@@ -283,7 +283,7 @@ public class CnlToAspTranslator {
                     error = createErrorMessage(sentence,e.getMessage(),"CNoun Variable Verb (more|less) than Number CNoun Variable.");
             }
         }
-        if (aspRule == null && sentence.matches("there is(n't | n't | not | )a .* [a-z] \\.$"))    // documented
+        if (aspRule == null && sentence.matches("there is(n't | n't | not | )(a|an) .* [a-z] \\.$"))    // documented
         {
             try {
                 aspRule = simpleSentences.thereIsACNounVariable((ArrayList<TaggedWord>) taggedWords.clone());
@@ -300,7 +300,7 @@ public class CnlToAspTranslator {
                     error = createErrorMessage(sentence,e.getMessage(),"CNoun Variable is [not] [Adjective] Preposition CNoun Variable.");
             }
         }
-        if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | )a .*\\.$")){   // documented x2
+        if (aspRule == null && sentence.matches(".* [a-z] is(n't | n't | not | )(a|an) .*\\.$")){   // documented x2
             try {
                 aspRule = simpleSentences.cNounVariableIsACNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
@@ -316,7 +316,7 @@ public class CnlToAspTranslator {
                     error = createErrorMessage(sentence,e.getMessage(),"PNoun is [not] [Adjective] Preposition CNoun Variable.");
             }
         }
-        if (aspRule == null && sentence.matches(".* is(n't | n't | not | )a .*\\.$")) {    // documented x4
+        if (aspRule == null && sentence.matches(".* is(n't | n't | not | )(a|an) .*\\.$")) {    // documented x4
             try {
                 aspRule = simpleSentences.pNounIsACNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
@@ -372,7 +372,7 @@ public class CnlToAspTranslator {
                     error = createErrorMessage(sentence,e.getMessage(),"PNoun is [not] Verb.");
             }
         }
-        if (aspRule == null && sentence.matches(".* [a-z] .* a .* as .*\\.$")){    // documented x2
+        if (aspRule == null && sentence.matches(".* [a-z] .* (a|an) .* as .*\\.$")){    // documented x2
             try {
                 aspRule = simpleSentences.cNounVariableVerbACNounAsPNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
@@ -412,7 +412,7 @@ public class CnlToAspTranslator {
                     error = createErrorMessage(sentence,e.getMessage(),"CNoun Variable [not] Verb [Preposition] PNoun.");
             }
         }
-        if (aspRule == null && sentence.matches(".* a .* as .*\\.$")){     // documented
+        if (aspRule == null && sentence.matches(".* (a|an) .* as .*\\.$")){     // documented
             try {
                 aspRule = simpleSentences.pNounVerbACNounAsPNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
