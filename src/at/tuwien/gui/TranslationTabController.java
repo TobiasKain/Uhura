@@ -9,11 +9,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -53,6 +53,8 @@ public class TranslationTabController implements Initializable{
     public StackPane spCNL;
     @FXML
     public StackPane spASP;
+    @FXML
+    public ProgressIndicator piAsp;
 
     public CodeArea caCNL;
     public CodeArea caASP;
@@ -68,7 +70,6 @@ public class TranslationTabController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         caCNL = new CodeArea();
         caCNL.setParagraphGraphicFactory(LineNumberFactory.get(caCNL));
         caCNL.setOnKeyPressed(this::tfCnlOnKeyPressed);
@@ -109,11 +110,11 @@ public class TranslationTabController implements Initializable{
         contextMenu.getItems().add(miTranslate);
         caCNL.setContextMenu(contextMenu);
 
-        spCNL.getChildren().add(new VirtualizedScrollPane<>(caCNL));
+        spCNL.getChildren().add(0,new VirtualizedScrollPane<>(caCNL));
 
         caASP = new CodeArea();
         caASP.setParagraphGraphicFactory(LineNumberFactory.get(caASP));
-        spASP.getChildren().add(new VirtualizedScrollPane<>(caASP));
+        spASP.getChildren().add(0, new VirtualizedScrollPane<>(caASP));
 
         try {
             loadSentencePatterns();
@@ -158,7 +159,6 @@ public class TranslationTabController implements Initializable{
             taModels.setText(e.getMessage());
         }
 
-
     }
 
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
@@ -176,9 +176,12 @@ public class TranslationTabController implements Initializable{
 
     public void translate() {
 
+        translationTabController.startLoadingAnimation();
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+
                 caASP.replaceText("");
                 taError.setText("");
 
@@ -193,6 +196,9 @@ public class TranslationTabController implements Initializable{
                     }
                 } catch (DLVException e) {
                     taError.appendText(e.getMessage());
+                } finally {
+                    translationTabController.endLoadingAnimation();
+                    btnTranslate.setDisable(false);
                 }
             }
         });
@@ -227,5 +233,18 @@ public class TranslationTabController implements Initializable{
 
     public void setFile(File file) {
         this.file = file;
+    }
+
+    public void startLoadingAnimation(){
+        ProgressIndicator pi = new ProgressIndicator();
+        pi.setPrefWidth(100);
+        pi.setPrefHeight(100);
+        pi.setProgress(-1);
+
+        spASP.getChildren().add(pi);
+    }
+
+    public void endLoadingAnimation(){
+        spASP.getChildren().remove(1);
     }
 }

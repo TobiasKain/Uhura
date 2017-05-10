@@ -83,7 +83,10 @@ public class MainGuiController implements Initializable{
             getSelectedTab().setText(file.getName());
             getControllerOfSelectedTab().setFile(file);
 
-            getControllerOfSelectedTab().translate();
+            if(mainGuiService.getTranslationType() == TranslationType.AUTOMATIC) {
+                getControllerOfSelectedTab().translate();
+            }
+
         } catch (IOException e) {
             getControllerOfSelectedTab().taError.appendText(e.getMessage());
         }

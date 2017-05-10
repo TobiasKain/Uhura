@@ -175,7 +175,7 @@ public class SimpleSentences {
 
     public AspRule cNounVariableVerbACNounAsPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
-        if(taggedWords.get(0).value().equals("(a|an)")) {
+        if(taggedWords.get(0).value().matches("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -193,7 +193,7 @@ public class SimpleSentences {
 
         wordDetector.removeWord(taggedWords,"as");
 
-        if(taggedWords.get(0).value().equals("(a|an)")) {
+        if(taggedWords.get(0).value().matches("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 
@@ -221,7 +221,7 @@ public class SimpleSentences {
 
     public AspRule pNounVerbACNounAsPNoun(ArrayList<TaggedWord> taggedWords) throws SentenceValidationException {
 
-        if(taggedWords.get(0).value().equals("(a|an)")) {
+        if(taggedWords.get(0).value().matches("(a|an)")) {
             wordDetector.removeFirstWord(taggedWords);
         }
 

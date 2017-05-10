@@ -43,7 +43,8 @@
             </BorderPane>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <StackPane fx:id="spASP" />
+                  <StackPane fx:id="spASP">
+                     </StackPane>
                </center>
                <top>
                   <Label alignment="TOP_CENTER" text="ASP" BorderPane.alignment="CENTER">
