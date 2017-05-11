@@ -1,18 +1,18 @@
 package at.tuwien.gui;
 
+import at.tuwien.dao.DaoException;
 import at.tuwien.entity.asp.Translation;
 import at.tuwien.service.IMainGuiService;
 import at.tuwien.service.impl.MainGuiService;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,6 +25,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainGuiController implements Initializable{
@@ -72,27 +73,34 @@ public class MainGuiController implements Initializable{
 
     private void openFile(File file) {
 
+        TranslationTabController translationTabController = createNewTab();
+
         try {
             List<String> lines = Files.readAllLines(file.toPath());
-            getControllerOfSelectedTab().caCNL.replaceText("");
+            translationTabController.caCNL.replaceText("");
 
             for (String line: lines) {
-                getControllerOfSelectedTab().caCNL.appendText(line + "\n");
+                translationTabController.caCNL.appendText(line + "\n");
             }
 
-            getSelectedTab().setText(file.getName());
-            getControllerOfSelectedTab().setFile(file);
+            translationTabController.getTab().setText(file.getName());
+
+            translationTabController.setFile(file);
 
             if(mainGuiService.getTranslationType() == TranslationType.AUTOMATIC) {
-                getControllerOfSelectedTab().translate();
+                translationTabController.translate();
             }
 
         } catch (IOException e) {
-            getControllerOfSelectedTab().taError.appendText(e.getMessage());
+            translationTabController.taError.appendText(e.getMessage());
         }
     }
 
     public void saveFileClicked(ActionEvent actionEvent) {
+        saveFile();
+    }
+
+    private void saveFile() {
         if(getControllerOfSelectedTab().getFile() != null)
         {
             saveCLN(getControllerOfSelectedTab().getFile());
@@ -310,14 +318,42 @@ public class MainGuiController implements Initializable{
         firstStart = false;
     }
 
-    public void createNewTab(){
+    public TranslationTabController createNewTab(){
+
+        TranslationTabController translationTabController = null;
+
         try {
             Tab tab = new Tab(String.format("new Tab (%d)",tabCount++));
             FXMLLoader fxmlLoader = new FXMLLoader();
             Node n = fxmlLoader.load(getClass().getResource("translation_tab.fxml").openStream());
 
-            TranslationTabController translationTabController = (TranslationTabController) fxmlLoader.getController();
+            translationTabController = (TranslationTabController) fxmlLoader.getController();
             translationTabController.setMainGuiService(mainGuiService);
+            translationTabController.setTab(tab);
+
+            TranslationTabController finalTranslationTabController = translationTabController;
+            tab.setOnCloseRequest(new EventHandler<Event>() {
+                @Override
+                public void handle(Event event) {
+                    if (finalTranslationTabController.hasCnlContentChanged()) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Save changes");
+                        alert.setHeaderText("Do you want to save your changes?");
+                        alert.setContentText("Your changes will be lost if you don't save them.");
+
+                        ButtonType buttonTypeYes = new ButtonType("Yes");
+                        ButtonType buttonTypeNo = new ButtonType("No");
+
+                        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == buttonTypeYes) {
+                            saveFile();
+                        }
+                    }
+                }
+            });
+
             tabTranslationTabControllerHashMap.put(tab,translationTabController);
 
             tab.setContent(n);
@@ -326,6 +362,8 @@ public class MainGuiController implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return translationTabController;
     }
 
     private TranslationTabController getControllerOfSelectedTab(){

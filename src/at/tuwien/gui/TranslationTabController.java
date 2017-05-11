@@ -9,7 +9,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -59,7 +58,10 @@ public class TranslationTabController implements Initializable{
     public CodeArea caCNL;
     public CodeArea caASP;
 
+    private Tab tab;
     private File file;
+    private String initialCNLContent ="";
+    private String tabLable;
 
     private IMainGuiService mainGuiService;
     private TranslationTabController translationTabController;
@@ -162,6 +164,13 @@ public class TranslationTabController implements Initializable{
     }
 
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
+
+        if(!caCNL.getText().concat(keyEvent.getText()).equals(initialCNLContent)){
+            highlightTabLabel(true);
+        } else {
+            highlightTabLabel(false);
+        }
+
         if(mainGuiService.getTranslationType() == TranslationType.AUTOMATIC) {
             if (keyEvent.getText().equals(".") ||
                     (caCNL.getCaretPosition() <= caCNL.getText().lastIndexOf('.') && !keyEvent.getText().equals("")) ||
@@ -233,6 +242,7 @@ public class TranslationTabController implements Initializable{
 
     public void setFile(File file) {
         this.file = file;
+        initialCNLContent = caCNL.getText();
     }
 
     public void startLoadingAnimation(){
@@ -246,5 +256,36 @@ public class TranslationTabController implements Initializable{
 
     public void endLoadingAnimation(){
         spASP.getChildren().remove(1);
+    }
+
+    public void setTab(Tab tab) {
+        this.tab = tab;
+    }
+
+    public Tab getTab() {
+        return tab;
+    }
+
+    private void highlightTabLabel(boolean highlight){
+        if(tabLable == null)
+        {
+            tabLable = tab.getText();
+            tab.setText("");
+        }
+
+        tab.setGraphic(new Label(tabLable));
+        if(highlight == true) {
+            tab.getGraphic().setStyle("-fx-text-fill: #0032B2;");
+        }else {
+            tab.getGraphic().setStyle("-fx-text-fill: black;");
+        }
+    }
+
+    public boolean hasCnlContentChanged(){
+        if(caCNL.getText().equals(initialCNLContent)){
+            return false;
+        }
+
+        return true;
     }
 }
