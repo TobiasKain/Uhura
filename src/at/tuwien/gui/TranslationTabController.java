@@ -165,7 +165,8 @@ public class TranslationTabController implements Initializable{
 
     public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
 
-        if(!caCNL.getText().concat(keyEvent.getText()).equals(initialCNLContent)){
+        if(!caCNL.getText().concat(keyEvent.getText()).equals(initialCNLContent) &&
+                (!keyEvent.isShortcutDown() || (keyEvent.getText().equals("v") && (keyEvent.isMetaDown())))){
             highlightTabLabel(true);
         } else {
             highlightTabLabel(false);
@@ -266,8 +267,12 @@ public class TranslationTabController implements Initializable{
         return tab;
     }
 
-    private void highlightTabLabel(boolean highlight){
-        if(tabLable == null)
+    public void setInitialCNLContent(String initialCNLContent) {
+        this.initialCNLContent = initialCNLContent;
+    }
+
+    public void highlightTabLabel(boolean highlight){
+        if(!tab.getText().equals(""))
         {
             tabLable = tab.getText();
             tab.setText("");

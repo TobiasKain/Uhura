@@ -1,7 +1,5 @@
 package at.tuwien.gui;
 
-import at.tuwien.dao.DaoException;
-import at.tuwien.entity.asp.Translation;
 import at.tuwien.service.IMainGuiService;
 import at.tuwien.service.impl.MainGuiService;
 import javafx.event.ActionEvent;
@@ -13,6 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -38,6 +40,13 @@ public class MainGuiController implements Initializable{
     public MenuItem miManualTranslations;
     @FXML
     public TabPane tabPane;
+    @FXML
+    public MenuItem miExportASP;
+    @FXML
+    public MenuItem miNewTab;
+    @FXML
+    public MenuItem miTranslate;
+
 
 
     public HashMap<Tab,TranslationTabController> tabTranslationTabControllerHashMap;
@@ -45,9 +54,16 @@ public class MainGuiController implements Initializable{
     private static int tabCount = 1;
 
     private IMainGuiService mainGuiService;
+    private MainGuiController mainGuiController;
+    private Scene scene;
+
+
+    final KeyCombination keyComb1 = new KeyCodeCombination(KeyCode.S,
+            KeyCombination.CONTROL_DOWN);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mainGuiController = this;
         tabTranslationTabControllerHashMap = new HashMap<>();
         mainGuiService = new MainGuiService();
         mainGuiService.setTranslationType(TranslationType.MANUAL);
@@ -97,18 +113,7 @@ public class MainGuiController implements Initializable{
     }
 
     public void saveFileClicked(ActionEvent actionEvent) {
-        saveFile();
-    }
-
-    private void saveFile() {
-        if(getControllerOfSelectedTab().getFile() != null)
-        {
-            saveCLN(getControllerOfSelectedTab().getFile());
-        }
-        else {
-            File file = showSaveDialog();
-            saveCLN(file);
-        }
+        saveCnlFile();
     }
 
     public void saveAsFileClicked(ActionEvent actionEvent) {
@@ -127,6 +132,17 @@ public class MainGuiController implements Initializable{
         return file;
     }
 
+    private void saveCnlFile() {
+        if(getControllerOfSelectedTab().getFile() != null)
+        {
+            saveCLN(getControllerOfSelectedTab().getFile());
+        }
+        else {
+            File file = showSaveDialog();
+            saveCLN(file);
+        }
+    }
+
     private void saveCLN(File file){
 
         if (file != null) {
@@ -143,7 +159,9 @@ public class MainGuiController implements Initializable{
                 getControllerOfSelectedTab().taError.appendText(e.getMessage());
             }
 
+            getControllerOfSelectedTab().setInitialCNLContent(getControllerOfSelectedTab().caCNL.getText());
             getSelectedTab().setText(file.getName());
+            getControllerOfSelectedTab().highlightTabLabel(false);
         }
     }
 
@@ -348,7 +366,7 @@ public class MainGuiController implements Initializable{
 
                         Optional<ButtonType> result = alert.showAndWait();
                         if (result.get() == buttonTypeYes) {
-                            saveFile();
+                            saveCnlFile();
                         }
                     }
                 }
@@ -372,5 +390,28 @@ public class MainGuiController implements Initializable{
 
     private Tab getSelectedTab(){
         return tabPane.getSelectionModel().getSelectedItem();
+    }
+
+    public void newTabClicked(ActionEvent actionEvent) {
+        createNewTab();
+    }
+
+    public void translateClicked(ActionEvent actionEvent) {
+        getControllerOfSelectedTab().translate();
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent keyEvent) {
+                if(keyEvent.isShortcutDown() && keyEvent.getCode().equals(KeyCode.N)){
+                    createNewTab();
+                } else if(keyEvent.isShortcutDown() && keyEvent.getCode().equals(KeyCode.T)){
+                    getControllerOfSelectedTab().translate();
+                }
+
+            }
+        });
     }
 }

@@ -1,2 +1,1 @@
-roberta is a person.
-roberta is a dog.
+whats up?

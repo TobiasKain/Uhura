@@ -3,6 +3,7 @@ package at.tuwien;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +19,14 @@ import at.tuwien.dlv.DLVProgramExecutor;
 import at.tuwien.dlv.DLVProgramGenerator;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.WordType;
+import at.tuwien.gui.MainGuiController;
+import at.tuwien.gui.ManualTranslationsController;
 import it.unical.mat.dlv.program.Program;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -30,10 +34,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("gui/main_gui.fxml"));
-        primaryStage.setTitle("CNL2ASP-Translator");
-        primaryStage.setScene(new Scene(root, 1000, 800));
-        primaryStage.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("gui/main_gui.fxml"));
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(loader.load(), 1000, 800);
+        stage.setScene(scene);
+        stage.setTitle("CNL2ASP-Translator");
+
+        stage.show();
+
+        MainGuiController mainGuiController = (MainGuiController) loader.getController();
+        mainGuiController.setScene(scene);
     }
 
 

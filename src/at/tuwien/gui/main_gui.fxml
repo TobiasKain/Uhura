@@ -28,10 +28,10 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem fx:id="miOpenFile" mnemonicParsing="false" onAction="#openFileClicked" text="Open ..." />
-                  <MenuItem fx:id="miSaveFile" mnemonicParsing="false" onAction="#saveFileClicked" text="Save ..." />
+              <MenuItem fx:id="miOpenFile" mnemonicParsing="false" onAction="#openFileClicked" text="Open ..." accelerator="Shortcut+O"/>
+                  <MenuItem fx:id="miSaveFile" mnemonicParsing="false" onAction="#saveFileClicked" text="Save ..." accelerator="Shortcut+S"/>
                   <MenuItem fx:id="miSaveFileAs" mnemonicParsing="false" onAction="#saveAsFileClicked" text="Save As ..." />
-                  <MenuItem mnemonicParsing="false" onAction="#exportASPClicked" text="Export ASP ..." />
+                  <MenuItem fx:id="miExportASP" mnemonicParsing="false" onAction="#exportASPClicked" text="Export ASP ..." accelerator="Shortcut+E"/>
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Dictionary">
@@ -53,6 +53,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#showTranslationPatternsClicked" text="Show Translation Patterns" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="miManualTranslations" mnemonicParsing="false" onAction="#showManualTranslationsClicked" text="Show Manual Translations" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Hidden" visible="false">
+              <items>
+                <MenuItem fx:id="miNewTab" mnemonicParsing="false" onAction="#newTabClicked" text="New Tab" />
+                  <MenuItem fx:id="miTranslate" mnemonicParsing="false" onAction="#translateClicked" text="Translate" />
               </items>
             </Menu>
         </menus>
