@@ -60,8 +60,7 @@ public class ComplexSentences {
 
         AspRule aspRule = new AspRule();
 
-        wordDetector.removeFirstWord(taggedWords);
-
+        wordDetector.removeWord(taggedWords,"if");
         /* Body */
         while (!taggedWords.get(0).value().equals("then")){
             String sentence = "";
