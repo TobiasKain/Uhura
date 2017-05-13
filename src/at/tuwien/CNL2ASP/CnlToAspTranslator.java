@@ -1,6 +1,6 @@
 package at.tuwien.CNL2ASP;
 
-import at.tuwien.CNL2ASP.sentences.AristotleSentences;
+import at.tuwien.CNL2ASP.sentences.CategoricalPropositionSentences;
 import at.tuwien.CNL2ASP.sentences.ComplexSentences;
 import at.tuwien.CNL2ASP.sentences.DefaultSentences;
 import at.tuwien.CNL2ASP.sentences.SimpleSentences;
@@ -25,7 +25,7 @@ public class CnlToAspTranslator {
     private SimpleSentences simpleSentences;
     private ComplexSentences complexSentences;
     private DefaultSentences defaultSentences;
-    private AristotleSentences aristotleSentences;
+    private CategoricalPropositionSentences categoricalPropositionSentences;
     private NL2CNLTranslator nl2CNLTranslator;
     private ManualTranslator manualTranslator;
 
@@ -37,7 +37,7 @@ public class CnlToAspTranslator {
         simpleSentences = new SimpleSentences(wordDetector);
         complexSentences = new ComplexSentences(wordDetector,this);
         defaultSentences = new DefaultSentences(wordDetector);
-        aristotleSentences = new AristotleSentences(wordDetector);
+        categoricalPropositionSentences = new CategoricalPropositionSentences(wordDetector);
         nl2CNLTranslator = new NL2CNLTranslator(translationPatterns);
         manualTranslator = new ManualTranslator(manualTranslations);
 
@@ -189,7 +189,7 @@ public class CnlToAspTranslator {
         if (aspRule == null && sentence.matches("all .* are .*\\.$" ))
         {
             try {
-                aspRule = aristotleSentences.allCNounAreCNoun((ArrayList<TaggedWord>) taggedWords.clone());
+                aspRule = categoricalPropositionSentences.allCNounAreCNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = createErrorMessage(originalSentence,e.getMessage(),"All CNoun are CNoun.");
@@ -198,7 +198,7 @@ public class CnlToAspTranslator {
         if (aspRule == null && sentence.matches("all .* are .*\\.$" ))
         {
             try {
-                aspRule = aristotleSentences.allCNounAreAdjective((ArrayList<TaggedWord>) taggedWords.clone());
+                aspRule = categoricalPropositionSentences.allCNounAreAdjective((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = createErrorMessage(originalSentence,e.getMessage(),"All CNoun are Adjective.");
@@ -207,7 +207,7 @@ public class CnlToAspTranslator {
         if (aspRule == null && sentence.matches("no .* are .*\\.$" ))
         {
             try {
-                aspRule = aristotleSentences.noCNounAreCNoun((ArrayList<TaggedWord>) taggedWords.clone());
+                aspRule = categoricalPropositionSentences.noCNounAreCNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = createErrorMessage(originalSentence,e.getMessage(),"No CNoun are CNoun.");
@@ -216,7 +216,7 @@ public class CnlToAspTranslator {
         if (aspRule == null && sentence.matches("no .* are .*\\.$" ))
         {
             try {
-                aspRule = aristotleSentences.noCNounAreAdjective((ArrayList<TaggedWord>) taggedWords.clone());
+                aspRule = categoricalPropositionSentences.noCNounAreAdjective((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = createErrorMessage(originalSentence,e.getMessage(),"No CNoun are Adjective.");
@@ -225,7 +225,7 @@ public class CnlToAspTranslator {
         if (aspRule == null && sentence.matches("some .* are(n't | n't | not | ).*\\.$" ))
         {
             try {
-                aspRule = aristotleSentences.someCNounAreCNoun((ArrayList<TaggedWord>) taggedWords.clone());
+                aspRule = categoricalPropositionSentences.someCNounAreCNoun((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = createErrorMessage(originalSentence,e.getMessage(),"Some CNoun are [not] CNoun.");
@@ -234,7 +234,7 @@ public class CnlToAspTranslator {
         if (aspRule == null && sentence.matches("some .* are(n't | n't | not | ).*\\.$" ))
         {
             try {
-                aspRule = aristotleSentences.someCNounAreAdjective((ArrayList<TaggedWord>) taggedWords.clone());
+                aspRule = categoricalPropositionSentences.someCNounAreAdjective((ArrayList<TaggedWord>) taggedWords.clone());
             } catch (SentenceValidationException e) {
                 if(error == null)
                     error = createErrorMessage(originalSentence,e.getMessage(),"Some CNoun are [not] Adjective.");

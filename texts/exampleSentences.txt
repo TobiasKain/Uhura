@@ -1,0 +1,88 @@
+If X is a human then X is mortal.
+Exclude that Robert is a dog.
+
+Roberta is a person.
+Roberta is not a dog.
+X is a person.
+X is not a dog.
+Person X is a teacher.
+Person X is not a headmaster.
+Roberta reads.
+Roberta does not read.
+Person X reads.
+Person X does not read.
+Roberta is reading.
+Roberta is not reading.
+Person X is reading.
+Person X is not reading.
+Roberta is educated.
+Roberta is not tall.
+X is tall.
+X is not small.
+Person X is educated.
+Person X is not educated.
+Roberta is at work.
+Roberta is not at work.
+Roberta is married to Bob.
+Roberta is not married to Bob.
+Person X is at work.
+Person X is not at work.
+Person X is married to bob.
+Person X is not married to bob.
+Roberta is in room X.
+Roberta is not in room X.
+Roberta is married to person X.
+Roberta is not married to person X.
+Person X is in room Y.
+Person X is not in room Y.
+Person X is married to person Y.
+Person X is not married to person Y.
+Roberta holds a job as a nurse.
+Roberta does not hold a job as a nurse.
+Person X holds a job as nurse.
+Person X does not hold a job as a nurse.
+Person X holds job Y.
+Person X does not hold job Y.
+Person X works for person Y.
+Person X does not work for person Y.
+Person X studies computer science.
+Person X does not studies computer science.
+Person X studies at TU Wien.
+Person X does not study at TU Wien.
+Roberta holds job X.
+Roberta doesn't hold job X.
+Roberta works for person X.
+Roberta does not work for person X.
+Roberta loves Bob.
+Roberta doesn't love Bob.
+Roberta works for Bob.
+Roberta does not work for Bob.
+There is a person X.
+There is not a person X.
+Person X holds more than two jobs Y.
+Person X holds less than two jobs Y.
+A person X is a husband of a person Y.
+A person X is not a husband of a person Y.
+Bob is the father of person X.
+Bob is not the father of person X.
+Person X is the father of Bob.
+Person X is not the father of Bob.
+Bob is the father of Roberta.
+Bob is not the father of Roberta.
+Roberta is a person or Roberta is a dog.
+
+Birds normally fly.
+Animals normally do not fly.
+Birds normally are beautifull.
+Birds normally are not ugly.
+Students normally are afraid of math.
+Students normally are not afraid of architecture.
+
+All politicians are humans.
+All politicians are corrupt.
+No politicians are humans.
+No politicians are corrupt.
+Some politicians are humans.
+Some politicians are not humans.
+Some politicians are corrupt.
+Some politicians are not corrupt.

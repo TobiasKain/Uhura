@@ -11,11 +11,11 @@ import java.util.ArrayList;
 /**
  * Created by tobiaskain on 22/04/2017.
  */
-public class AristotleSentences {
+public class CategoricalPropositionSentences {
 
     private WordDetector wordDetector;
 
-    public AristotleSentences(WordDetector wordDetector) {
+    public CategoricalPropositionSentences(WordDetector wordDetector) {
         this.wordDetector = wordDetector;
     }
 
