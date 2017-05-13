@@ -1,7 +1,6 @@
 package at.tuwien.gui;
 
 import at.tuwien.dlv.DLVException;
-import at.tuwien.entity.asp.Translation;
 import at.tuwien.service.IMainGuiService;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -52,8 +51,6 @@ public class TranslationTabController implements Initializable{
     public StackPane spCNL;
     @FXML
     public StackPane spASP;
-    @FXML
-    public ProgressIndicator piAsp;
 
     public CodeArea caCNL;
     public CodeArea caASP;
@@ -61,7 +58,7 @@ public class TranslationTabController implements Initializable{
     private Tab tab;
     private File file;
     private String initialCNLContent ="";
-    private String tabLable;
+    private String tabLabel;
 
     private IMainGuiService mainGuiService;
     private TranslationTabController translationTabController;
@@ -74,7 +71,7 @@ public class TranslationTabController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         caCNL = new CodeArea();
         caCNL.setParagraphGraphicFactory(LineNumberFactory.get(caCNL));
-        caCNL.setOnKeyPressed(this::tfCnlOnKeyPressed);
+        caCNL.setOnKeyReleased(this::tfCnlOnKeyReleased);
 
         ContextMenu contextMenu = new ContextMenu();
         MenuItem miTranslate = new MenuItem("manually translate sentence");
@@ -125,10 +122,6 @@ public class TranslationTabController implements Initializable{
         }
     }
 
-    public void setMainGuiService(IMainGuiService mainGuiService) {
-        this.mainGuiService = mainGuiService;
-    }
-
     public void btnTranslateClicked(ActionEvent actionEvent) {
         translate();
     }
@@ -163,9 +156,9 @@ public class TranslationTabController implements Initializable{
 
     }
 
-    public void tfCnlOnKeyPressed(KeyEvent keyEvent) {
+    public void tfCnlOnKeyReleased(KeyEvent keyEvent) {
 
-        if(!caCNL.getText().concat(keyEvent.getText()).equals(initialCNLContent) &&
+        if(!caCNL.getText().equals(initialCNLContent) &&
                 (!keyEvent.isShortcutDown() || (keyEvent.getText().equals("v") && (keyEvent.isMetaDown())))){
             highlightTabLabel(true);
         } else {
@@ -186,8 +179,9 @@ public class TranslationTabController implements Initializable{
 
     public void translate() {
 
-        translationTabController.startLoadingAnimation();
 
+        translationTabController.startTranslation();
+/*
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -211,11 +205,11 @@ public class TranslationTabController implements Initializable{
                     btnTranslate.setDisable(false);
                 }
             }
-        });
+        });*/
 
-       /* TranslatorThread translatorThread;
+        TranslatorThread translatorThread;
 
-        translatorThread = new TranslatorThread(caCNL,taError, caASP);
+        translatorThread = new TranslatorThread(this,caCNL.getText());
 
         if(thread == null)
         {
@@ -225,7 +219,34 @@ public class TranslationTabController implements Initializable{
             thread.stop();
             thread = new Thread(translatorThread);
             thread.start();
-        }*/
+        }
+    }
+
+    public void updateCaAspAsync(String s){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                caASP.replaceText(s);
+            }
+        });
+    }
+
+    public void updateTaErrorAsync(String s){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                taError.setText(s);
+            }
+        });
+    }
+
+    public void appendTaErrorAsync(String s){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                taError.appendText(s);
+            }
+        });
     }
 
     private void loadSentencePatterns() throws URISyntaxException {
@@ -236,49 +257,30 @@ public class TranslationTabController implements Initializable{
         webEngine.load(f.toURI().toString());
     }
 
-
-    public File getFile() {
-        return file;
+    public void startTranslation(){
+        btnTranslate.setDisable(true);
+        btnTranslate.setText("Translating ...");
     }
 
-    public void setFile(File file) {
-        this.file = file;
-        initialCNLContent = caCNL.getText();
-    }
-
-    public void startLoadingAnimation(){
-        ProgressIndicator pi = new ProgressIndicator();
-        pi.setPrefWidth(100);
-        pi.setPrefHeight(100);
-        pi.setProgress(-1);
-
-        spASP.getChildren().add(pi);
-    }
-
-    public void endLoadingAnimation(){
-        spASP.getChildren().remove(1);
-    }
-
-    public void setTab(Tab tab) {
-        this.tab = tab;
-    }
-
-    public Tab getTab() {
-        return tab;
-    }
-
-    public void setInitialCNLContent(String initialCNLContent) {
-        this.initialCNLContent = initialCNLContent;
+    public void endTranslationAsync() {
+        
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                btnTranslate.setDisable(false);
+                btnTranslate.setText("Translate");
+            }
+        });
     }
 
     public void highlightTabLabel(boolean highlight){
         if(!tab.getText().equals(""))
         {
-            tabLable = tab.getText();
+            tabLabel = tab.getText();
             tab.setText("");
         }
 
-        tab.setGraphic(new Label(tabLable));
+        tab.setGraphic(new Label(tabLabel));
         if(highlight == true) {
             tab.getGraphic().setStyle("-fx-text-fill: #0032B2;");
         }else {
@@ -292,5 +294,31 @@ public class TranslationTabController implements Initializable{
         }
 
         return true;
+    }
+
+
+    public void setMainGuiService(IMainGuiService mainGuiService) {
+        this.mainGuiService = mainGuiService;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+        initialCNLContent = caCNL.getText();
+    }
+
+    public void setTab(Tab tab) {
+        this.tab = tab;
+    }
+
+    public Tab getTab() {
+        return tab;
+    }
+
+    public void setInitialCNLContent(String initialCNLContent) {
+        this.initialCNLContent = initialCNLContent;
     }
 }

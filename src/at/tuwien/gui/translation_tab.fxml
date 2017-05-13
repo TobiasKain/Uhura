@@ -29,7 +29,7 @@
                         </Label>
                      </center>
                      <right>
-                        <Button fx:id="btnTranslate" mnemonicParsing="false" onAction="#btnTranslateClicked" text="Translate" BorderPane.alignment="CENTER">
+                        <Button fx:id="btnTranslate" maxWidth="102.0" minWidth="102.0" mnemonicParsing="false" onAction="#btnTranslateClicked" prefWidth="102.0" text="Translate" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin>
