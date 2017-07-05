@@ -181,31 +181,6 @@ public class TranslationTabController implements Initializable{
 
 
         translationTabController.startTranslation();
-/*
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-                caASP.replaceText("");
-                taError.setText("");
-
-                Translation translation = null;
-                try {
-                    translation = mainGuiService.translate(caCNL.getText());
-
-                    caASP.replaceText(translation.getAspCode());
-
-                    for (String error : translation.getErrors()) {
-                        taError.appendText(error + "\n");
-                    }
-                } catch (DLVException e) {
-                    taError.appendText(e.getMessage());
-                } finally {
-                    translationTabController.endLoadingAnimation();
-                    btnTranslate.setDisable(false);
-                }
-            }
-        });*/
 
         TranslatorThread translatorThread;
 

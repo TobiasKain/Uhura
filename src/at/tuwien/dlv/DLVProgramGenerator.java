@@ -1,6 +1,7 @@
 package at.tuwien.dlv;
 
 import at.tuwien.entity.asp.AspRule;
+import at.tuwien.entity.asp.Comment;
 import at.tuwien.entity.asp.Literal;
 import at.tuwien.entity.asp.NewLine;
 import it.unical.mat.dlv.program.Program;
@@ -30,6 +31,11 @@ public class DLVProgramGenerator {
 
             if(rule instanceof NewLine){
                 program += "\n";
+                continue;
+            }
+
+            if(rule instanceof Comment){
+                program += ((Comment) rule).getComment();
                 continue;
             }
 
@@ -78,15 +84,15 @@ public class DLVProgramGenerator {
     public Program generateDlvProgram(String rules) throws DLVException {
         Program program = new Program();
 
-        rules = rules.replaceAll("\n", "");
-
-        List<String> ruleList = Arrays.asList(rules.split("\\."));
+        List<String> ruleList = Arrays.asList(rules.split("\n"));
 
         for (String rule: ruleList) {
-            try {
-                program.add(new Rule(rule + "."));
-            }catch (Exception e){
-                throw new DLVException(e.getMessage());
+            if(!rule.startsWith("%") && !rule.equals("")) {
+                try {
+                    program.add(new Rule(rule));
+                } catch (Exception e) {
+                    throw new DLVException(e.getMessage());
+                }
             }
         }
 

@@ -1,33 +1,19 @@
 package at.tuwien;
 
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-import at.tuwien.CNL2ASP.CnlToAspTranslator;
 import at.tuwien.CNL2ASP.SentenceValidationException;
-import at.tuwien.CNL2ASP.StanfordParser;
-import at.tuwien.entity.asp.Translation;
 import at.tuwien.dao.DaoException;
 import at.tuwien.dao.H2Handler;
-import at.tuwien.dao.WordDAO;
-import at.tuwien.dao.impl.JDBCWordDAO;
-import at.tuwien.dlv.DLVProgramExecutor;
-import at.tuwien.dlv.DLVProgramGenerator;
-import at.tuwien.entity.Word;
-import at.tuwien.entity.WordType;
 import at.tuwien.gui.MainGuiController;
-import at.tuwien.gui.ManualTranslationsController;
-import it.unical.mat.dlv.program.Program;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import javax.swing.*;
+import java.sql.SQLException;
+import java.util.List;
 
 
 public class Main extends Application {
@@ -37,9 +23,18 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("gui/main_gui.fxml"));
 
         Stage stage = new Stage();
+
         Scene scene = new Scene(loader.load(), 1000, 800);
         stage.setScene(scene);
-        stage.setTitle("CNL2ASP-Translator");
+        stage.setTitle("Uhura");
+
+        /*TODO does not work yet*/
+        try {
+            java.awt.Image image = new ImageIcon("file:logo icon_256x256@2x.png").getImage();
+            com.apple.eawt.Application.getApplication().setDockIconImage(image);
+        } catch (Exception e) {
+            stage.getIcons().add(new Image("file:uhura_logo.png"));
+        }
 
         stage.show();
 

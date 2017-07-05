@@ -8,6 +8,7 @@ import at.tuwien.entity.ManualTranslation;
 import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.Word;
 import at.tuwien.entity.asp.AspRule;
+import at.tuwien.entity.asp.Comment;
 import at.tuwien.entity.asp.NewLine;
 import at.tuwien.entity.asp.Translation;
 import at.tuwien.nl2cln.NL2CNLTranslator;
@@ -57,8 +58,9 @@ public class CnlToAspTranslator {
             try {
                 if(sentence.equals("\n")){
                     aspRules.add(new NewLine());
-                } else if(!sentence.trim().startsWith("//") &&
-                        !sentence.trim().startsWith("%")) {     // check if sentence is a comment
+                } else if(sentence.trim().startsWith("%")) {   // check if sentence is ASP comment
+                    aspRules.add(new Comment(sentence));
+                }else if(!sentence.trim().startsWith("//")) {    // check if sentence is CNL comment
 
                     AspRule aspRule;
                     if((aspRule = manualTranslator.translate(sentence)) != null){

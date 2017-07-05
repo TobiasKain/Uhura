@@ -136,23 +136,25 @@ public class MainGuiService implements IMainGuiService {
 
     private List<String> splitSentences(String cnlSentences)
     {
-        List<String> sentenceList = new LinkedList<String>(Arrays.asList(cnlSentences.split("\\.")));
+        List<String> sentenceList = new LinkedList<String>(Arrays.asList(cnlSentences.split("\n")));
         List<String> resultList = new ArrayList<>();
-
-        if(cnlSentences.lastIndexOf('.') != cnlSentences.length()-1) // check if last character is .
-        {
-            sentenceList.remove(sentenceList.size()-1);
-        }
 
         for (String s : sentenceList) {
 
-            for(int i = 0; i < countNewLines(s); i++){
+            if(s.trim().equals(""))  // check if just s contains just new line
+            {
                 resultList.add("\n");
             }
-            s = s.replaceAll("\n","");
-
-            resultList.add(s.trim() + ".");
+            else {
+                resultList.add(s.trim());
+                resultList.add("\n");
+            }
         }
+        /*
+        if(cnlSentences.lastIndexOf('.') != cnlSentences.length()-1) // check if last character is .
+        {
+            sentenceList.remove(sentenceList.size()-1);
+        }*/
 
         return resultList;
     }

@@ -49,8 +49,8 @@
                   </RadioMenuItem>
                   <RadioMenuItem mnemonicParsing="false" onAction="#rmiManualTranslationSelected" selected="true" text="Manual Translation" toggleGroup="$translationType" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#addTranslationPatternClicked" text="Add Translation Pattern" />
-                  <MenuItem mnemonicParsing="false" onAction="#showTranslationPatternsClicked" text="Show Translation Patterns" />
+                  <MenuItem mnemonicParsing="false" onAction="#addTranslationPatternClicked" text="Add Sentence Pattern" />
+                  <MenuItem mnemonicParsing="false" onAction="#showTranslationPatternsClicked" text="Show Self-Defined Sentence Patterns" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="miManualTranslations" mnemonicParsing="false" onAction="#showManualTranslationsClicked" text="Show Manual Translations" />
               </items>

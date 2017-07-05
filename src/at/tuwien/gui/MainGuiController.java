@@ -239,7 +239,7 @@ public class MainGuiController implements Initializable{
 
             /* set the scene */
             stage.setScene(new Scene(loader.load(), 411, 206));
-            stage.setTitle("add translation pattern");
+            stage.setTitle("add sentence pattern");
 
             stage.show();
 
@@ -265,7 +265,7 @@ public class MainGuiController implements Initializable{
 
             /* set the scene */
             stage.setScene(new Scene(loader.load(), 900, 400));
-            stage.setTitle("Translation Patterns");
+            stage.setTitle("self defined translation patterns");
 
             stage.show();
 

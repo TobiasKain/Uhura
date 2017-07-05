@@ -1,0 +1,88 @@
+mortal(X) :- human(X).
+:- dog(robert).
+
+person(roberta).
+- dog(roberta).
+person(X).
+- dog(X).
+teacher(X).
+- headmaster(X).
+read(roberta).
+- read(roberta).
+read(X).
+- read(X).
+read(roberta).
+- read(roberta).
+read(X).
+- read(X).
+educated(roberta).
+- tall(roberta).
+tall(X).
+- small(X).
+educated(X).
+- educated(X).
+at(roberta,work).
+- at(roberta,work).
+married_to(roberta,bob).
+- married_to(roberta,bob).
+at(X,work).
+- at(X,work).
+married_to(X,bob).
+- married_to(X,bob).
+in(roberta,X).
+- in(roberta,X).
+married_to(roberta,X).
+- married_to(roberta,X).
+in(X,Y).
+- in(X,Y).
+married_to(X,Y).
+- married_to(X,Y).
+hold(roberta).
+- hold(roberta).
+hold(X,nurse).
+- hold(X,nurse).
+hold(X,Y).
+- hold(X,Y).
+work_for(X,Y).
+- work_for(X,Y).
+study(X,computerscience).
+- study(X,computerscience).
+study_at(X,tuwien).
+- study_at(X,tuwien).
+hold(roberta,X).
+- hold(roberta,X).
+work_for(roberta,X).
+- work_for(roberta,X).
+love(roberta,bob).
+- love(roberta,bob).
+work_for(roberta,bob).
+- work_for(roberta,bob).
+person(X).
+- person(X).
+#count{Y : hold(X,Y)} > 2.
+#count{Y : hold(X,Y)} < 2.
+husband(X,Y).
+- husband(X,Y).
+father(bob,X).
+- father(bob,X).
+father(X,bob).
+- father(X,bob).
+father(bob,roberta).
+- father(bob,roberta).
+person(roberta) v dog(roberta).
+
+fly(X) :- bird(X),  not -fly(X).
+- fly(X) :- animal(X),  not fly(X).
+beautifull(X) :- bird(X),  not -beautifull(X).
+- ugly(X) :- bird(X),  not ugly(X).
+afraid_of(X,math) :- student(X),  not -afraid_of(X,math).
+- afraid_of(X,architecture) :- student(X),  not afraid_of(X,architecture).
+
+human(X) :- politician(X).
+corrupt(X) :- politician(X).
+- human(X) :- politician(X).
+- corrupt(X) :- politician(X).
+:- #count{X:politician(X),human(X)} = 0.
+:- #count{X:politician(X),not human(X)} = 0.
+:- #count{X:politician(X),corrupt(X)} = 0.
+:- #count{X:politician(X),not corrupt(X)} = 0.

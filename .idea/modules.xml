@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/cnl2asp.iml" filepath="$PROJECT_DIR$/cnl2asp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uhura.iml" filepath="$PROJECT_DIR$/uhura.iml" />
     </modules>
   </component>
 </project>
