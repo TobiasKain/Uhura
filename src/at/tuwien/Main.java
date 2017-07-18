@@ -1,7 +1,7 @@
 package at.tuwien;
 
 
-import at.tuwien.CNL2ASP.SentenceValidationException;
+import at.tuwien.cnl2asp.SentenceValidationException;
 import at.tuwien.dao.DaoException;
 import at.tuwien.dao.H2Handler;
 import at.tuwien.gui.MainGuiController;
@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -50,6 +51,8 @@ public class Main extends Application {
         } catch (DaoException e) {
             e.printStackTrace();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

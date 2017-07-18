@@ -1,14 +1,12 @@
-package at.tuwien.CNL2ASP.sentences;
+package at.tuwien.cnl2asp.sentences;
 
-import at.tuwien.CNL2ASP.CnlToAspTranslator;
-import at.tuwien.CNL2ASP.SentenceValidationException;
-import at.tuwien.CNL2ASP.WordDetector;
-import at.tuwien.entity.Word;
+import at.tuwien.cnl2asp.CnlToAspTranslator;
+import at.tuwien.cnl2asp.SentenceValidationException;
+import at.tuwien.cnl2asp.WordDetector;
 import at.tuwien.entity.asp.AspRule;
 import edu.stanford.nlp.ling.TaggedWord;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by tobiaskain on 22/04/2017.

@@ -1,9 +1,9 @@
-package at.tuwien.CNL2ASP;
+package at.tuwien.cnl2asp;
 
-import at.tuwien.CNL2ASP.sentences.CategoricalPropositionSentences;
-import at.tuwien.CNL2ASP.sentences.ComplexSentences;
-import at.tuwien.CNL2ASP.sentences.DefaultSentences;
-import at.tuwien.CNL2ASP.sentences.SimpleSentences;
+import at.tuwien.cnl2asp.sentences.CategoricalPropositionSentences;
+import at.tuwien.cnl2asp.sentences.ComplexSentences;
+import at.tuwien.cnl2asp.sentences.DefaultSentences;
+import at.tuwien.cnl2asp.sentences.SimpleSentences;
 import at.tuwien.entity.ManualTranslation;
 import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.Word;

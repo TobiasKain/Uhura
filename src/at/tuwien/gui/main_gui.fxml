@@ -11,7 +11,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.tuwien.gui.MainGuiController">
+<BorderPane fx:id="borderpane" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.tuwien.gui.MainGuiController">
    <center>
       <TabPane fx:id="tabPane">
          <tabs>
@@ -42,12 +42,12 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Translation">
               <items>
-                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiAutomaticTranslationSelected" text="Automatic Translation">
+                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiAutomaticTranslationSelected" text="Automatic Translation Mode">
                      <toggleGroup>
                         <ToggleGroup fx:id="translationType" />
                      </toggleGroup>
                   </RadioMenuItem>
-                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiManualTranslationSelected" selected="true" text="Manual Translation" toggleGroup="$translationType" />
+                  <RadioMenuItem mnemonicParsing="false" onAction="#rmiManualTranslationSelected" selected="true" text="Manual Translation Mode" toggleGroup="$translationType" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#addTranslationPatternClicked" text="Add Sentence Pattern" />
                   <MenuItem mnemonicParsing="false" onAction="#showTranslationPatternsClicked" text="Show Self-Defined Sentence Patterns" />

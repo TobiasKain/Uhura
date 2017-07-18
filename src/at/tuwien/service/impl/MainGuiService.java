@@ -1,6 +1,6 @@
 package at.tuwien.service.impl;
 
-import at.tuwien.CNL2ASP.*;
+import at.tuwien.cnl2asp.*;
 import at.tuwien.dao.DaoException;
 import at.tuwien.dao.ManualTranslationDAO;
 import at.tuwien.dao.TranslationPatternDAO;

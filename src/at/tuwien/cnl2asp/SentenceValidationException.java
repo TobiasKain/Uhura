@@ -1,4 +1,4 @@
-package at.tuwien.CNL2ASP;
+package at.tuwien.cnl2asp;
 
 /**
  * Created by tobiaskain on 25/03/2017.

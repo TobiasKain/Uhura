@@ -2,9 +2,12 @@ package at.tuwien.dao;
 
 import at.tuwien.entity.WordType;
 import org.h2.jdbcx.JdbcDataSource;
+import org.h2.tools.RunScript;
 
-import java.io.File;
+import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class H2Handler {
 
@@ -55,13 +58,26 @@ public class H2Handler {
         }
     }
 
-    public static void executeSqlFile(String path) throws DaoException, SQLException {
-        PreparedStatement preparedStatement = getConnection().prepareStatement("RUNSCRIPT FROM ?");
-        preparedStatement.setString(1,path);
-        preparedStatement.execute();
+    public static void executeSqlFile(InputStream inputStream) throws DaoException, SQLException, IOException {
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String sqlFile = "";
+        String line;
+
+        while ((line = bufferedReader.readLine()) != null){
+            sqlFile += line;
+        }
+
+        Statement stmt = getConnection().createStatement();
+        stmt.execute(sqlFile);
+
+       /* PreparedStatement preparedStatement = getConnection().prepareStatement("RUNSCRIPT FROM ?");
+        preparedStatement.setString(1,inputStream);
+        preparedStatement.execute();*/
     }
 
-    public static void setupDatabase() throws DaoException, SQLException {
+    public static void setupDatabase() throws DaoException, SQLException, IOException {
 
         Statement stmt = getConnection().createStatement();
         PreparedStatement pst;
@@ -83,10 +99,20 @@ public class H2Handler {
 
         pst = getConnection().prepareStatement("SELECT seq_translationPatternID.NEXTVAL from dual");
         rs = pst.executeQuery();
+
+        List<String> translationPatterns = new ArrayList<>();
+        translationPatterns.add("INSERT INTO TranslationPattern(nlSentence, regex, translation) VALUES ('A and B are C.','.* and .* are .* \\.$','A is a C.\n" +
+                "B is a C.');");
+        translationPatterns.add("INSERT INTO TranslationPattern(nlSentence, regex, translation) VALUES ('Just A are B.','Just .* are .* \\.$','All A are B.');");
+        translationPatterns.add("INSERT INTO TranslationPattern(nlSentence, regex, translation) VALUES ('All A are not B.','All .* are not .* \\.$','No A are B.');");
+
         if(rs.next()) {
             long seq_translationPatternID = rs.getLong(1);
             if(seq_translationPatternID == 0){
-                executeSqlFile("translation_pattern_insert.sql");
+                for (String translationPattern: translationPatterns)
+                {
+                    stmt.execute(translationPattern);
+                }
             }
         }
 

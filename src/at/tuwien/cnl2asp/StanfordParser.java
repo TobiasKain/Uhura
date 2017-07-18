@@ -1,4 +1,4 @@
-package at.tuwien.CNL2ASP;
+package at.tuwien.cnl2asp;
 
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;

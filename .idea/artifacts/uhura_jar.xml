@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="uhura:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/uhura_jar</output-path>
+    <root id="archive" name="uhura.jar">
+      <element id="module-output" name="uhura" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/stanford-parser-full-2016-10-31/stanford-parser-3.7.0-models.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/richtextfx-fat-0.7-M5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/DLVwrapper-v4.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/h2/bin/h2-1.4.194.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/stanford-parser-full-2016-10-31/ejml-0.23.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/stanford-parser-full-2016-10-31/slf4j-api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/stanford-parser-full-2016-10-31/stanford-parser.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -1,4 +1,4 @@
-package at.tuwien.CNL2ASP;
+package at.tuwien.cnl2asp;
 
 import at.tuwien.entity.Word;
 import at.tuwien.entity.WordType;

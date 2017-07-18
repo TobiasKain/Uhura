@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -330,6 +331,7 @@ public class MainGuiController implements Initializable{
 
     private boolean firstStart = true;  // Workaround: addTabClicked is called before initialize => e.g. translationTabControllerList == NULL
     public void addTabClicked(Event event) {
+
         if(!firstStart) {
             createNewTab();
         }
@@ -342,10 +344,12 @@ public class MainGuiController implements Initializable{
 
         try {
             Tab tab = new Tab(String.format("new Tab (%d)",tabCount++));
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Node n = fxmlLoader.load(getClass().getResource("translation_tab.fxml").openStream());
 
-            translationTabController = (TranslationTabController) fxmlLoader.getController();
+            FXMLLoader loader = new FXMLLoader();
+
+            Node n = loader.load(MainGuiController.class.getResourceAsStream("translation_tab.fxml"));
+
+            translationTabController = (TranslationTabController) loader.getController();
             translationTabController.setMainGuiService(mainGuiService);
             translationTabController.setTab(tab);
 

@@ -1,10 +1,8 @@
-package at.tuwien.CNL2ASP;
+package at.tuwien.cnl2asp;
 
 import at.tuwien.entity.ManualTranslation;
-import at.tuwien.entity.TranslationPattern;
 import at.tuwien.entity.asp.AspRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

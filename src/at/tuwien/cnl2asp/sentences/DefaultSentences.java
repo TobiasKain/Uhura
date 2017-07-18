@@ -1,7 +1,7 @@
-package at.tuwien.CNL2ASP.sentences;
+package at.tuwien.cnl2asp.sentences;
 
-import at.tuwien.CNL2ASP.SentenceValidationException;
-import at.tuwien.CNL2ASP.WordDetector;
+import at.tuwien.cnl2asp.SentenceValidationException;
+import at.tuwien.cnl2asp.WordDetector;
 import at.tuwien.entity.asp.AspRule;
 import at.tuwien.entity.asp.Literal;
 import edu.stanford.nlp.ling.TaggedWord;

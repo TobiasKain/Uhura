@@ -21,8 +21,7 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
@@ -64,11 +63,11 @@ public class TranslationTabController implements Initializable{
     private TranslationTabController translationTabController;
 
     public TranslationTabController() {
-        translationTabController = this;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        translationTabController = this;
         caCNL = new CodeArea();
         caCNL.setParagraphGraphicFactory(LineNumberFactory.get(caCNL));
         caCNL.setOnKeyReleased(this::tfCnlOnKeyReleased);
@@ -117,7 +116,7 @@ public class TranslationTabController implements Initializable{
 
         try {
             loadSentencePatterns();
-        } catch (URISyntaxException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -224,12 +223,22 @@ public class TranslationTabController implements Initializable{
         });
     }
 
-    private void loadSentencePatterns() throws URISyntaxException {
+    private void loadSentencePatterns() throws IOException {
 
         WebEngine webEngine = wvSentencePatterns.getEngine();
 
-        File f = new File(getClass().getResource("sentences.htm").toURI());
-        webEngine.load(f.toURI().toString());
+        InputStream inputStream = this.getClass().getResourceAsStream("sentences.htm");
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String htmlSource ="";
+        String line = "";
+        while ((line = bufferedReader.readLine()) != null)
+        {
+            htmlSource += line;
+        }
+
+        webEngine.loadContent(htmlSource);
     }
 
     public void startTranslation(){
