@@ -47,9 +47,9 @@ public class DLVProgramGenerator {
                         if (literal.isNegated()) {
                             ruleString += " - ";
                         }
-                        ruleString += generateDlvLiteral(literal) + " v ";
+                        ruleString += generateDlvLiteral(literal) + " | ";
                     }
-                    ruleString = ruleString.substring(0, ruleString.lastIndexOf(" v "));  // remove last 'v'
+                    ruleString = ruleString.substring(0, ruleString.lastIndexOf(" | "));  // remove last '|'
                 } else {
                     // TODO throw exception if head > 1
                     if (rule.getHead().get(0).isNegated()) {
