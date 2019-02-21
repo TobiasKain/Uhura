@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+at.tuwien.Main-Class: at.tuwien.gui.Main
+
